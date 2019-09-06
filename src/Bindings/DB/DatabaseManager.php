@@ -51,7 +51,7 @@ class DatabaseManager
      *
      * @param string|null $name
      *
-     * @return \Framework\Bindings\DB\Query\Builder
+     * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     public function connection($name = null)
     {
@@ -70,7 +70,7 @@ class DatabaseManager
      *
      * @param string $name
      *
-     * @return \Framework\Bindings\DB\Query\Builder
+     * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     protected function makeConnection($name)
     {

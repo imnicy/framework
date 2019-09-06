@@ -46,7 +46,7 @@ trait RoutesRequests
     }
 
     /**
-     * @return \Framework\Support\Contracts\ResponseEmitter
+     * @return \Nicy\Framework\Support\Contracts\ResponseEmitter
      */
     protected function resolveResponseEmitter()
     {

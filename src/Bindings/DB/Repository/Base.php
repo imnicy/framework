@@ -221,7 +221,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * Perform a model insert operation.
      *
-     * @param \Framework\Bindings\DB\Query\Builder $query
+     * @param \Nicy\Framework\Bindings\DB\Query\Builder $query
      *
      * @return bool
      */
@@ -253,7 +253,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * Perform a model update operation.
      *
-     * @param \Framework\Bindings\DB\Query\Builder $query
+     * @param \Nicy\Framework\Bindings\DB\Query\Builder $query
      *
      * @return bool
      */
@@ -337,7 +337,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
-     * @return \Framework\Bindings\DB\Query\Builder
+     * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     public function newQuery()
     {
@@ -347,7 +347,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
-     * @return \Framework\Bindings\DB\Query\Builder
+     * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     public function newQueryWith()
     {
@@ -373,7 +373,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @param array|null $with
      *
-     * @return \Framework\Bindings\DB\Query\Builder
+     * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     public static function query(array $with = [])
     {
@@ -381,7 +381,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
-     * @return \Framework\Bindings\DB\Repository\Base
+     * @return \Nicy\Framework\Bindings\DB\Repository\Base
      */
     public static function instance()
     {
@@ -426,7 +426,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * Determine if two repositories have the same ID and belong to the same table.
      *
-     * @param \Framework\Bindings\DB\Repository\Base|null $repository
+     * @param \Nicy\Framework\Bindings\DB\Repository\Base|null $repository
      *
      * @return bool
      */
@@ -469,7 +469,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @param array|mixed $data
      *
-     * @return \Framework\Bindings\DB\Repository\Collection
+     * @return \Nicy\Framework\Bindings\DB\Repository\Collection
      */
     public function newCollection($data)
     {

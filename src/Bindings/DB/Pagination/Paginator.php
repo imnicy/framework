@@ -14,7 +14,7 @@ use Nicy\Framework\Bindings\DB\Repository\Collection;
 class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSerializable, IteratorAggregate, Countable, ArrayAccess
 {
     /**
-     * @var \Framework\Bindings\DB\Repository\Collection
+     * @var \Nicy\Framework\Bindings\DB\Repository\Collection
      */
     protected $items;
 

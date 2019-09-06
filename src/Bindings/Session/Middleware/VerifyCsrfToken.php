@@ -23,7 +23,7 @@ class VerifyCsrfToken
     /**
      * The encrypter implementation.
      *
-     * @var \Framework\Bindings\Encryption\Contracts\Encrypter
+     * @var \Nicy\Framework\Bindings\Encryption\Contracts\Encrypter
      */
     protected $encrypter;
 

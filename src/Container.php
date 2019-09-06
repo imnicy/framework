@@ -87,9 +87,9 @@ class Container extends DiContainer
     /**
      * Register a service provider with the container.
      *
-     * @param \Framework\Support\ServiceProvider|string $provider
+     * @param \Nicy\Framework\Support\ServiceProvider|string $provider
      *
-     * @return \Framework\Support\ServiceProvider|void
+     * @return \Nicy\Framework\Support\ServiceProvider|void
      */
     public function register($provider)
     {
@@ -133,7 +133,7 @@ class Container extends DiContainer
     /**
      * Boot the given service provider.
      *
-     * @param \Framework\Support\ServiceProvider $provider
+     * @param \Nicy\Framework\Support\ServiceProvider $provider
      *
      * @return mixed|void
      */

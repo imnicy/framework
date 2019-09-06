@@ -6,7 +6,7 @@ if (! function_exists('main')) {
     /**
      * Get the manager instance.
      *
-     * @return \Framework\Main
+     * @return \Nicy\Framework\Main
      */
     function main()
     {
@@ -163,7 +163,7 @@ if (! function_exists('db')) {
      *
      * @param string|null $connection
      *
-     * @return \Framework\Bindings\DB\Query\Builder
+     * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     function db($connection = null)
     {

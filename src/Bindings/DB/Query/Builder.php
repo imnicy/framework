@@ -19,7 +19,7 @@ class Builder extends Medoo
     public static $errorThrowable = true;
 
     /**
-     * @var \Framework\Bindings\DB\Repository\Base
+     * @var \Nicy\Framework\Bindings\DB\Repository\Base
      */
     protected $repository;
 
@@ -94,7 +94,7 @@ class Builder extends Medoo
      *
      * @param array $items
      *
-     * @return \Framework\Bindings\DB\Repository\Collection
+     * @return \Nicy\Framework\Bindings\DB\Repository\Collection
      */
     public function hydrate(array $items)
     {
@@ -106,7 +106,7 @@ class Builder extends Medoo
     /**
      * Get the repository instance being queried.
      *
-     * @return \Framework\Bindings\DB\Repository\Base
+     * @return \Nicy\Framework\Bindings\DB\Repository\Base
      */
     public function getRepository()
     {
@@ -116,7 +116,7 @@ class Builder extends Medoo
     /**
      * Set a repository instance for the repository being queried.
      *
-     * @param \Framework\Bindings\DB\Repository\Base $repository
+     * @param \Nicy\Framework\Bindings\DB\Repository\Base $repository
      *
      * @return $this
      */
@@ -146,7 +146,7 @@ class Builder extends Medoo
      *
      * @param array $attributes
      *
-     * @return \Framework\Bindings\DB\Repository\Base|static
+     * @return \Nicy\Framework\Bindings\DB\Repository\Base|static
      */
     public function newRepositoryInstance($attributes = [])
     {

@@ -55,7 +55,7 @@ class Main
     protected $loadedConfigurations = [];
 
     /**
-     * @var \Framework\Main
+     * @var \Nicy\Framework\Main
      */
     protected static $instance;
 
@@ -78,9 +78,9 @@ class Main
     /**
      * Set the shared instance of the main.
      *
-     * @param \Framework\Main|null $main
+     * @param \Nicy\Framework\Main|null $main
      *
-     * @return \Framework\Main|static
+     * @return \Nicy\Framework\Main|static
      */
     public static function setInstance(Main $main = null)
     {
@@ -90,7 +90,7 @@ class Main
     /**
      * Get the shared instance of the main
      *
-     * @return \Framework\Main
+     * @return \Nicy\Framework\Main
      */
     public static function getInstance()
     {
@@ -214,9 +214,9 @@ class Main
     /**
      * Register a service provider with the container.
      *
-     * @param \Framework\Support\ServiceProvider|string $provider
+     * @param \Nicy\Framework\Support\ServiceProvider|string $provider
      *
-     * @return \Framework\Support\ServiceProvider|void
+     * @return \Nicy\Framework\Support\ServiceProvider|void
      */
     public function register($provider)
     {

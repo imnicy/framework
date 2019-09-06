@@ -65,7 +65,7 @@ class StartSession
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      *
-     * @return \Framework\Bindings\Session\Store
+     * @return \Nicy\Framework\Bindings\Session\Store
      */
     public function getSession(Request $request)
     {
@@ -114,7 +114,7 @@ class StartSession
      * Store the current URL for the request if necessary.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request PSR7 request
-     * @param \Framework\Bindings\Session\Store $session
+     * @param \Nicy\Framework\Bindings\Session\Store $session
      *
      * @return void
      */
@@ -134,7 +134,7 @@ class StartSession
      * Add the session cookie to the application response.
      *
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param \Framework\Bindings\Session\Store $session
+     * @param \Nicy\Framework\Bindings\Session\Store $session
      *
      * @return \Psr\Http\Message\ResponseInterface
      */

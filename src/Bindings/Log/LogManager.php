@@ -116,9 +116,9 @@ class LogManager implements LoggerInterface
      * Apply the configured taps for the logger.
      *
      * @param string $name
-     * @param \Framework\Bindings\Log\Logger $logger
+     * @param \Nicy\Framework\Bindings\Log\Logger $logger
      *
-     * @return \Framework\Bindings\Log\Logger
+     * @return \Nicy\Framework\Bindings\Log\Logger
      */
     protected function tap($name, Logger $logger)
     {

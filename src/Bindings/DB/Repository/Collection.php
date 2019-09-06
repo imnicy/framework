@@ -14,7 +14,7 @@ class Collection extends SupportCollection
      * @param mixed $key
      * @param mixed $default
      *
-     * @return \Framework\Bindings\DB\Repository\Base|static|null
+     * @return \Nicy\Framework\Bindings\DB\Repository\Base|static|null
      */
     public function find($key, $default = null)
     {

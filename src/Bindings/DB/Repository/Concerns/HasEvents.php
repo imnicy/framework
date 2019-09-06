@@ -18,7 +18,7 @@ trait HasEvents
     /**
      * The event dispatcher instance.
      *
-     * @var \Framework\Bindings\Events\Contracts\Dispatcher
+     * @var \Nicy\Framework\Bindings\Events\Contracts\Dispatcher
      */
     protected static $dispatcher;
 
@@ -108,7 +108,7 @@ trait HasEvents
     /**
      * Set the event dispatcher instance.
      *
-     * @param \Framework\Bindings\Events\Contracts\Dispatcher $dispatcher
+     * @param \Nicy\Framework\Bindings\Events\Contracts\Dispatcher $dispatcher
      *
      * @return void
      */

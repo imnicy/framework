@@ -20,7 +20,7 @@ abstract class Simple implements SimpleRepositoryInterface
     protected $table;
 
     /**
-     * @return \Framework\Bindings\DB\Repository\Simple
+     * @return \Nicy\Framework\Bindings\DB\Repository\Simple
      */
     public static function instance()
     {

@@ -80,7 +80,7 @@ interface RepositoryInterface
     /**
      * Get a query builder instance
      *
-     * @return \Framework\Bindings\DB\Query\Builder
+     * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     public function newQuery();
 }
