@@ -13,8 +13,8 @@
   "require": {
     "php": ">=7.1",
     "ext-json": "*",
-    "ext-pdo": "*",
     "ext-openssl": "*",
+    "ext-pdo": "*",
     "catfan/medoo": "^1.7",
     "dflydev/fig-cookies": "^2.0",
     "imnicy/container": "dev-master",
