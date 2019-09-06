@@ -318,4 +318,17 @@ class Main
             }
         }
     }
+
+    /**
+     * Dynamically call the container instance.
+     *
+     * @param string $method
+     * @param array $parameters
+     *
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        return $this->container()->$method(...$parameters);
+    }
 }
