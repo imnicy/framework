@@ -1,0 +1,47 @@
+{
+  "name": "imnicy/framework",
+  "type": "library",
+  "description": "simple framework package",
+  "license": "MIT",
+  "homepage": "https://imnicy.com",
+  "authors": [
+    {
+      "name": "bin",
+      "email": "support@imnicy.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "ext-openssl": "*",
+    "catfan/medoo": "^1.7",
+    "dflydev/fig-cookies": "^2.0",
+    "imnicy/container": "dev-master",
+    "imnicy/support": "^1.0",
+    "jasongrimes/paginator": "^1.0",
+    "league/event": "^2.2",
+    "league/flysystem": "^1.0",
+    "monolog/monolog": "^1.24",
+    "phpfastcache/phpfastcache": "^7.0",
+    "rakit/validation": "^1.2",
+    "slim/psr7": "^0.5.0",
+    "slim/slim": "^4.1",
+    "twig/twig": "^2.11"
+  },
+  "require-dev": {
+    "digitalnature/php-ref": "^1.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Nicy\\Framework\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev"
+}
