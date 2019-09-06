@@ -17,7 +17,7 @@
     "ext-pdo": "*",
     "catfan/medoo": "^1.7",
     "dflydev/fig-cookies": "^2.0",
-    "imnicy/container": "dev-master",
+    "imnicy/container": "^1.0",
     "imnicy/support": "^1.0",
     "jasongrimes/paginator": "^1.0",
     "league/event": "^2.2",
