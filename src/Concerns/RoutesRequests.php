@@ -50,10 +50,10 @@ trait RoutesRequests
      */
     protected function resolveResponseEmitter()
     {
-        if ($this->container->has('Framework\Support\Contracts\ResponseEmitter')) {
-            return $this->container->make('Framework\Support\Contracts\ResponseEmitter');
+        if ($this->container->has('Nicy\Framework\Support\Contracts\ResponseEmitter')) {
+            return $this->container->make('Nicy\Framework\Support\Contracts\ResponseEmitter');
         } else {
-            return $this->container->make('Framework\Support\Emitters\SlimResponseEmitter');
+            return $this->container->make('Nicy\Framework\Support\Emitters\SlimResponseEmitter');
         }
     }
 }

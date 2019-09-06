@@ -2,7 +2,6 @@
 
 namespace Nicy\Framework\Bindings\DB\Connectors;
 
-use Nicy\Framework\Bindings\DB\Repository\Base;
 use Nicy\Support\Arr;
 use Nicy\Container\Contracts\Container;
 use Nicy\Framework\Bindings\DB\Query\Builder;
