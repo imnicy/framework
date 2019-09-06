@@ -7,7 +7,7 @@ return [
     | Enable CSRF
     |--------------------------------------------------------------------------
     |
-    | Use CSRF protect with session driver.
+    | Use CSRF protected with session driver.
     |
     */
 
@@ -83,7 +83,7 @@ return [
     |
     */
 
-    'cookie' => 'slim_session',
+    'cookie' => 'app_session',
 
     /*
     |--------------------------------------------------------------------------

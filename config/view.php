@@ -2,6 +2,17 @@
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Twig view configures
+    |--------------------------------------------------------------------------
+    |
+    | more documents
+    |
+    | @see https://twig.symfony.com/doc/2.x/
+    |
+    */
+
     'path' => resource_path('views'),
 
     'debug' => true,

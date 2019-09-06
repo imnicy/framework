@@ -32,13 +32,13 @@ return [
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/slim.log'),
+            'path' => storage_path('logs/app.log'),
             'level' => 'debug',
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/slim.log'),
+            'path' => storage_path('logs/app.log'),
             'level' => 'debug',
             'days' => 7,
         ],
