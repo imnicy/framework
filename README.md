@@ -67,13 +67,14 @@ $framework->run();
 
 ```php
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Nicy\Framework\Support\Router\Arguments;
 use Nicy\Framework\Support\Traits\{ForRequest, ForResponse}
 
 class HomeController extends Controller
 {
     use ForRequest, ForResponse;
 
-    public function index(Request $request, $arguments)
+    public function index(Request $request, Arguments $arguments)
     {
         // write your codes ...
         ...
@@ -88,6 +89,11 @@ class HomeController extends Controller
 
         // for response
         return $this->response('contents', $headers = [], $cookies = []);
+        
+        // for route arguments as collection
+        $arguments->get('name', 'default');
+        $arguments->all();
+        ...
     }
 }
 ```
