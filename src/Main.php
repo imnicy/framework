@@ -6,6 +6,7 @@ use DI\ContainerBuilder;
 use Nicy\Container\Contracts\Container as ContainerContract;
 use Nicy\Framework\Handlers\Strategies\RequestResponse;
 use Nicy\Framework\Container as FrameworkContainer;
+use Nicy\Support\Str;
 use Psr\Http\Server\MiddlewareInterface;
 use Slim\App as SlimApplication;
 use Slim\Factory\AppFactory;
@@ -69,9 +70,7 @@ class Main
         $this->path = $path;
 
         $this->bootstrapContainer();
-
         $this->registerErrorHandling();
-
         $this->bootstrapSlimApp();
     }
 
@@ -124,6 +123,11 @@ class Main
         });
 
         $this->container = $this->manager->driver('framework.container');
+
+        $this->container->singleton('main', $this);
+        $this->container->singleton(self::class, $this);
+
+        $this->container->singleton('env', $this->environment());
     }
 
     /**
@@ -208,6 +212,31 @@ class Main
         }
 
         return $bound;
+    }
+
+    /**
+     * Get or check the current application environment.
+     *
+     * @param  mixed
+     * @return string
+     */
+    public function environment()
+    {
+        $env = $this->container['config']->get('env', 'production');
+
+        if (func_num_args() > 0) {
+            $patterns = is_array(func_get_arg(0)) ? func_get_arg(0) : func_get_args();
+
+            foreach ($patterns as $pattern) {
+                if (Str::is($pattern, $env)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        return $env;
     }
 
     /**

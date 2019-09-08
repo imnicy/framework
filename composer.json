@@ -29,9 +29,6 @@
     "slim/slim": "^4.1",
     "twig/twig": "^2.11"
   },
-  "require-dev": {
-    "digitalnature/php-ref": "^1.2"
-  },
   "autoload": {
     "psr-4": {
       "Nicy\\Framework\\": "src/"

@@ -3,6 +3,7 @@
 namespace Nicy\Framework\Bindings\Log;
 
 use Closure;
+use Nicy\Framework\Main;
 use Throwable;
 use Nicy\Support\Str;
 use Psr\Log\LoggerInterface;
@@ -151,7 +152,7 @@ class LogManager implements LoggerInterface
     protected function createEmergencyLogger()
     {
         return new Logger(new Monolog('laravel', $this->prepareHandlers([new StreamHandler(
-            $this->container['main']->path().'/storage/logs/laravel.log', $this->level(['level' => 'debug'])
+            Main::getInstance()->path('/storage/logs/laravel.log'), $this->level(['level' => 'debug'])
         )])));
     }
 
@@ -371,6 +372,16 @@ class LogManager implements LoggerInterface
         return tap(new LineFormatter(null, null, true, true), function ($formatter) {
             $formatter->includeStacktraces();
         });
+    }
+
+    /**
+     * Get fallback log channel name.
+     *
+     * @return string
+     */
+    protected function getFallbackChannelName()
+    {
+        return $this->container['config']['env'] ?: 'production';
     }
 
     /**
