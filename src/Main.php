@@ -69,7 +69,11 @@ class Main
         $this->path = $path;
 
         $this->bootstrapContainer();
+
+        $this->configure('app');
+
         $this->registerErrorHandling();
+
         $this->bootstrapSlimApp();
     }
 

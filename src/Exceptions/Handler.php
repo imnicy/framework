@@ -96,7 +96,7 @@ class Handler implements ExceptionHandler
 
         $renderer = $this->getRenderer();
 
-        $body = call_user_func($renderer, $e, true);
+        $body = call_user_func($renderer, $e, Main::getInstance()->container('config')->get('app.debug', false));
 
         $response->getBody()->write($body);
 
