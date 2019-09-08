@@ -77,7 +77,7 @@ class Encrypter implements EncrypterContract
      * @param  bool  $serialize
      * @return string
      *
-     * @throws \Framework\Exceptions\EncryptException
+     * @throws \Nicy\Framework\Exceptions\EncryptException
      */
     public function encrypt($value, $serialize = true)
     {
@@ -127,7 +127,7 @@ class Encrypter implements EncrypterContract
      * @param  bool  $unserialize
      * @return mixed
      *
-     * @throws \Framework\Exceptions\DecryptException
+     * @throws \Nicy\Framework\Exceptions\DecryptException
      */
     public function decrypt($payload, $unserialize = true)
     {
@@ -178,7 +178,7 @@ class Encrypter implements EncrypterContract
      * @param  string  $payload
      * @return array
      *
-     * @throws \Framework\Exceptions\DecryptException
+     * @throws \Nicy\Framework\Exceptions\DecryptException
      */
     protected function getJsonPayload($payload)
     {

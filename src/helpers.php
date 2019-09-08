@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\HtmlString;
-
 if (! function_exists('main')) {
     /**
      * Get the manager instance.
@@ -10,7 +8,7 @@ if (! function_exists('main')) {
      */
     function main()
     {
-        return Framework\Main::getInstance();
+        return Nicy\Framework\Main::getInstance();
     }
 }
 
@@ -317,7 +315,7 @@ if (! function_exists('session')) {
      * @param array|string $key
      * @param mixed $default
      *
-     * @return mixed|\Framework\Bindings\Session\Store|\Framework\Bindings\Session\SessionManager
+     * @return mixed|\Nicy\Framework\Bindings\Session\Store|\Nicy\Framework\Bindings\Session\SessionManager
      */
     function session($key = null, $default = null)
     {
@@ -391,6 +389,6 @@ if (! function_exists('set_cookie')) {
      */
     function set_cookie(string $name, ? string $value = null)
     {
-        return Framework\Bindings\Cookie\Factory::setCookie($name, $value);
+        return Nicy\Framework\Bindings\Cookie\Factory::setCookie($name, $value);
     }
 }

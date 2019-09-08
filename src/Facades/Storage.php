@@ -9,7 +9,7 @@ use Nicy\Framework\Support\Facade;
  * Class Storage
  * @package Framework\Facades
  *
- * @method static \Framework\Bindings\Filesystem\FilesystemManager extend($driver, Closure $callback)
+ * @method static \Nicy\Framework\Bindings\Filesystem\FilesystemManager extend($driver, Closure $callback)
  * @method static \League\Flysystem\AdapterInterface disk($name = null)
  *
  */

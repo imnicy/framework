@@ -114,7 +114,6 @@ class Main
         $this->manager->extend('framework.container', function() {
 
             $builder = new ContainerBuilder($class = FrameworkContainer::class);
-            $builder->enableCompilation($this->path('storage/cache/container/compile'), 'CompiledContainer', $class);
 
             $container = $builder->build();
 

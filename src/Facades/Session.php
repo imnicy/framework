@@ -8,7 +8,7 @@ use Nicy\Framework\Support\Facade;
  * Class Session
  * @package Framework\Facades
  *
- * @mixin \Framework\Bindings\Session\Store
+ * @mixin \Nicy\Framework\Bindings\Session\Store
  *
  */
 class Session extends Facade
