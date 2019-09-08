@@ -1,10 +1,10 @@
 ## simple framework package
 
-Follow the Psr specification
+A simple PHP framework, carefully selected many excellent and lightweight projects into the framework, and provide convenient and simple calls. The framework uses service container (DI) to manage the various packages, so that you can easily and simply expand your own packages into the framework.
 
 ### Provided:
 
-- Request & Response (use `slim\slim`, read more see: slim framework)
+- Request & Response (use `slim\slim`, see: slim framework)
 - Container (use `php-di\php-di`)
 - Cache (use `phpfastcache/phpfastcache`)
 - Configure
@@ -19,7 +19,7 @@ Follow the Psr specification
 - View (use `twig/twig`)
 - Powerful libs (like Str, Arr, Collection, Manager...)
 
-> All packages are lazy to load, and if you don't use them, you won't execute the code logic of the response.
+> All packages are lazy to load, and if you don't use them, you won't execute the codes of the response.
 
 ## Container and Routing
 
@@ -327,6 +327,18 @@ Disk::put('path.txt', 'contents');
 Storage::driver('file')->put('path.txt', 'contents');
 ```
 
+you can extend your custom filesystem driver.
+
+```php
+Storage::extend('qiniu', function() {
+    // some code
+});
+
+// usage
+Storage::driver('qiniu')->put('path.txt', 'contents');
+```
+
+you will read league/flysystem document.
 
 ### Session
 
