@@ -174,4 +174,217 @@ class Custom extends Repository
 
 It is similar to ORM in use and inheritance, but it does not provide attribute mapping and object operation. The results of data query and data operation are medoo based on the original state.
 
-Be continued...
+### Container
+
+read php-di document
+
+basic Use
+
+get container instance:
+
+```php
+$container = container();
+
+// or
+Main::getInstance()->contaner();
+```
+
+get definition from container:
+
+```php
+$definition = container('name');
+
+// or
+$definition = container()->get('name');
+
+// or
+$definition = Main::getInstance()->container('name')
+```
+
+set a definition to container:
+
+```php
+// give a callable or instance
+container()->singleton('name', Callable $callable)
+```
+
+### Cookie
+
+set response with cookie:
+
+```php
+use Nick\Framework\Support\Traits;
+
+class Controller
+{
+    use Traits\ForResponse;
+
+    public function demo()
+    {
+        return $this->response('contents', $headers, $cookies = [
+            'token' => 'generate a token string',
+        ]]);
+        
+        // or
+        
+        return $this->response('contents', $headers, $cookies = [
+                    set_cookie('token', 'token string')->withDomain('/')->with......,
+                ]]);
+    }
+}
+```
+
+get cookie from request:
+
+```php
+use Nick\Framework\Support\Helpers;
+
+class Service
+{
+    public function provider()
+    {
+        $cookie = get_cookie('token', 'default');
+        
+        // or use facede
+        $cookie = Nicy\Framework\Facades\Cookie::get('token', 'default');
+    }
+}
+```
+
+### Events
+
+define a listener:
+
+```php
+use Nicy\Framework\Support\Listener;
+use Nicy\Framework\Support\Event;
+
+class AddedListener extend Listener
+{
+    public function handler(Events $event)
+    {
+        // some codes
+    }
+}
+```
+
+define a event:
+
+```php
+use App\Models\Product;
+use Nicy\Framework\Support\Event;
+
+class AddedEvent extend Event
+{
+    protected $product;
+    
+    public function __construct(Product $product)
+    {
+        $this->>product = $product;
+    }
+}
+```
+
+dispatch a event:
+
+```php
+// in anywhere
+// event name as custom string or event class name
+container('events')->dispatch('event_name', $payloads = []);
+```
+
+listen any events in EventServiceProvider
+
+```php
+use Nicy\Framework\Providers\EventServiceProvider as ServiceProvider;
+
+class EventServiceProvider extend ServiceProvider
+{
+    protected $listen = [
+        // for event name
+        'product.added' => [
+            'App\Listeners\AddedListener',
+        ],
+        // or event class name
+        'App\Events\AddedEvent' => [
+            'App\Listeners\AddedListener',
+        ]
+    ];
+}
+```
+
+### Filesystem
+
+basic use:
+
+```php
+container('filesystem')->put('path.txt', 'contents');
+
+// with facede
+Disk::put('path.txt', 'contents');
+
+// or
+Storage::driver('file')->put('path.txt', 'contents');
+```
+
+
+### Session
+
+basic use:
+
+```php
+session('name', 'default');
+
+// set a session
+session(['name' => 'value']);
+
+// with facede
+Session::put(['name' => 'value']);
+
+Session::get('name', 'default');
+```
+you can choose file, cache or null handlers for session.
+
+
+### Validation
+
+basic use:
+
+```php
+validate($inputs, [
+    'name' => 'required',
+    'age' => 'required|numeric',
+    ...
+]);
+
+// if fail it will throw a ValidationException.
+
+// with Facede
+$validator = Validator::validate($inputs, $rules = []);
+
+if ($validator->fails()) {
+    // some code
+}
+```
+
+more rules, you will read rakit/validation document.
+
+
+### View
+
+basic use:
+
+```php
+class Controller()
+{
+    public function display()
+    {
+        return view('resource/home/index.html', $parameters = []);
+        
+        // with Facade
+        return View::render('resource/home/index.html', $parameters = []);
+    }
+}
+```
+
+you can read the twig/twig document for more information.

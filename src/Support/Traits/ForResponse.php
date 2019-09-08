@@ -2,6 +2,7 @@
 
 namespace Nicy\Framework\Support\Traits;
 
+use Dflydev\FigCookies\SetCookie;
 use Nicy\Framework\Support\Helpers\ResponseHelper;
 
 trait ForResponse
@@ -25,7 +26,15 @@ trait ForResponse
         }
 
         foreach ($cookies as $name => $value) {
-            $response = ResponseHelper::responseWithCookie($response, set_cookie($name, $value));
+
+            if ($value instanceof SetCookie) {
+                $cookie = $value;
+            }
+            else {
+                $cookie = set_cookie($name, $value);
+            }
+
+            $response = ResponseHelper::responseWithCookie($response, $cookie);
         }
 
         if ($status) {
