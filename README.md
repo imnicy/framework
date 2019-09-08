@@ -1,6 +1,6 @@
-## simple framework package
+## Framework
 
-A simple PHP framework, carefully selected many excellent and lightweight projects into the framework, and provide convenient and simple calls. The framework uses service container (DI) to manage the various packages, so that you can easily and simply expand your own packages into the framework.
+A simple PHP framework, careful selection of many excellent and lightweight packages into the framework, and provide convenient and simple calls. The framework uses service container (DI) to manage the various packages, so that you can easily and simply expand your own packages into the framework.
 
 ### Provided:
 
