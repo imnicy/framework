@@ -3,16 +3,15 @@
 namespace Nicy\Framework;
 
 use DI\ContainerBuilder;
-use Nicy\Container\Contracts\Container as ContainerContract;
-use Nicy\Framework\Handlers\Strategies\RequestResponse;
-use Nicy\Framework\Container as FrameworkContainer;
 use Nicy\Support\Str;
-use Psr\Http\Server\MiddlewareInterface;
-use Slim\App as SlimApplication;
-use Slim\Factory\AppFactory;
-use Nicy\Framework\Concerns\{FacadeTrait, RouterTrait, RegistersExceptionHandlers, RoutesRequests};
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Nicy\Container\Manager;
+use Nicy\Framework\Container as FrameworkContainer;
+use Nicy\Container\Contracts\Container as ContainerContract;
+use Slim\Factory\AppFactory;
+use Slim\App as SlimApplication;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Nicy\Framework\Concerns\{FacadeTrait, RouterTrait, RegistersExceptionHandlers, RoutesRequests};
 
 class Main
 {
@@ -190,7 +189,14 @@ class Main
             return ;
         }
 
-        $this->app->getRouteCollector()->setDefaultInvocationStrategy(new RequestResponse);
+        if ($this->container->has('Nicy\Framework\Support\Contracts\Strategy')) {
+            $handler = $this->container->make('Nicy\Framework\Support\Contracts\Strategy');
+        }
+        else {
+            $handler = $this->container->make('Nicy\Framework\Handlers\Strategies\RequestResponse');
+        }
+
+        $this->app->getRouteCollector()->setDefaultInvocationStrategy($handler);
     }
 
     /**
@@ -266,7 +272,9 @@ class Main
     }
 
     /**
-     * Get the path to the application "app" directory.
+     * Get the path to the application directory.
+     *
+     * @param string $path
      *
      * @return string
      */

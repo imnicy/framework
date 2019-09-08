@@ -4,9 +4,8 @@ namespace Nicy\Framework\Handlers\Strategies;
 
 use ErrorException;
 use Nicy\Framework\Main;
+use Nicy\Framework\Bindings\Routing\RouterArguments;
 use Nicy\Framework\Support\Helpers\ResponseHelper;
-use Nicy\Support\Contracts\Arrayable;
-use Nicy\Support\Contracts\Jsonable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Interfaces\InvocationStrategyInterface;
@@ -39,9 +38,15 @@ class RequestResponse implements InvocationStrategyInterface
             $request = $request->withAttribute($k, $v);
         }
 
-        Main::getInstance()->container()->singleton('request', $request);
+        $container = Main::getInstance()->container();
 
-        $contents = container()->call($callable, [$request, $routeArguments]);
+        $container->singleton('request', $request);
+
+        $container->singleton('Nicy\Framework\Support\Contracts\Router\Arguments', function() use($routeArguments) {
+            return new RouterArguments($routeArguments);
+        });
+
+        $contents = $container->call($callable);
 
         return ResponseHelper::prepare($contents);
     }
