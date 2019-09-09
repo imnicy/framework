@@ -85,6 +85,10 @@ class HomeController extends Controller
         $requests = $this->request()->all();
 
         // or
+        // request mode parameter: 
+        //      1 => query mode.
+        //      2 => request mode.
+        //      1 | 2 => request && request mode. this is default value.
         $queries = $this->request(1)->only(['name', 'age']);
 
         // or more...

@@ -28,6 +28,10 @@ class EncryptionServiceProvider extends ServiceProvider
 
             return new Encrypter($key, $config['cipher']);
         });
+
+        $this->container->singleton('Nicy\Framework\Bindings\Encryption\Contracts\Encrypter', function() {
+            return $this->container['encrypter'];
+        });
     }
 
     /**

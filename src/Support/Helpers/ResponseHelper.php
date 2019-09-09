@@ -3,6 +3,7 @@
 namespace Nicy\Framework\Support\Helpers;
 
 use Dflydev\FigCookies\SetCookie;
+use Nicy\Framework\Main;
 use Nicy\Support\Contracts\Arrayable;
 use Nicy\Support\Contracts\Jsonable;
 use Psr\Http\Message\ResponseInterface;
@@ -68,6 +69,6 @@ class ResponseHelper
      */
     public static function responseWithCookie($contents, SetCookie $cookie)
     {
-        return container('cookie')->setOnResponse(static::prepare($contents), $cookie);
+        return Main::getInstance()->container('cookie')->setOnResponse(static::prepare($contents), $cookie);
     }
 }

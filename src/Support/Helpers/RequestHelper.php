@@ -2,6 +2,7 @@
 
 namespace Nicy\Framework\Support\Helpers;
 
+use Nicy\Framework\Main;
 use Nicy\Support\Collection;
 use Nicy\Support\Str;
 use Psr\Http\Message\ServerRequestInterface;
@@ -49,7 +50,7 @@ class RequestHelper
             return static::$attributes;
         }
 
-        $request = container('request');
+        $request = Main::getInstance()->container('request');
 
         if (Str::contains($request->getHeaderLine('Content-Type'), ['+json', '/json'])) {
             $request = $request->withParsedBody(json_decode($request->getBody()->getContents(), true));

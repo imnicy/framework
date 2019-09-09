@@ -18,6 +18,10 @@ class FilesystemServiceProvider extends ServiceProvider
         $this->container->singleton('filesystem.disk', function () {
             return $this->container['filesystem']->disk();
         });
+
+        $this->container->singleton('Nicy\Framework\Bindings\Filesystem\Contracts\Factory', function() {
+            return $this->container['filesystem.disk'];
+        });
     }
 
     /**

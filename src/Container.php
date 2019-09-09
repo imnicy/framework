@@ -254,6 +254,8 @@ class Container extends DiContainer
         'encrypter'         => 'registerEncryptionBindings',
 
         'Psr\Http\Message\ServerRequestInterface'   => 'getRequestAliasesBindings',
-        'Nicy\Framework\Bindings\Events\Contracts\Dispatcher' => 'registerEventsBindings'
+        'Nicy\Framework\Bindings\Events\Contracts\Dispatcher' => 'registerEventsBindings',
+        'Nicy\Framework\Bindings\Encryption\Contracts\Encrypter' => 'registerEncryptionBindings',
+        'Nicy\Framework\Bindings\Filesystem\Contracts\Factory' => 'registerFilesystemBindings',
     ];
 }

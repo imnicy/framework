@@ -4,6 +4,7 @@ namespace Nicy\Framework\Bindings\DB\Repository;
 
 use Nicy\Framework\Bindings\DB\Query\Builder;
 use Nicy\Framework\Bindings\DB\Repository\Concerns\ForPaginate;
+use Nicy\Framework\Main;
 
 abstract class Simple implements SimpleRepositoryInterface
 {
@@ -54,7 +55,7 @@ abstract class Simple implements SimpleRepositoryInterface
      */
     public function newQuery()
     {
-        return container('db')->connection($this->connection)->simpling();
+        return Main::getInstance()->container('db')->connection($this->connection)->simpling();
     }
 
     /**
