@@ -296,7 +296,7 @@ define a event:
 
 ```php
 use App\Models\Product;
-use League\Event\EventAbstract as Event;
+use League\Event\AbstractEvent as Event;
 
 class AddedEvent extend Event
 {

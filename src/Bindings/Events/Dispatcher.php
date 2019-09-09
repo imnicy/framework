@@ -3,10 +3,21 @@
 namespace Nicy\Framework\Bindings\Events;
 
 use League\Event\Emitter;
+use Nicy\Container\Contracts\Container;
 use Nicy\Framework\Bindings\Events\Contracts\Dispatcher as DispatcherContract;
 
 class Dispatcher extends Emitter implements DispatcherContract
 {
+    /**
+     * @var \Nicy\Container\Contracts\Container
+     */
+    protected $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * Register an event listener with the dispatcher.
      *
@@ -30,6 +41,10 @@ class Dispatcher extends Emitter implements DispatcherContract
      */
     public function dispatch($event, $payload = [])
     {
+        if (is_string($event) && class_exists($event)) {
+            $event = $this->container->make($event);
+        }
+
         return $this->emit($event, $payload);
     }
 

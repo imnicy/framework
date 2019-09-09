@@ -10,7 +10,7 @@ use Nicy\Framework\Support\Facade;
  * @package Framework\Facades
  *
  * @method static Dispatcher|void listen($event, $listener)
- * @method static mixed dispatcher($event, $payload = [])
+ * @method static mixed dispatch($event, $payload = [])
  *
  */
 class Events extends Facade

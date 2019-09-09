@@ -14,7 +14,7 @@ class EventServiceProvider extends ServiceProvider
     public function register()
     {
         $this->container->singleton('events', function() {
-            return new Dispatcher();
+            return new Dispatcher($this->container);
         });
 
         $this->container->singleton('Nicy\Framework\Bindings\Events\Contracts\Dispatcher', function() {
