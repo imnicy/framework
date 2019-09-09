@@ -14,7 +14,7 @@ class Builder extends Medoo
      *
      * @var bool
      */
-    public $simple = false;
+    public $simple = true;
 
     public static $errorThrowable = true;
 

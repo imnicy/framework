@@ -211,7 +211,7 @@ if (! function_exists('info')) {
      */
     function info($message, array $context = [])
     {
-        return container('log')->info($message, $context);
+        return container('logger')->info($message, $context);
     }
 }
 
@@ -226,7 +226,7 @@ if (! function_exists('debug')) {
      */
     function debug($message, array $context = [])
     {
-        return container('log')->debug($message, $context);
+        return container('logger')->debug($message, $context);
     }
 }
 
@@ -241,7 +241,7 @@ if (! function_exists('warning')) {
      */
     function warning($message, array $context = [])
     {
-        return container('log')->warning($message, $context);
+        return container('logger')->warning($message, $context);
     }
 }
 
@@ -256,7 +256,7 @@ if (! function_exists('error')) {
      */
     function error($message, array $context = [])
     {
-        return container('log')->error($message, $context);
+        return container('logger')->error($message, $context);
     }
 }
 
@@ -271,7 +271,7 @@ if (! function_exists('notice')) {
      */
     function notice($message, array $context = [])
     {
-        return container('log')->notice($message, $context);
+        return container('logger')->notice($message, $context);
     }
 }
 
@@ -287,7 +287,7 @@ if (! function_exists('log')) {
      */
     function log($level, $message, array $context = [])
     {
-        return container('log')->log($level, $message, $context);
+        return container('logger')->log($level, $message, $context);
     }
 }
 

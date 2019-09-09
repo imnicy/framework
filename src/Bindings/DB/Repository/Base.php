@@ -136,6 +136,18 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
+     * @param array $datas
+     *
+     * @return bool
+     */
+    public function insert(array $datas = [])
+    {
+        static::query()->insert($this->table, $datas);
+
+        return true;
+    }
+
+    /**
      * @param array $attributes
      * @param array $conditions
      *
