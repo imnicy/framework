@@ -1,11 +1,11 @@
 ## Framework
 
-A simple PHP framework, careful selection of many excellent and lightweight packages into the framework, and provide convenient and simple calls. The framework uses service container (DI) to manage the various packages, so that you can easily and simply expand your own packages into the framework.
+provides mainstream features, such as DI, IoC, Events, ORM, Filesystem, etc.
 
-### Provided:
+### Features:
 
 - Request & Response (use `slim\slim`, see: slim framework)
-- Container (use `php-di\php-di`)
+- DI (use `php-di\php-di`)
 - Cache (use `phpfastcache/phpfastcache`)
 - Configure
 - Cookie
@@ -19,13 +19,15 @@ A simple PHP framework, careful selection of many excellent and lightweight pack
 - View (use `twig/twig`)
 - Powerful libs (like Str, Arr, Collection, Manager...)
 
-> All packages are lazy to load, and if you don't use them, you won't execute the codes of the response.
+> All packages are lazy to load. And you can expand many other useful packages to the framework.
 
-## Container and Routing
+## About
 
-Use slim\slim to provide simple routing requests and responses, container comes from php-di\php-di.
+The framework use slim/slim and php-di/php-di to provide routing requests, responses and container services.
 
-The coding style is very similar to laravel, but lighter and simpler than laravel. Try to assemble a package with as little code as possible.
+It's like laravel, but not as complex as laravel.
+
+I want to minimize the number of dependent packages, make the framework faster, and you can clearly see what it does.
 
 ### Installation
 
@@ -178,7 +180,7 @@ It is similar to ORM in use and inheritance, but it does not provide attribute m
 
 read php-di document
 
-basic Use
+basic Use:
 
 get container instance:
 
@@ -280,7 +282,7 @@ class AddedEvent extend Event
     
     public function __construct(Product $product)
     {
-        $this->>product = $product;
+        $this->product = $product;
     }
 }
 ```
