@@ -13,6 +13,12 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Nicy\Framework\Concerns\{FacadeTrait, RouterTrait, RegistersExceptionHandlers, RoutesRequests};
 
+/**
+ * Class Main
+ * @package Nicy\Framework
+ *
+ * @mixin \Nicy\Framework\Container
+ */
 class Main
 {
     use RouterTrait,

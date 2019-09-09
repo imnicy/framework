@@ -121,7 +121,7 @@ trait RegistersExceptionHandlers
     protected function resolveExceptionHandler()
     {
         if ($this->container->has('Nicy\Framework\Exceptions\ExceptionHandler')) {
-            return $this->container->make('Nicy\Framework\Exceptions\ExceptionHandler');
+            return $this->container->get('Nicy\Framework\Exceptions\ExceptionHandler');
         } else {
             return $this->container->make('Nicy\Framework\Exceptions\Handler');
         }
