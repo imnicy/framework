@@ -69,14 +69,14 @@ $framework->run();
 
 ```php
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Nicy\Framework\Support\Router\Arguments;
+use Nicy\Framework\Support\Contracts\Router\Arguments;
 use Nicy\Framework\Support\Traits\{ForRequest, ForResponse}
 
 class HomeController extends Controller
 {
     use ForRequest, ForResponse;
 
-    public function index(Request $request, Arguments $arguments)
+    public function index(Arguments $arguments)
     {
         // write your codes ...
         ...
@@ -108,6 +108,7 @@ custom model
 namespace App\Models;
 
 use Nicy\Framework\Support\Model;
+use League\Event\EventInterface as Event;
 
 class Custom extends Model
 {
@@ -116,6 +117,16 @@ class Custom extends Model
     protected $table = 'customs';
     
     protected $fillable = ['name', 'mobile'];
+    
+    // you can listen events on boot
+    public static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function(Event $e, Model $model) {
+            // some code
+        });
+    }
 }
 ```
 
@@ -128,19 +139,25 @@ use App\Models\Custom;
 
 class CustomController extends Controller
 {
-    public function demo()
+    public function demo(Custom $custom)
     {
-        return Custom::instance()->all();
+        // get custom model instance
+        $instance = $custom;
+        // or
+        $instance = Custom::instance();
+        
+        // get all entries from customs
+        return $instance->all();
         
         // or for pagination
-        return Custom::instance()->paginate(1);
+        return $instance->paginate(1);
         
         // with some conditions and columns
         // see medoo ducoments
-        return Custom::instance()->all(['name[~]' => 'w%'], 'name, age');
+        return $instance->all(['name[~]' => 'w%'], 'name, age');
         
         // find a item, fill and update
-        $found = Custom::instance()->one(['name' => 'bin']);
+        $found = $instance->one(['name' => 'bin']);
         
         if ($found) {
             $found->mobile = '156...';
@@ -151,10 +168,10 @@ class CustomController extends Controller
         }
         
         // for update with conditions
-        Custom::instance()->update(['name[~]' => 'w%'], ['mobile' => '156...']);
+        $instance->update(['name[~]' => 'w%'], ['mobile' => '156...']);
         
         // destroy any items
-        Custom::instance()->destroy([1,2,3,4]);
+        $instance->destroy([1,2,3,4]);
     }
 }
 ```
@@ -168,8 +185,10 @@ use Nicy\Framework\Support\Repository;
 
 class Custom extends Repository
 {
-    protected $connection = 'default';
-    
+    // if donot set the default connection name, configure `database.php` config, set the database connection default value.
+    protected $connection = 'default'; 
+
+    // your table name
     protected $table = 'customs';
 }
 ```
@@ -177,10 +196,6 @@ class Custom extends Repository
 It is similar to ORM in use and inheritance, but it does not provide attribute mapping and object operation. The results of data query and data operation are medoo based on the original state.
 
 ### Container
-
-read php-di document
-
-basic Use:
 
 get container instance:
 
@@ -200,14 +215,17 @@ $definition = container('name');
 $definition = container()->get('name');
 
 // or
-$definition = Main::getInstance()->container('name')
+$definition = Main::getInstance()->container('name');;
 ```
 
 set a definition to container:
 
 ```php
 // give a callable or instance
-container()->singleton('name', Callable $callable)
+container()->singleton('name', Callable $callable);
+
+// or, Set the `$value` parameter to null, will definition a `Support\Helper` instance.
+container()->singleton(Support/Helper::class);
 ```
 
 ### Cookie
@@ -258,12 +276,12 @@ class Service
 define a listener:
 
 ```php
-use Nicy\Framework\Support\Listener;
-use Nicy\Framework\Support\Event;
+use League\Event\ListenerInterface as Listener;
+use League\Event\EventInterface as Event;
 
 class AddedListener extend Listener
 {
-    public function handler(Events $event)
+    public function handler(Event $event)
     {
         // some codes
     }
@@ -274,7 +292,7 @@ define a event:
 
 ```php
 use App\Models\Product;
-use Nicy\Framework\Support\Event;
+use League\Event\EventAbstract as Event;
 
 class AddedEvent extend Event
 {
