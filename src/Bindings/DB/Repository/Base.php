@@ -3,6 +3,7 @@
 namespace Nicy\Framework\Bindings\DB\Repository;
 
 use ArrayAccess;
+use Nicy\Framework\Main;
 use Nicy\Support\Str;
 use Nicy\Support\Contracts\Arrayable;
 use Nicy\Support\Contracts\Jsonable;
@@ -95,7 +96,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      */
     protected static function boot()
     {
-        //
+        static::setEventDispatcher(Main::getInstance()->container('events'));
     }
 
     /**
@@ -341,7 +342,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      */
     public function newQuery()
     {
-        $query = container('db')->connection($this->connection)->simpling(false);
+        $query = Main::getInstance()->container('db')->connection($this->connection)->simpling(false);
 
         return $query->setRepository($this);
     }
