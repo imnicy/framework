@@ -17,7 +17,7 @@ trait RoutesRequests
             $request = $serverRequestCreator->createServerRequestFromGlobals();
         }
 
-        $this->container->singleton('request', $request);
+        $this->container->singleton('Psr\Http\Message\ServerRequestInterface', $request);
 
         $this->container->boot();
 

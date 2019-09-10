@@ -225,8 +225,8 @@ class Container extends DiContainer
 
     protected function getRequestAliasesBindings()
     {
-        $this->singleton('Psr\Http\Message\ServerRequestInterface', function() {
-            return $this->get('request');
+        $this->singleton('request', function() {
+            return $this->get('Psr\Http\Message\ServerRequestInterface');
         });
     }
 
@@ -252,8 +252,8 @@ class Container extends DiContainer
         'filesystem'        => 'registerFilesystemBindings',
         'filesystem.disk'   => 'registerFilesystemBindings',
         'encrypter'         => 'registerEncryptionBindings',
+        'request'           => 'getRequestAliasesBindings',
 
-        'Psr\Http\Message\ServerRequestInterface'   => 'getRequestAliasesBindings',
         'Nicy\Framework\Bindings\Events\Contracts\Dispatcher' => 'registerEventsBindings',
         'Nicy\Framework\Bindings\Encryption\Contracts\Encrypter' => 'registerEncryptionBindings',
         'Nicy\Framework\Bindings\Filesystem\Contracts\Factory' => 'registerFilesystemBindings',
