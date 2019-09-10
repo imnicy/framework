@@ -14,7 +14,7 @@ class ValidationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->container->singleton('validator', function() {
+        $this->container->singleton('validation', function() {
             return new ValidationFactory;
         });
     }
