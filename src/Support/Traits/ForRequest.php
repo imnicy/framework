@@ -18,9 +18,9 @@ trait ForRequest
      *
      * @return mixed|void|\Nicy\Support\Collection
      */
-    protected function request($mode = 1 || 2, $key = null, $default = null)
+    protected function request($mode = 1|2|4, $key = null, $default = null)
     {
-        if ($mode == (1 || 2)) {
+        if ($mode == (1|2|4)) {
             if (! $key) {
                 return RequestHelper::all();
             }
@@ -44,7 +44,27 @@ trait ForRequest
                 return RequestHelper::request($key, $default);
             }
         }
+        else if ($mode & 4) {
+            if (! $key) {
+                return RequestHelper::files();
+            }
+            else {
+                return RequestHelper::file($key);
+            }
+        }
 
         return ;
+    }
+
+    /**
+     * @param string $key
+     * @param bool $unique
+     * @param string|null $disk
+     *
+     * @return false|string
+     */
+    protected function upload(string $key, bool $unique = false, string $disk = null)
+    {
+        return RequestHelper::upload($key, $unique, $disk);
     }
 }
