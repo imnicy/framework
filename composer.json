@@ -22,12 +22,12 @@
     "jasongrimes/paginator": "^1.0",
     "league/event": "^2.2",
     "league/flysystem": "^1.0",
+    "league/plates": "^3.3",
     "monolog/monolog": "^1.24",
     "phpfastcache/phpfastcache": "^7.0",
     "rakit/validation": "^1.2",
     "slim/psr7": "^0.5.0",
-    "slim/slim": "^4.1",
-    "twig/twig": "^2.11"
+    "slim/slim": "^4.1"
   },
   "autoload": {
     "psr-4": {

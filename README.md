@@ -16,7 +16,7 @@ provides mainstream features, such as DI, IoC, Events, ORM, Filesystem, etc.
 - Filesystem (use `league/flysystem`)
 - Session (with CSRF)
 - Validation (use `rakit/validation`)
-- View (use `twig/twig`)
+- View (use `league/plates`)
 - Powerful libs (like Str, Arr, Collection, Manager...)
 
 > All packages are lazy to load. And you can expand many other useful packages to the framework.
@@ -423,4 +423,4 @@ class Controller()
 }
 ```
 
-you can read the twig/twig document for more information.
+you can read the league/plates document for more information.
