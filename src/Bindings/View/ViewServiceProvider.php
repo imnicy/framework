@@ -14,8 +14,8 @@ class ViewServiceProvider extends ServiceProvider
     public function register()
     {
         $this->container->singleton('view', function() {
-
             $factory = new Factory($this->container);
+
             return $factory->getEngine();
         });
     }

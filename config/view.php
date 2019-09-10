@@ -4,29 +4,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Twig view configures
+    | View configures
     |--------------------------------------------------------------------------
     |
     | more documents
     |
-    | @see https://twig.symfony.com/doc/2.x/
+    | @see http://platesphp.com/v3
     |
     */
 
     'path' => resource_path('views'),
 
-    'debug' => true,
+    'extension' => 'php',
 
-    'charset' => 'UTF-8',
-
-    'strict_variables' => false,
-
-    'autoescape' => 'html',
-
-    'cache' => storage_path('cache/views'),
-
-    'auto_reload' => true,
-
-    'optimizations' => -1,
-
+    'assets_path' => public_path('assets'),
 ];

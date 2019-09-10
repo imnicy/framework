@@ -80,6 +80,20 @@ if (! function_exists('resource_path')) {
     }
 }
 
+if (! function_exists('public_path')) {
+    /**
+     * Get the path to the public folder.
+     *
+     * @param  string  $path
+     *
+     * @return string
+     */
+    function public_path($path = '')
+    {
+        return main()->path('public' . DIRECTORY_SEPARATOR . $path);
+    }
+}
+
 if (! function_exists('path')) {
     /**
      * Get the path to the base folder.
@@ -341,10 +355,8 @@ if (! function_exists('csrf_token')) {
      */
     function csrf_token()
     {
-        $session = container('session');
-
-        if (isset($session)) {
-            return $session->token();
+        if (container()->has('session')) {
+            return container('session')->token();
         }
 
         throw new RuntimeException('Application session store not set.');
@@ -355,11 +367,11 @@ if (! function_exists('csrf_field')) {
     /**
      * Generate a CSRF token form field.
      *
-     * @return string
+     * @return string|\Nicy\Support\HtmlString
      */
     function csrf_field()
     {
-        return '<input type="hidden" name="_token" value="'.csrf_token().'">';
+        return new Nicy\Support\HtmlString('<input type="hidden" name="_token" value="'.csrf_token().'">');
     }
 }
 
