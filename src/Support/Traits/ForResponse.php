@@ -12,10 +12,11 @@ trait ForResponse
      *
      * @param mixed $contents
      * @param array $headers
+     * @param array $cookies
      * @param int|null $status
      * @param int|null $version
      *
-     * @return int
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function response($contents, array $headers = [], array $cookies = [], int $status = null, int $version = null)
     {
@@ -26,7 +27,6 @@ trait ForResponse
         }
 
         foreach ($cookies as $name => $value) {
-
             if ($value instanceof SetCookie) {
                 $cookie = $value;
             }

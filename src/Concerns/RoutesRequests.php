@@ -11,19 +11,15 @@ trait RoutesRequests
     protected function dispatch(PsrRequestInterface $request = null)
     {
         // Run App & Emit Response
-
         if (! $request) {
             $serverRequestCreator = ServerRequestCreatorFactory::create();
             $request = $serverRequestCreator->createServerRequestFromGlobals();
         }
 
         $this->container->singleton('Psr\Http\Message\ServerRequestInterface', $request);
-
         $this->container->boot();
 
-        $response = $this->app->handle($request);
-
-        return $response;
+        return $this->app->handle($request);
     }
 
     /**

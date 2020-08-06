@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'path' => resource_path('views'),
+    'path' => resources_path('views'),
 
     'extension' => 'php',
 

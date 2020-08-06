@@ -66,17 +66,17 @@ if (! function_exists('storage_path')) {
     }
 }
 
-if (! function_exists('resource_path')) {
+if (! function_exists('resources_path')) {
     /**
-     * Get the path to the resource folder.
+     * Get the path to the resources folder.
      *
      * @param  string  $path
      *
      * @return string
      */
-    function resource_path($path = '')
+    function resources_path($path = '')
     {
-        return main()->path('resource' . DIRECTORY_SEPARATOR . $path);
+        return main()->path('resources' . DIRECTORY_SEPARATOR . $path);
     }
 }
 

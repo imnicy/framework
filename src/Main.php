@@ -75,11 +75,8 @@ class Main
         $this->path = $path;
 
         $this->bootstrapContainer();
-
         $this->configure('app');
-
         $this->registerErrorHandling();
-
         $this->bootstrapSlimApp();
     }
 
@@ -135,7 +132,6 @@ class Main
 
         $this->container->singleton('main', $this);
         $this->container->singleton(self::class, $this);
-
         $this->container->singleton('env', $this->environment());
     }
 
@@ -148,7 +144,6 @@ class Main
     public function middleware($middleware, $shouldMake = true)
     {
         if ($shouldMake && is_string($middleware) && class_exists($middleware)) {
-
             $middleware = $this->container->make($middleware);
         }
 
@@ -165,7 +160,6 @@ class Main
     protected function bootstrapSlimApp()
     {
         $this->registerApplication();
-
         $this->registerRoutingMiddleware();
     }
 
