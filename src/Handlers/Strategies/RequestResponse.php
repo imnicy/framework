@@ -2,7 +2,6 @@
 
 namespace Nicy\Framework\Handlers\Strategies;
 
-use ErrorException;
 use Nicy\Framework\Main;
 use Nicy\Framework\Bindings\Routing\RouterArguments;
 use Nicy\Framework\Support\Helpers\ResponseHelper;
@@ -25,7 +24,6 @@ class RequestResponse implements InvocationStrategyInterface
      * @param array                  $routeArguments
      *
      * @return ResponseInterface
-     * @throws ErrorException
      */
     public function __invoke(
         callable $callable,

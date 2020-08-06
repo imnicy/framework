@@ -22,7 +22,7 @@ use Slim\Interfaces\RouteInterface;
  * @method static RouteInterface redirect(string $from, $to, int $status = 302)
  *
  */
-class Router extends Facade
+class Route extends Facade
 {
     /**
      * Get the registered name of the component.
