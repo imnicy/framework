@@ -53,7 +53,7 @@ class Factory
 
             throw new ValidationException(
                 $validation,
-                Arr::first($validation->errors->firstOfAll()),
+                Arr::first($validation->errors->firstOfAll(':message', true)),
                 $validation->errors
             );
         }
