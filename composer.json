@@ -29,6 +29,9 @@
     "slim/psr7": "^0.5.0",
     "slim/slim": "^4.1"
   },
+  "require-dev": {
+    "tomasfejfar/enhanced-dump": "dev-master"
+  },
   "autoload": {
     "psr-4": {
       "Nicy\\Framework\\": "src/"
