@@ -27,9 +27,7 @@
     "phpfastcache/phpfastcache": "^7.0",
     "rakit/validation": "^1.2",
     "slim/psr7": "^0.5.0",
-    "slim/slim": "^4.1"
-  },
-  "require-dev": {
+    "slim/slim": "^4.1",
     "tomasfejfar/enhanced-dump": "dev-master"
   },
   "autoload": {
