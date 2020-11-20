@@ -32,7 +32,6 @@ class Factory
         $this->container = $container;
 
         $this->registerEngine();
-
         $this->registerAvailableExtensions();
     }
 
@@ -65,9 +64,7 @@ class Factory
     protected function registerAvailableExtensions()
     {
         foreach (get_class_methods($class = static::class) as $method) {
-
             if (Str::endsWith($method, 'Extension') && ! in_array($method, $this->registeredExtensions)) {
-
                 forward_static_call([$class, $method]);
 
                 $this->registeredExtensions[] = $method;

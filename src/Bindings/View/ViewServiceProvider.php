@@ -15,7 +15,6 @@ class ViewServiceProvider extends ServiceProvider
     {
         $this->container->singleton('view', function() {
             $factory = new Factory($this->container);
-
             return $factory->getEngine();
         });
     }

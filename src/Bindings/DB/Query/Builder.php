@@ -121,7 +121,6 @@ class Builder extends Medoo
     public function setRepository(Base $repository)
     {
         $this->repository = $repository;
-
         return $this;
     }
 
@@ -135,7 +134,6 @@ class Builder extends Medoo
     public function simpling($state=true)
     {
         $this->simple = $state;
-
         return $this;
     }
 
@@ -149,7 +147,6 @@ class Builder extends Medoo
     public function newRepositoryInstance($attributes=[])
     {
         return $this->repository::unguarded(function() use($attributes) {
-
             return $this->repository->newInstance($attributes, true)->setConnection(
                 $this->repository->connection()
             );

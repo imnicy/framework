@@ -90,7 +90,6 @@ class DatabaseManager
     protected function configuration($name)
     {
         $name = $name ?: $this->getDefaultConnection();
-
         $connections = $this->container['config']['database.connections'];
 
         if (is_null($config = Arr::get($connections, $name))) {

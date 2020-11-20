@@ -25,7 +25,6 @@ class CSRFToken implements ExtensionInterface
     public function register(Engine $engine)
     {
         $engine->registerFunction('csrf_token', [$this, 'buildCSRFToken']);
-
         $engine->registerFunction('csrf_field', [$this, 'buildCSRFField']);
     }
 
