@@ -123,7 +123,7 @@ trait RegistersExceptionHandlers
         if ($this->container->has('Nicy\Framework\Exceptions\ExceptionHandler')) {
             return $this->container->get('Nicy\Framework\Exceptions\ExceptionHandler');
         } else {
-            return $this->container->make('Nicy\Framework\Exceptions\Handler');
+            return $this->container->make($this->errorHandler);
         }
     }
 
