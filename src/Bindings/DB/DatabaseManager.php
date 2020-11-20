@@ -53,7 +53,7 @@ class DatabaseManager
      *
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public function connection($name = null)
+    public function connection($name=null)
     {
         $name = $name ?: $this->getDefaultConnection();
 

@@ -12,7 +12,7 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function all(array $conditions = [], $columns = '*');
+    public function all(array $conditions=[], $columns='*');
 
     /**
      * Get a row from table with conditions
@@ -22,7 +22,7 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function one(array $conditions = [], $columns = '*');
+    public function one(array $conditions=[], $columns='*');
 
     /**
      * Create a new row
@@ -31,7 +31,7 @@ interface RepositoryInterface
      *
      * @return RepositoryInterface
      */
-    public function create(array $attributes = []) :RepositoryInterface ;
+    public function create(array $attributes=[]) :RepositoryInterface ;
 
     /**
      * Delete the row with conditions
@@ -48,7 +48,7 @@ interface RepositoryInterface
      *
      * @return bool
      */
-    public function update($attributes = [], $conditions = []) :bool ;
+    public function update($attributes=[], $conditions=[]) :bool ;
 
     /**
      * Save changes attributes
@@ -57,7 +57,7 @@ interface RepositoryInterface
      *
      * @return bool
      */
-    public function save(array $options = []) :bool ;
+    public function save(array $options=[]) :bool ;
 
     /**
      * Destroy items from table
@@ -66,7 +66,7 @@ interface RepositoryInterface
      *
      * @return bool
      */
-    public function destroy(array $ids = []) :bool ;
+    public function destroy(array $ids=[]) :bool ;
 
     /**
      * Fill attributes for save
@@ -75,7 +75,7 @@ interface RepositoryInterface
      *
      * @return RepositoryInterface
      */
-    public function fill(array $attributes = []) :RepositoryInterface ;
+    public function fill(array $attributes=[]) :RepositoryInterface ;
 
     /**
      * Get a query builder instance

@@ -23,7 +23,7 @@ class Builder extends Medoo
      */
     protected $repository;
 
-    public function select($table, $join, $columns = null, $where = null)
+    public function select($table, $join, $columns=null, $where=null)
     {
         $result = parent::select($table, $join, $columns, $where);
 
@@ -34,7 +34,7 @@ class Builder extends Medoo
         return $result;
     }
 
-    public function get($table, $join = null, $columns = null, $where = null)
+    public function get($table, $join=null, $columns=null, $where=null)
     {
         $result = parent::get($table, $join, $columns, $where);
 
@@ -61,7 +61,6 @@ class Builder extends Medoo
     protected function prepareQueryWithError()
     {
         if (($error = $this->error()) && $error[1] && static::$errorThrowable) {
-
             // Dispatch a query error event, if query has error info.
             Main::getInstance()->container('events')->dispatch('db.query.error', $error);
 
@@ -77,13 +76,12 @@ class Builder extends Medoo
      *
      * @return bool|\PDOStatement
      */
-    public function exec($query, $map = [])
+    public function exec($query, $map=[])
     {
         // Dispatch a query sql statements log, when sql running.
         Main::getInstance()->container('events')->dispatch('db.query.sql',$sql = parent::generate($query, $map));
 
         $statement = parent::exec($query, $map);
-
         $this->prepareQueryWithError();
 
         return $statement;
@@ -134,7 +132,7 @@ class Builder extends Medoo
      *
      * @return Builder
      */
-    public function simpling($state = true)
+    public function simpling($state=true)
     {
         $this->simple = $state;
 
@@ -148,7 +146,7 @@ class Builder extends Medoo
      *
      * @return \Nicy\Framework\Bindings\DB\Repository\Base|static
      */
-    public function newRepositoryInstance($attributes = [])
+    public function newRepositoryInstance($attributes=[])
     {
         return $this->repository::unguarded(function() use($attributes) {
 

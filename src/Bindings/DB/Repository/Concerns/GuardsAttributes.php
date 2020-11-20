@@ -82,7 +82,7 @@ trait GuardsAttributes
      *
      * @return void
      */
-    public static function unguard($state = true)
+    public static function unguard($state=true)
     {
         static::$unguarded = $state;
     }

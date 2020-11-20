@@ -39,7 +39,7 @@ class Dispatcher extends Emitter implements DispatcherContract
      *
      * @return mixed
      */
-    public function dispatch($event, $payload = [])
+    public function dispatch($event, $payload=[])
     {
         if (is_string($event) && class_exists($event)) {
             $event = $this->container->make($event);

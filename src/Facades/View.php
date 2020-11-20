@@ -8,7 +8,7 @@ use Nicy\Framework\Support\Facade;
  * Class View
  * @package Framework\Facades
  *
- * @method static string render($name, array $context = [])
+ * @method static string render($name, array $context=[])
  * @method static void enableDebug()
  * @method static void disableDebug()
  *

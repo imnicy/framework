@@ -66,7 +66,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      */
     protected static $traitInitializers = [];
 
-    public function __construct(array $attributes = [])
+    public function __construct(array $attributes=[])
     {
         $this->bootIfNotBooted();
 
@@ -105,7 +105,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @return Collection|mixed
      */
-    public function all(array $conditions = [], $columns = '*')
+    public function all(array $conditions=[], $columns='*')
     {
         return $this->newQueryWith()->select($this->table, $columns, $conditions);
     }
@@ -116,7 +116,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @return Collection|mixed
      */
-    public function one(array $conditions = [], $columns = '*')
+    public function one(array $conditions=[], $columns='*')
     {
         return $this->newQueryWith()->get($this->table, $columns, $conditions);
     }
@@ -126,7 +126,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @return RepositoryInterface
      */
-    public function create(array $attributes = []): RepositoryInterface
+    public function create(array $attributes=[]): RepositoryInterface
     {
         $this->fill($attributes)->save();
 
@@ -136,13 +136,13 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
-     * @param array $datas
+     * @param array $rows
      *
      * @return bool
      */
-    public function insert(array $datas = [])
+    public function insert(array $rows=[])
     {
-        static::query()->insert($this->table, $datas);
+        static::query()->insert($this->table, $rows);
 
         return true;
     }
@@ -153,7 +153,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @return bool
      */
-    public function update($attributes = [], $conditions = []): bool
+    public function update($attributes=[], $conditions=[]): bool
     {
         if (! $this->exists) {
             return false;
@@ -165,8 +165,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
-     * @param array $conditions
-     *
      * @return bool
      */
     public function delete(): bool
@@ -193,7 +191,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @return bool
      */
-    public function destroy(array $ids = []): bool
+    public function destroy(array $ids=[]): bool
     {
         static::query()->delete($this->table, [$this->primary.'[!]' => $ids]);
 
@@ -205,7 +203,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @return bool
      */
-    public function save(array $options = []): bool
+    public function save(array $options=[]): bool
     {
         $query = $this->newQuery();
 
@@ -316,7 +314,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @return RepositoryInterface
      */
-    public function fill(array $attributes = []): RepositoryInterface
+    public function fill(array $attributes=[]): RepositoryInterface
     {
         $totallyGuarded = $this->totallyGuarded();
 
@@ -388,7 +386,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public static function query(array $with = [])
+    public static function query(array $with=[])
     {
         return (new static)->with($with)->newQuery();
     }
@@ -409,7 +407,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @return static
      */
-    public function newInstance($attributes = [], $exists = false)
+    public function newInstance($attributes=[], $exists=false)
     {
         $instance = new static((array) $attributes);
 
@@ -577,7 +575,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @return string
      * @throws \RuntimeException
      */
-    public function toJson($options = 0)
+    public function toJson($options=0)
     {
         $json = json_encode($this->toArray(), $options);
 

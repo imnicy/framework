@@ -32,7 +32,7 @@ class Encrypter implements EncrypterContract
      *
      * @throws \RuntimeException
      */
-    public function __construct($key, $cipher = 'AES-128-CBC')
+    public function __construct($key, $cipher='AES-128-CBC')
     {
         $key = (string) $key;
 
@@ -79,7 +79,7 @@ class Encrypter implements EncrypterContract
      *
      * @throws \Nicy\Framework\Exceptions\EncryptException
      */
-    public function encrypt($value, $serialize = true)
+    public function encrypt($value, $serialize=true)
     {
         $iv = random_bytes(openssl_cipher_iv_length($this->cipher));
 
@@ -129,7 +129,7 @@ class Encrypter implements EncrypterContract
      *
      * @throws \Nicy\Framework\Exceptions\DecryptException
      */
-    public function decrypt($payload, $unserialize = true)
+    public function decrypt($payload, $unserialize=true)
     {
         $payload = $this->getJsonPayload($payload);
 

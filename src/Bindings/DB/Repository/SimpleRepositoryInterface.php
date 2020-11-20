@@ -12,7 +12,7 @@ interface SimpleRepositoryInterface
      *
      * @return mixed
      */
-    public function all(array $conditions = [], $columns = '*');
+    public function all(array $conditions=[], $columns='*');
 
     /**
      * Get a row from table with conditions
@@ -22,7 +22,7 @@ interface SimpleRepositoryInterface
      *
      * @return mixed
      */
-    public function one(array $conditions = [], $columns = '*');
+    public function one(array $conditions=[], $columns='*');
 
     /**
      * Create a new row
@@ -31,7 +31,7 @@ interface SimpleRepositoryInterface
      *
      * @return int
      */
-    public function create(array $attributes = []) :bool ;
+    public function create(array $attributes=[]) :bool ;
 
     /**
      * Delete the row with conditions
@@ -40,7 +40,7 @@ interface SimpleRepositoryInterface
      *
      * @return bool
      */
-    public function delete($condition = []) :bool ;
+    public function delete($conditions =[]) :bool ;
 
     /**
      * Update table with conditions
@@ -50,7 +50,7 @@ interface SimpleRepositoryInterface
      *
      * @return bool
      */
-    public function update($attributes = [], $conditions = []) :bool ;
+    public function update($attributes=[], $conditions=[]) :bool ;
 
     /**
      * Get a query builder instance

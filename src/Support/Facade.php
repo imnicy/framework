@@ -2,7 +2,6 @@
 
 namespace Nicy\Framework\Support;
 
-use Closure;
 use RuntimeException;
 
 abstract class Facade

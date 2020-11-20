@@ -8,7 +8,7 @@ use Slim\Factory\ServerRequestCreatorFactory;
 
 trait RoutesRequests
 {
-    protected function dispatch(PsrRequestInterface $request = null)
+    protected function dispatch(PsrRequestInterface $request=null)
     {
         // Run App & Emit Response
         if (! $request) {
@@ -29,7 +29,7 @@ trait RoutesRequests
      *
      * @return void
      */
-    public function run($request = null)
+    public function run($request=null)
     {
         $response = $this->dispatch($request);
 

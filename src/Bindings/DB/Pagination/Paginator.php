@@ -27,7 +27,7 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
      * @param int $currentPage
      * @param string $urlPattern
      */
-    public function __construct($items, $totalItems, $itemsPerPage, $currentPage, $urlPattern = '')
+    public function __construct($items, $totalItems, $itemsPerPage, $currentPage, $urlPattern='')
     {
         parent::__construct($totalItems, $itemsPerPage, $currentPage, $urlPattern);
 

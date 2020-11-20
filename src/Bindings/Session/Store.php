@@ -53,7 +53,7 @@ class Store
      * @param  string|null $id
      * @return void
      */
-    public function __construct($name, SessionHandlerInterface $handler, $id = null)
+    public function __construct($name, SessionHandlerInterface $handler, $id=null)
     {
         $this->setId($id);
 
@@ -236,7 +236,7 @@ class Store
      * @param  string|null  $key
      * @return bool
      */
-    public function hasOldInput($key = null)
+    public function hasOldInput($key=null)
     {
         $old = $this->getOldInput($key);
 
@@ -250,7 +250,7 @@ class Store
      * @param  mixed   $default
      * @return mixed
      */
-    public function getOldInput($key = null, $default = null)
+    public function getOldInput($key=null, $default=null)
     {
         return Arr::get($this->get('_old_input', []), $key, $default);
     }
@@ -273,7 +273,7 @@ class Store
      * @param  mixed       $value
      * @return void
      */
-    public function put($key, $value = null)
+    public function put($key, $value=null)
     {
         if (! is_array($key)) {
             $key = [$key => $value];
@@ -325,7 +325,7 @@ class Store
      * @param  int  $amount
      * @return mixed
      */
-    public function increment($key, $amount = 1)
+    public function increment($key, $amount=1)
     {
         $this->put($key, $value = $this->get($key, 0) + $amount);
 
@@ -339,7 +339,7 @@ class Store
      * @param  int  $amount
      * @return int
      */
-    public function decrement($key, $amount = 1)
+    public function decrement($key, $amount=1)
     {
         return $this->increment($key, $amount * -1);
     }
@@ -351,7 +351,7 @@ class Store
      * @param  mixed   $value
      * @return void
      */
-    public function flash(string $key, $value = true)
+    public function flash(string $key, $value=true)
     {
         $this->put($key, $value);
 
@@ -392,7 +392,7 @@ class Store
      * @param  array|mixed  $keys
      * @return void
      */
-    public function keep($keys = null)
+    public function keep($keys=null)
     {
         $this->mergeNewFlashes($keys = is_array($keys) ? $keys : func_get_args());
 
@@ -484,7 +484,7 @@ class Store
      * @param  bool  $destroy
      * @return bool
      */
-    public function regenerate($destroy = false)
+    public function regenerate($destroy=false)
     {
         return tap($this->migrate($destroy), function () {
             $this->regenerateToken();
@@ -497,7 +497,7 @@ class Store
      * @param  bool  $destroy
      * @return bool
      */
-    public function migrate($destroy = false)
+    public function migrate($destroy=false)
     {
         if ($destroy) {
             $this->handler->destroy($this->getId());

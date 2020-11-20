@@ -11,5 +11,5 @@ interface Factory
      *
      * @return \League\Flysystem\FilesystemInterface
      */
-    public function disk($name = null);
+    public function disk($name=null);
 }

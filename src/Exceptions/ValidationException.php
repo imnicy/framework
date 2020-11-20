@@ -36,7 +36,7 @@ class ValidationException extends Exception
      *
      * @return void
      */
-    public function __construct($validation, string $content = null, $errorBag = null)
+    public function __construct($validation, string $content=null, $errorBag=null)
     {
         parent::__construct($content);
 

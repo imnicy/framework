@@ -92,7 +92,7 @@ class Router
     /**
      * {@inheritdoc}
      */
-    public function redirect(string $from, $to, int $status = 302): RouteInterface
+    public function redirect(string $from, $to, int $status=302): RouteInterface
     {
         return $this->app->redirect($from, $to, $status);
     }

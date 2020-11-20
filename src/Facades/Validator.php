@@ -9,8 +9,8 @@ use Rakit\Validation\Validation;
  * Class Validator
  * @package Framework\Facades
  *
- * @method static Validation make(array $inputs, array $rules, array $messages = [])
- * @method static void|bool validate(array $inputs, array $rules, array $messages = [])
+ * @method static Validation make(array $inputs, array $rules, array $messages=[])
+ * @method static void|bool validate(array $inputs, array $rules, array $messages=[])
  *
  */
 class Validator extends Facade

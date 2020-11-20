@@ -11,13 +11,13 @@ use Phpfastcache\Helper\Psr16Adapter;
  * @package Framework\Facades
  *
  * @method static $this extend($driver, Closure $callback)
- * @method static Psr16Adapter driver($name = null)
- * @method static mixed|null get($key, $default = null)
- * @method static bool set($key, $value, $ttl = null)
+ * @method static Psr16Adapter driver($name=null)
+ * @method static mixed|null get($key, $default=null)
+ * @method static bool set($key, $value, $ttl=null)
  * @method static bool delete($key)
  * @method static bool clear()
- * @method static iterable getMultiple($keys, $default = null)
- * @method static bool setMultiple($values, $ttl = null)
+ * @method static iterable getMultiple($keys, $default=null)
+ * @method static bool setMultiple($values, $ttl=null)
  * @method static bool deleteMultiple($keys)
  * @method static bool has($key)
  *

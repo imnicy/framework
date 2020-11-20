@@ -28,7 +28,7 @@ class ConnectionFactory
      *
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public function make(array $config, string $name = null)
+    public function make(array $config, string $name=null)
     {
         $config = $this->parseConfig($config, $name);
 

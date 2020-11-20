@@ -19,7 +19,7 @@ use Slim\Interfaces\RouteInterface;
  * @method static RouteInterface any(string $pattern, $callable)
  * @method static RouteInterface map(array $methods, string $pattern, $callable)
  * @method static RouteGroupInterface group(string $pattern, $callable)
- * @method static RouteInterface redirect(string $from, $to, int $status = 302)
+ * @method static RouteInterface redirect(string $from, $to, int $status=302)
  *
  */
 class Route extends Facade

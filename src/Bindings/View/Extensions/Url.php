@@ -24,18 +24,18 @@ class Url implements ExtensionInterface
     public function register(Engine $engine)
     {
         $engine->registerFunction('url_to', [$this, 'to']);
-
         $engine->registerFunction('route_to', [$this, 'routeTo']);
-
         $engine->registerFunction('current_url', [$this, 'current']);
     }
 
     /**
      * @param string $path
+     * @param array $extra
+     * @param bool $secure
      *
      * @return string
      */
-    public function to(string $path, array $extra = [], bool $secure = false)
+    public function to(string $path, array $extra=[], bool $secure=false)
     {
         return $this->container['url']->to($path, $extra, $secure);
     }
@@ -47,7 +47,7 @@ class Url implements ExtensionInterface
      *
      * @return string
      */
-    public function routeTo(string $name, array $data = [], array $parameters = [])
+    public function routeTo(string $name, array $data=[], array $parameters=[])
     {
         return $this->container['url']->route($name, $data, $parameters);
     }

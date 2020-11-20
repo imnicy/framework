@@ -21,7 +21,7 @@ class Repository implements ArrayAccess
      *
      * @return void
      */
-    public function __construct(array $items = [])
+    public function __construct(array $items=[])
     {
         $this->items = $items;
     }
@@ -46,7 +46,7 @@ class Repository implements ArrayAccess
      *
      * @return mixed
      */
-    public function get($key, $default = null)
+    public function get($key, $default=null)
     {
         if (is_array($key)) {
             return $this->getMany($key);
@@ -85,7 +85,7 @@ class Repository implements ArrayAccess
      *
      * @return void
      */
-    public function set($key, $value = null)
+    public function set($key, $value=null)
     {
         $keys = is_array($key) ? $key : [$key => $value];
 

@@ -62,7 +62,7 @@ class LogManager implements LoggerInterface
      *
      * @return \Psr\Log\LoggerInterface
      */
-    public function stack(array $channels, $channel = null)
+    public function stack(array $channels, $channel=null)
     {
         return new Logger($this->createStackDriver(compact('channels', 'channel')));
     }
@@ -74,7 +74,7 @@ class LogManager implements LoggerInterface
      *
      * @return mixed
      */
-    public function channel($channel = null)
+    public function channel($channel=null)
     {
         return $this->driver($channel);
     }
@@ -86,7 +86,7 @@ class LogManager implements LoggerInterface
      *
      * @return mixed
      */
-    public function driver($driver = null)
+    public function driver($driver=null)
     {
         return $this->get($driver ?? $this->getDefaultDriver());
     }
@@ -351,7 +351,7 @@ class LogManager implements LoggerInterface
      *
      * @return \Monolog\Handler\HandlerInterface
      */
-    protected function prepareHandler(HandlerInterface $handler, array $config = [])
+    protected function prepareHandler(HandlerInterface $handler, array $config=[])
     {
         if (! isset($config['formatter'])) {
             $handler->setFormatter($this->formatter());
@@ -441,7 +441,7 @@ class LogManager implements LoggerInterface
      *
      * @return void
      */
-    public function emergency($message, array $context = [])
+    public function emergency($message, array $context=[])
     {
         $this->driver()->emergency($message, $context);
     }
@@ -457,7 +457,7 @@ class LogManager implements LoggerInterface
      *
      * @return void
      */
-    public function alert($message, array $context = [])
+    public function alert($message, array $context=[])
     {
         $this->driver()->alert($message, $context);
     }
@@ -472,7 +472,7 @@ class LogManager implements LoggerInterface
      *
      * @return void
      */
-    public function critical($message, array $context = [])
+    public function critical($message, array $context=[])
     {
         $this->driver()->critical($message, $context);
     }
@@ -486,7 +486,7 @@ class LogManager implements LoggerInterface
      *
      * @return void
      */
-    public function error($message, array $context = [])
+    public function error($message, array $context=[])
     {
         $this->driver()->error($message, $context);
     }
@@ -502,7 +502,7 @@ class LogManager implements LoggerInterface
      *
      * @return void
      */
-    public function warning($message, array $context = [])
+    public function warning($message, array $context=[])
     {
         $this->driver()->warning($message, $context);
     }
@@ -515,7 +515,7 @@ class LogManager implements LoggerInterface
      *
      * @return void
      */
-    public function notice($message, array $context = [])
+    public function notice($message, array $context=[])
     {
         $this->driver()->notice($message, $context);
     }
@@ -530,7 +530,7 @@ class LogManager implements LoggerInterface
      *
      * @return void
      */
-    public function info($message, array $context = [])
+    public function info($message, array $context=[])
     {
         $this->driver()->info($message, $context);
     }
@@ -543,7 +543,7 @@ class LogManager implements LoggerInterface
      *
      * @return void
      */
-    public function debug($message, array $context = [])
+    public function debug($message, array $context=[])
     {
         $this->driver()->debug($message, $context);
     }
@@ -557,7 +557,7 @@ class LogManager implements LoggerInterface
      *
      * @return void
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context=[])
     {
         $this->driver()->log($level, $message, $context);
     }

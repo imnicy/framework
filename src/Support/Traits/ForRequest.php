@@ -18,7 +18,7 @@ trait ForRequest
      *
      * @return mixed|void|\Nicy\Support\Collection
      */
-    protected function request($mode = 1|2|4, $key = null, $default = null)
+    protected function request($mode = 1|2|4, $key=null, $default=null)
     {
         if ($mode == (1|2|4)) {
             if (! $key) {
@@ -63,7 +63,7 @@ trait ForRequest
      *
      * @return false|string
      */
-    protected function upload(string $key, bool $unique = false, string $disk = null)
+    protected function upload(string $key, bool $unique=false, string $disk=null)
     {
         return RequestHelper::upload($key, $unique, $disk);
     }

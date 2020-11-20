@@ -54,9 +54,7 @@ class CacheManager extends Manager
     protected function createFilesDriver()
     {
         return new Psr16Adapter('files', (new FilesConfig(
-
             Arr::only($this->container['config']['cache.stores.files'], ['path'])
-
         ))->setSecurityKey('domain'));
     }
 

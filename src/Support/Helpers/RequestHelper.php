@@ -2,11 +2,10 @@
 
 namespace Nicy\Framework\Support\Helpers;
 
-use InvalidArgumentException;
 use Nicy\Framework\Main;
 use Nicy\Support\Collection;
 use Nicy\Support\Str;
-use Psr\Http\Message\ServerRequestInterface;
+use InvalidArgumentException;
 use Psr\Http\Message\UploadedFileInterface;
 
 class RequestHelper
@@ -52,7 +51,7 @@ class RequestHelper
      *
      * @return \Nicy\Support\Collection
      */
-    protected static function newCollection($withQueries = true, $withRequests = true, $withFiles = true)
+    protected static function newCollection($withQueries=true, $withRequests=true, $withFiles=true)
     {
         if (static::$attributes) {
             return static::$attributes;
@@ -87,7 +86,7 @@ class RequestHelper
      *
      * @return mixed
      */
-    public static function get(string $name, $default = null)
+    public static function get(string $name, $default=null)
     {
         return static::queries()->get($name, $default);
     }
@@ -98,7 +97,7 @@ class RequestHelper
      *
      * @return mixed
      */
-    public static function request(string $name, $default = null)
+    public static function request(string $name, $default=null)
     {
         return static::requests()->get($name, $default);
     }
@@ -119,7 +118,7 @@ class RequestHelper
      *
      * @return mixed
      */
-    public static function input(string $name, $default = null)
+    public static function input(string $name, $default=null)
     {
         return static::all()->get($name, $default);
     }
@@ -127,25 +126,22 @@ class RequestHelper
     /**
      * @param string $key
      * @param bool $unique
-     * @param null $disk
+     * @param string $disk
      *
      * @return string|false
      */
-    public static function upload(string $key, bool $unique = false, string $disk = null)
+    public static function upload(string $key, bool $unique=false, string $disk=null)
     {
         if ($file = static::file($key)) {
-
             if (! $file instanceof UploadedFileInterface) {
                 throw new InvalidArgumentException('Invalid upload file ['.$key.']');
             }
         }
 
         $filesystemManager = Main::getInstance()->container('filesystem');
-
         $filesystem = $filesystemManager->disk($disk);
 
         if ($file->getError() === UPLOAD_ERR_OK) {
-
             $filename = $file->getClientFilename();
 
             if ($unique) {

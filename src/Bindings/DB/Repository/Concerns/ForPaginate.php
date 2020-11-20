@@ -65,7 +65,7 @@ trait ForPaginate
      *
      * @return Paginator
      */
-    public function paginate(int $page = 1, array $conditions = [], $columns = '*', int $perPage = null)
+    public function paginate(int $page = 1, array $conditions=[], $columns='*', int $perPage=null)
     {
         unset($conditions['LIMIT']);
 

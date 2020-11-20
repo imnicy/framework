@@ -373,7 +373,7 @@ trait HasAttributes
      *
      * @return bool
      */
-    public function isDirty($attributes = null)
+    public function isDirty($attributes=null)
     {
         return $this->hasChanges(
             $this->getDirty(), is_array($attributes) ? $attributes : func_get_args()
@@ -387,7 +387,7 @@ trait HasAttributes
      *
      * @return bool
      */
-    public function isClean($attributes = null)
+    public function isClean($attributes=null)
     {
         return ! $this->isDirty(...func_get_args());
     }
@@ -543,7 +543,7 @@ trait HasAttributes
      *
      * @return mixed
      */
-    public function fromJson($value, $asObject = false)
+    public function fromJson($value, $asObject=false)
     {
         return json_decode($value, ! $asObject);
     }
@@ -580,7 +580,7 @@ trait HasAttributes
      *
      * @return bool
      */
-    public function hasCast($key, $types = null)
+    public function hasCast($key, $types=null)
     {
         if (array_key_exists($key, $this->getCasts())) {
             return $types ? in_array($this->getCastType($key), (array) $types, true) : true;
@@ -637,7 +637,7 @@ trait HasAttributes
      *
      * @return mixed|array
      */
-    public function getOriginal($key = null, $default = null)
+    public function getOriginal($key=null, $default=null)
     {
         return Arr::get($this->original, $key, $default);
     }
@@ -674,7 +674,7 @@ trait HasAttributes
      *
      * @return bool
      */
-    public function wasChanged($attributes = null)
+    public function wasChanged($attributes=null)
     {
         return $this->hasChanges(
             $this->getChanges(), is_array($attributes) ? $attributes : func_get_args()
@@ -699,7 +699,7 @@ trait HasAttributes
      *
      * @return bool
      */
-    protected function hasChanges($changes, $attributes = null)
+    protected function hasChanges($changes, $attributes=null)
     {
         if (empty($attributes)) {
             return count($changes) > 0;

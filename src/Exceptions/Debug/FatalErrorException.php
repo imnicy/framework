@@ -4,7 +4,7 @@ namespace Nicy\Framework\Exceptions\Debug;
 
 class FatalErrorException extends \ErrorException
 {
-    public function __construct(string $message, int $code, int $severity, string $filename, int $lineno, int $traceOffset = null, bool $traceArgs = true, array $trace = null, \Throwable $previous = null)
+    public function __construct(string $message, int $code, int $severity, string $filename, int $lineno, int $traceOffset=null, bool $traceArgs=true, array $trace=null, \Throwable $previous=null)
     {
         parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
 

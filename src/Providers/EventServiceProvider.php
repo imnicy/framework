@@ -40,6 +40,7 @@ class EventServiceProvider extends ServiceProvider
     }
 
     /**
+     * @param string $event
      * @param mixed $listener
      *
      * @return mixed

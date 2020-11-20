@@ -117,14 +117,13 @@ class UrlGenerator
      *
      * @return string
      */
-    public function to($path, $extra = [], $secure = null)
+    public function to($path, $extra=[], $secure=null)
     {
         if ($this->isValidUrl($path)) {
             return $path;
         }
 
         $scheme = $this->getSchemeForUrl($secure);
-
         $extra = $this->formatParameters($extra);
 
         $tail = implode('/', array_map(
@@ -132,7 +131,6 @@ class UrlGenerator
         );
 
         $root = $this->getRootUrl($scheme);
-
         return $this->trimUrl($root, $path, $tail);
     }
 
@@ -144,7 +142,7 @@ class UrlGenerator
      *
      * @return string
      */
-    public function secure($path, $parameters = [])
+    public function secure($path, $parameters=[])
     {
         return $this->to($path, $parameters, true);
     }
@@ -157,7 +155,7 @@ class UrlGenerator
      *
      * @return string
      */
-    public function asset($path, $secure = null)
+    public function asset($path, $secure=null)
     {
         if ($this->isValidUrl($path)) {
             return $path;
@@ -177,7 +175,7 @@ class UrlGenerator
      *
      * @return string
      */
-    public function assetFrom($root, $path, $secure = null)
+    public function assetFrom($root, $path, $secure=null)
     {
         $root = $this->getRootUrl($this->formatScheme($secure), $root);
 
@@ -255,7 +253,7 @@ class UrlGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function route($name, $parameters = [], $queryParams = [])
+    public function route($name, $parameters=[], $queryParams=[])
     {
         return $this->app->getContainer()->get('router.parser')->fullUrlFor(
             $this->request->getUri(), $name, $parameters, $queryParams
@@ -320,7 +318,7 @@ class UrlGenerator
      *
      * @return string
      */
-    protected function replaceRouteParameters($route, &$parameters = [])
+    protected function replaceRouteParameters($route, &$parameters=[])
     {
         return preg_replace_callback('/\{(.*?)(:.*?)?(\{[0-9,]+\})?\}/', function ($m) use (&$parameters) {
             return isset($parameters[$m[1]]) ? Arr::pull($parameters, $m[1]) : $m[0];
@@ -335,7 +333,7 @@ class UrlGenerator
      *
      * @return string
      */
-    protected function getRootUrl($scheme, $root = null)
+    protected function getRootUrl($scheme, $root=null)
     {
         if (is_null($root)) {
             if (is_null($this->cachedRoot)) {
@@ -383,7 +381,7 @@ class UrlGenerator
      *
      * @return string
      */
-    protected function trimUrl($root, $path, $tail = '')
+    protected function trimUrl($root, $path, $tail='')
     {
         return trim($root.'/'.trim($path.'/'.$tail, '/'), '/');
     }

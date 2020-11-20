@@ -21,7 +21,7 @@ if (! function_exists('container')) {
      *
      * @return mixed|\Nicy\Container\Contracts\Container
      */
-    function container($make = null, array $parameters = [])
+    function container($make=null, array $parameters=[])
     {
         return main()->container($make, $parameters);
     }
@@ -38,7 +38,7 @@ if (! function_exists('config')) {
      *
      * @return mixed
      */
-    function config($key = null, $default = null)
+    function config($key=null, $default=null)
     {
         if (is_null($key)) {
             return container('config');
@@ -60,7 +60,7 @@ if (! function_exists('storage_path')) {
      *
      * @return string
      */
-    function storage_path($path = '')
+    function storage_path($path='')
     {
         return main()->path('storage' . DIRECTORY_SEPARATOR . $path);
     }
@@ -74,7 +74,7 @@ if (! function_exists('resources_path')) {
      *
      * @return string
      */
-    function resources_path($path = '')
+    function resources_path($path='')
     {
         return main()->path('resources' . DIRECTORY_SEPARATOR . $path);
     }
@@ -88,7 +88,7 @@ if (! function_exists('public_path')) {
      *
      * @return string
      */
-    function public_path($path = '')
+    function public_path($path='')
     {
         return main()->path('public' . DIRECTORY_SEPARATOR . $path);
     }
@@ -102,7 +102,7 @@ if (! function_exists('path')) {
      *
      * @return string
      */
-    function path($path = '')
+    function path($path='')
     {
         return main()->path($path);
     }
@@ -118,7 +118,7 @@ if (! function_exists('route')) {
      *
      * @return string
      */
-    function route(string $routeName, array $data = [], array $queryParams = []) :string
+    function route(string $routeName, array $data=[], array $queryParams=[]) :string
     {
         return container('url')->route($routeName, $data, $queryParams);
     }
@@ -134,7 +134,7 @@ if (! function_exists('url')) {
      *
      * @return string
      */
-    function url($path, $extra = [], $secure = null)
+    function url($path, $extra=[], $secure=null)
     {
         return container('url')->to($path, $extra, $secure);
     }
@@ -149,7 +149,7 @@ if (! function_exists('asset')) {
      *
      * @return string
      */
-    function asset($path, $secure = null)
+    function asset($path, $secure=null)
     {
         return container('url')->asset($path, $secure);
     }
@@ -163,7 +163,7 @@ if (! function_exists('cache')) {
      *
      * @return \Phpfastcache\Helper\Psr16Adapter
      */
-    function cache($driver = null)
+    function cache($driver=null)
     {
         return container('cache')->driver($driver);
     }
@@ -177,7 +177,7 @@ if (! function_exists('db')) {
      *
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    function db($connection = null)
+    function db($connection=null)
     {
         return container('db')->connection($connection);
     }
@@ -193,7 +193,7 @@ if (! function_exists('validate')) {
      *
      * @return void|bool
      */
-    function validate(array $inputs, array $rules, array $messages = [])
+    function validate(array $inputs, array $rules, array $messages=[])
     {
         return container('validator')->validate($inputs, $rules, $messages);
     }
@@ -208,7 +208,7 @@ if (! function_exists('view')) {
      *
      * @return string
      */
-    function view($name, array $context = [])
+    function view($name, array $context=[])
     {
         return container('view')->render($name, $context);
     }
@@ -223,7 +223,7 @@ if (! function_exists('info')) {
      *
      * @return void
      */
-    function info($message, array $context = [])
+    function info($message, array $context=[])
     {
         return container('logger')->info($message, $context);
     }
@@ -238,7 +238,7 @@ if (! function_exists('debug')) {
      *
      * @return void
      */
-    function debug($message, array $context = [])
+    function debug($message, array $context=[])
     {
         return container('logger')->debug($message, $context);
     }
@@ -253,7 +253,7 @@ if (! function_exists('warning')) {
      *
      * @return void
      */
-    function warning($message, array $context = [])
+    function warning($message, array $context=[])
     {
         return container('logger')->warning($message, $context);
     }
@@ -268,7 +268,7 @@ if (! function_exists('error')) {
      *
      * @return void
      */
-    function error($message, array $context = [])
+    function error($message, array $context=[])
     {
         return container('logger')->error($message, $context);
     }
@@ -283,7 +283,7 @@ if (! function_exists('notice')) {
      *
      * @return void
      */
-    function notice($message, array $context = [])
+    function notice($message, array $context=[])
     {
         return container('logger')->notice($message, $context);
     }
@@ -299,7 +299,7 @@ if (! function_exists('log')) {
      *
      * @return void
      */
-    function log($level, $message, array $context = [])
+    function log($level, $message, array $context=[])
     {
         return container('logger')->log($level, $message, $context);
     }
@@ -314,7 +314,7 @@ if (! function_exists('event')) {
      *
      * @return mixed
      */
-    function event($event, $payload = [])
+    function event($event, $payload=[])
     {
         return container('events')->dispatch($event, $payload);
     }
@@ -331,7 +331,7 @@ if (! function_exists('session')) {
      *
      * @return mixed|\Nicy\Framework\Bindings\Session\Store|\Nicy\Framework\Bindings\Session\SessionManager
      */
-    function session($key = null, $default = null)
+    function session($key=null, $default=null)
     {
         if (is_null($key)) {
             return container('session');
@@ -384,7 +384,7 @@ if (! function_exists('get_cookie')) {
      *
      * @return mixed
      */
-    function get_cookie(string $name, ? string $value = null)
+    function get_cookie(string $name, ?string $value=null)
     {
         return container('cookie')->get($name, $value);
     }
@@ -399,7 +399,7 @@ if (! function_exists('set_cookie')) {
      *
      * @return \Dflydev\FigCookies\SetCookie
      */
-    function set_cookie(string $name, ? string $value = null)
+    function set_cookie(string $name, ?string $value=null)
     {
         return Nicy\Framework\Bindings\Cookie\Factory::setCookie($name, $value);
     }

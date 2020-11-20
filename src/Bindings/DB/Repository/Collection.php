@@ -16,7 +16,7 @@ class Collection extends SupportCollection
      *
      * @return \Nicy\Framework\Bindings\DB\Repository\Base|static|null
      */
-    public function find($key, $default = null)
+    public function find($key, $default=null)
     {
         if ($key instanceof Base) {
             $key = $key->getKey();
@@ -48,7 +48,7 @@ class Collection extends SupportCollection
      *
      * @return bool
      */
-    public function contains($key, $operator = null, $value = null)
+    public function contains($key, $operator=null, $value=null)
     {
         if (func_num_args() > 1 || $this->useAsCallable($key)) {
             return parent::contains(...func_get_args());
@@ -163,7 +163,7 @@ class Collection extends SupportCollection
      *
      * @return static|\Nicy\Support\Collection
      */
-    public function unique($key = null, $strict = false)
+    public function unique($key=null, $strict=false)
     {
         if (! is_null($key)) {
             return parent::unique($key, $strict);
@@ -235,7 +235,7 @@ class Collection extends SupportCollection
      *
      * @return array
      */
-    public function getDictionary($items = null)
+    public function getDictionary($items=null)
     {
         $items = is_null($items) ? $this->items : $items;
 
@@ -256,7 +256,7 @@ class Collection extends SupportCollection
      *
      * @return \Nicy\Support\Collection
      */
-    public function pluck($value, $key = null)
+    public function pluck($value, $key=null)
     {
         return $this->toBase()->pluck($value, $key);
     }
@@ -300,7 +300,7 @@ class Collection extends SupportCollection
      *
      * @return \Nicy\Support\Collection
      */
-    public function flatten($depth = INF)
+    public function flatten($depth=INF)
     {
         return $this->toBase()->flatten($depth);
     }

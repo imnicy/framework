@@ -2,10 +2,10 @@
 
 namespace Nicy\Framework\Support\Helpers;
 
-use Dflydev\FigCookies\SetCookie;
 use Nicy\Framework\Main;
 use Nicy\Support\Contracts\Arrayable;
 use Nicy\Support\Contracts\Jsonable;
+use Dflydev\FigCookies\SetCookie;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Response;
 
@@ -50,7 +50,7 @@ class ResponseHelper
      *
      * @return ResponseInterface
      */
-    public static function shouldBeJson(ResponseInterface $response, $contents = null)
+    public static function shouldBeJson(ResponseInterface $response, $contents=null)
     {
         $response = $response->withHeader('Content-Type', 'application/json;charset=utf-8');
 
