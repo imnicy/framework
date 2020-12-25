@@ -9,13 +9,13 @@ return [
     |
     | more documents
     |
-    | @see http://platesphp.com/v3
+    | @see https://latte.nette.org/en/develop
     |
     */
 
+    'temp_path' => storage_path('framework/views'),
+
     'path' => resources_path('views'),
 
-    'extension' => 'php',
-
-    'assets_path' => public_path('assets'),
+    'auto_refresh' => true,
 ];

@@ -2,12 +2,12 @@
 
 namespace Nicy\Framework\Bindings\View\Extensions;
 
-use League\Plates\Engine;
-use League\Plates\Extension\ExtensionInterface;
+use Latte\Engine;
+use Nicy\Framework\Bindings\View\Contracts\FunctionInterface;
 use LogicException;
 use Nicy\Framework\Main;
 
-class Asset implements ExtensionInterface
+class Asset implements FunctionInterface
 {
     /**
      * Path to asset directory.
@@ -30,12 +30,11 @@ class Asset implements ExtensionInterface
      * Register extension function.
      *
      * @param Engine $engine
-     *
-     * @return null
+     * @return void
      */
-    public function register(Engine $engine)
+    public function register(Engine $engine) :void
     {
-        $engine->registerFunction('asset', array($this, 'from'));
+        $engine->addFunction('asset', array($this, 'from'));
     }
 
     /**

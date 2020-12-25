@@ -2,12 +2,12 @@
 
 namespace Nicy\Framework\Bindings\View\Extensions;
 
-use League\Plates\Engine;
-use League\Plates\Extension\ExtensionInterface;
+use Latte\Engine;
+use Nicy\Framework\Bindings\View\Contracts\FunctionInterface;
 use Nicy\Container\Contracts\Container;
 use Nicy\Support\HtmlString;
 
-class CSRFToken implements ExtensionInterface
+class CSRFToken implements FunctionInterface
 {
     /**
      * @var \Nicy\Container\Contracts\Container
@@ -21,11 +21,12 @@ class CSRFToken implements ExtensionInterface
 
     /**
      * @param Engine $engine
+     * @return void
      */
-    public function register(Engine $engine)
+    public function register(Engine $engine) :void
     {
-        $engine->registerFunction('csrf_token', [$this, 'buildCSRFToken']);
-        $engine->registerFunction('csrf_field', [$this, 'buildCSRFField']);
+        $engine->addFunction('csrf_token', [$this, 'buildCSRFToken']);
+        $engine->addFunction('csrf_field', [$this, 'buildCSRFField']);
     }
 
     /**

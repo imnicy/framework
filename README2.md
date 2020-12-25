@@ -16,7 +16,7 @@ provides mainstream features, such as DI, IoC, Events, ORM, Filesystem, etc.
 - Filesystem (use `league/flysystem`)
 - Session (with CSRF)
 - Validation (use `rakit/validation`)
-- View (use `league/plates`)
+- View (use `latte/latte`)
 - Powerful libs (like Str, Arr, Collection, Manager...)
 
 > All packages are lazy to load. And you can expand many other useful packages to the framework.
@@ -415,7 +415,7 @@ class Controller()
 {
     public function display()
     {
-        return view('resource/home/index.html', $parameters = []);
+        return view('index.latte', $parameters = []);
         
         // with Facade
         return View::render('resource/home/index.html', $parameters = []);
@@ -423,4 +423,4 @@ class Controller()
 }
 ```
 
-you can read the league/plates document for more information.
+you can read the latte/latte document for more information.

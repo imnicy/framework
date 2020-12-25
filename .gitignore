@@ -1,4 +1,7 @@
-.idea/
+/.idea
 /composer.lock
 /vendor
+/demo
+/storage
+/resources
 .phpunit.result.cache

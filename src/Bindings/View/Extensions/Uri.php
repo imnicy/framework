@@ -2,11 +2,11 @@
 
 namespace Nicy\Framework\Bindings\View\Extensions;
 
-use League\Plates\Engine;
-use League\Plates\Extension\ExtensionInterface;
+use Latte\Engine;
 use Nicy\Container\Contracts\Container;
+use Nicy\Framework\Bindings\View\Contracts\FunctionInterface;
 
-class Url implements ExtensionInterface
+class Uri implements FunctionInterface
 {
     /**
      * @var \Nicy\Container\Contracts\Container
@@ -20,12 +20,13 @@ class Url implements ExtensionInterface
 
     /**
      * @param Engine $engine
+     * @return void
      */
-    public function register(Engine $engine)
+    public function register(Engine $engine) :void
     {
-        $engine->registerFunction('url_to', [$this, 'to']);
-        $engine->registerFunction('route_to', [$this, 'routeTo']);
-        $engine->registerFunction('current_url', [$this, 'current']);
+        $engine->addFunction('url_to', [$this, 'to']);
+        $engine->addFunction('route_to', [$this, 'routeTo']);
+        $engine->addFunction('current_url', [$this, 'current']);
     }
 
     /**

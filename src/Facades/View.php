@@ -2,6 +2,7 @@
 
 namespace Nicy\Framework\Facades;
 
+use Latte\Engine;
 use Nicy\Framework\Support\Facade;
 
 /**
@@ -9,8 +10,7 @@ use Nicy\Framework\Support\Facade;
  * @package Framework\Facades
  *
  * @method static string render($name, array $context=[])
- * @method static void enableDebug()
- * @method static void disableDebug()
+ * @method static Engine getEngine()
  *
  */
 class View extends Facade

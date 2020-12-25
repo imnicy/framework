@@ -2,12 +2,12 @@
 
 namespace Nicy\Framework\Bindings\View;
 
-use League\Plates\Engine;
-use League\Plates\Extension\URI;
+use Latte\Engine;
+use Nicy\Framework\Bindings\View\Contracts\Registerable;
 use Nicy\Framework\Bindings\View\Extensions\CSRFToken;
 use Nicy\Framework\Bindings\View\Extensions\Asset;
 use Nicy\Container\Contracts\Container;
-use Nicy\Framework\Bindings\View\Extensions\Url;
+use Nicy\Framework\Bindings\View\Extensions\Uri;
 use Nicy\Support\Str;
 
 class Factory
@@ -18,7 +18,7 @@ class Factory
     protected $container;
 
     /**
-     * @var \League\Plates\Engine
+     * @var \Latte\Engine
      */
     protected $engine;
 
@@ -36,7 +36,17 @@ class Factory
     }
 
     /**
-     * @return \League\Plates\Engine
+     * @param string $name
+     * @param mixed $default
+     * @return mixed
+     */
+    protected function config(string $name, $default=null)
+    {
+        return $this->container['config']->get('view.'.$name, $default);
+    }
+
+    /**
+     * @return \Latte\Engine
      */
     public function getEngine()
     {
@@ -50,10 +60,46 @@ class Factory
      */
     public function registerEngine()
     {
-        $this->engine = new Engine(
-            $this->container['config']['view.path'],
-            $this->container['config']['view.extension']
-        );
+        $this->engine = new Engine;
+
+        $this->engine->setTempDirectory($this->config('temp_path', 'tmp/to/path'));
+
+        $this->engine->setAutoRefresh($this->config('auto_refresh', true));
+    }
+
+    /**
+     * Renders template to output.
+     *
+     * @param string $name
+     * @param object|mixed[] $params
+     * @param string $block
+     * @return void
+     */
+    public function render(string $name, $params = [], string $block = null): void
+    {
+        $this->engine->render($this->getViewFile($name), $params, $block);
+    }
+
+    /**
+     * Transform view file path
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function getViewFile(string $name)
+    {
+        return $this->config('path', 'view/to/path') .'/'. ltrim($name, '/');
+    }
+
+    /**
+     * Register extension
+     *
+     * @param Registerable $extension
+     * @return void
+     */
+    protected function load(Registerable $extension)
+    {
+        $extension->register($this->engine);
     }
 
     /**
@@ -79,7 +125,7 @@ class Factory
      */
     protected function assetExtension()
     {
-        $this->engine->loadExtension(new Asset($this->container['config']['view.assets_path']));
+        $this->load(new Asset($this->container['config']['view.assets_path']));
     }
 
     /**
@@ -89,7 +135,7 @@ class Factory
      */
     protected function CSRFTokenExtension()
     {
-        $this->engine->loadExtension(new CSRFToken($this->container));
+        $this->load(new CSRFToken($this->container));
     }
 
     /**
@@ -97,18 +143,8 @@ class Factory
      *
      * @return void
      */
-    protected function urlExtension()
-    {
-        $this->engine->loadExtension(new Url($this->container));
-    }
-
-    /**
-     * Load uri extension
-     *
-     * @return void
-     */
     protected function uriExtension()
     {
-        $this->engine->loadExtension(new URI($this->container['url']->path()));
+        $this->load(new Uri($this->container));
     }
 }

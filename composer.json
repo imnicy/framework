@@ -20,9 +20,9 @@
     "imnicy/container": "^1.0",
     "imnicy/support": "^1.0",
     "jasongrimes/paginator": "^1.0",
+    "latte/latte": "^2.9",
     "league/event": "^2.2",
     "league/flysystem": "^1.0",
-    "league/plates": "^3.3",
     "monolog/monolog": "^1.24",
     "phpfastcache/phpfastcache": "^7.0",
     "rakit/validation": "^1.2",
@@ -41,5 +41,5 @@
   "config": {
     "sort-packages": true
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "stable"
 }
