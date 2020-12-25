@@ -8,6 +8,7 @@ use Nicy\Framework\Bindings\View\Extensions\CSRFToken;
 use Nicy\Framework\Bindings\View\Extensions\Asset;
 use Nicy\Container\Contracts\Container;
 use Nicy\Framework\Bindings\View\Extensions\Uri;
+use Nicy\Framework\Exceptions\ViewException;
 use Nicy\Support\Str;
 
 class Factory
@@ -88,7 +89,11 @@ class Factory
      */
     protected function getViewFile(string $name)
     {
-        return $this->config('path', 'view/to/path') .'/'. ltrim($name, '/');
+        if (! file_exists($file = $this->config('path', 'view/to/path') .'/'. ltrim($name, '/'))) {
+            throw new ViewException('template not found.');
+        }
+
+        return $file;
     }
 
     /**
