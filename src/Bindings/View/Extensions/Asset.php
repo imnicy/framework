@@ -45,7 +45,9 @@ class Asset implements FunctionInterface
      */
     public function from($url)
     {
-        $path = $this->path . '/' .  ltrim($url, '/');
+        $main = Main::getInstance();
+
+        $path = $this->path . DIRECTORY_SEPARATOR .  ltrim($url, DIRECTORY_SEPARATOR);
 
         if (!file_exists($path)) {
             throw new LogicException(
@@ -53,7 +55,7 @@ class Asset implements FunctionInterface
             );
         }
 
-        $info = pathinfo($url);
+        $info = pathinfo($path);
         $updatedAt = filemtime($path);
 
         if ($info['dirname'] === '.') {
@@ -64,7 +66,15 @@ class Asset implements FunctionInterface
             $directory = $info['dirname'] . DIRECTORY_SEPARATOR;
         }
 
-        return Main::getInstance()->container('url')
-                    ->asset($directory . $info['filename'] . '.' . $info['extension'] . '?v=' . $updatedAt);
+        $directory = str_replace([$main->path(), DIRECTORY_SEPARATOR], ['', '/'], $directory);
+
+        return $main->container('url')->asset(
+            ltrim($directory, DIRECTORY_SEPARATOR) .
+            $info['filename'] .
+            '.' .
+            $info['extension'] .
+            '?v=' .
+            $updatedAt
+        );
     }
 }
