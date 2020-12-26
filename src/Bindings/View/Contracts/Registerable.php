@@ -2,13 +2,13 @@
 
 namespace Nicy\Framework\Bindings\View\Contracts;
 
-use Latte\Engine;
+use Twig\Environment;
 
 interface Registerable
 {
     /**
-     * @param Engine $engine
+     * @param Environment $engine
      * @return void
      */
-    public function register(Engine $engine) :void ;
+    public function register(Environment $engine) :void ;
 }

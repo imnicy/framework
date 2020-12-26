@@ -13,9 +13,13 @@ return [
     |
     */
 
-    'temp_path' => storage_path('framework/views'),
+    'debug' => true,
+
+    'assets_path' => resources_path('assets'),
+
+    'cache' => storage_path('framework/views'),
 
     'path' => resources_path('views'),
 
-    'auto_refresh' => true,
+    'auto_reload' => true,
 ];

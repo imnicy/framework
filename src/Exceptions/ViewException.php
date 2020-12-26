@@ -2,9 +2,9 @@
 
 namespace Nicy\Framework\Exceptions;
 
-use Latte\RuntimeException;
+use Twig\Error\RuntimeError;
 
-class ViewException extends RuntimeException
+class ViewException extends RuntimeError
 {
 
 }

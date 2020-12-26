@@ -2,7 +2,8 @@
 
 namespace Nicy\Framework\Bindings\View;
 
-use Latte\Engine;
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
 use Nicy\Framework\Bindings\View\Contracts\Registerable;
 use Nicy\Framework\Bindings\View\Extensions\CSRFToken;
 use Nicy\Framework\Bindings\View\Extensions\Asset;
@@ -10,6 +11,7 @@ use Nicy\Container\Contracts\Container;
 use Nicy\Framework\Bindings\View\Extensions\Uri;
 use Nicy\Framework\Exceptions\ViewException;
 use Nicy\Support\Str;
+use Twig\TemplateWrapper;
 
 class Factory
 {
@@ -19,7 +21,7 @@ class Factory
     protected $container;
 
     /**
-     * @var \Latte\Engine
+     * @var \Twig\Environment
      */
     protected $engine;
 
@@ -47,7 +49,7 @@ class Factory
     }
 
     /**
-     * @return \Latte\Engine
+     * @return \Twig\Environment
      */
     public function getEngine()
     {
@@ -61,39 +63,33 @@ class Factory
      */
     public function registerEngine()
     {
-        $this->engine = new Engine;
+        $loader = new FilesystemLoader($this->config('path', '/path/to/templates'));
 
-        $this->engine->setTempDirectory($this->config('temp_path', 'tmp/to/path'));
+        $this->engine = new Environment($loader, [
+            // Cache
+            'cache' => $this->config('cache', false),   // /path/to/compilation_cache
 
-        $this->engine->setAutoRefresh($this->config('auto_refresh', true));
+            // Options
+            'debug' => $this->config('debug', true),
+            'auto_reload' => $this->config('auto_reload', true),
+            'autoescape' => $this->config('autoescape ', 'html'),
+            'optimizations' => $this->config('optimizations', 1)    // set to 0 to disable
+        ]);
     }
 
     /**
      * Renders template to output.
      *
-     * @param string $name
-     * @param object|mixed[] $params
-     * @param string $block
-     * @return void
-     */
-    public function render(string $name, $params = [], string $block = null): void
-    {
-        $this->engine->render($this->getViewFile($name), $params, $block);
-    }
-
-    /**
-     * Transform view file path
-     *
-     * @param string $name
+     * @param string|TemplateWrapper $name
+     * @param array $context
      * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
-    protected function getViewFile(string $name)
+    public function render(string $name, array $context = []): string
     {
-        if (! file_exists($file = $this->config('path', 'view/to/path') .'/'. ltrim($name, '/'))) {
-            throw new ViewException('template not found.');
-        }
-
-        return $file;
+        return $this->engine->render($name, $context);
     }
 
     /**
@@ -130,7 +126,7 @@ class Factory
      */
     protected function assetExtension()
     {
-        $this->load(new Asset($this->container['config']['view.assets_path']));
+        $this->load(new Asset($this->config('assets_path')));
     }
 
     /**

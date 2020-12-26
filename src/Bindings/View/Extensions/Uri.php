@@ -2,9 +2,10 @@
 
 namespace Nicy\Framework\Bindings\View\Extensions;
 
-use Latte\Engine;
+use Twig\Environment;
 use Nicy\Container\Contracts\Container;
 use Nicy\Framework\Bindings\View\Contracts\FunctionInterface;
+use Twig\TwigFunction;
 
 class Uri implements FunctionInterface
 {
@@ -19,14 +20,14 @@ class Uri implements FunctionInterface
     }
 
     /**
-     * @param Engine $engine
+     * @param Environment $engine
      * @return void
      */
-    public function register(Engine $engine) :void
+    public function register(Environment $engine) :void
     {
-        $engine->addFunction('url_to', [$this, 'to']);
-        $engine->addFunction('route_to', [$this, 'routeTo']);
-        $engine->addFunction('current_url', [$this, 'current']);
+        $engine->addFunction(new TwigFunction('url_to', [$this, 'to']));
+        $engine->addFunction(new TwigFunction('route_to', [$this, 'routeTo']));
+        $engine->addFunction(new TwigFunction('current_url', [$this, 'current']));
     }
 
     /**

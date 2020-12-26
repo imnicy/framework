@@ -2,10 +2,11 @@
 
 namespace Nicy\Framework\Bindings\View\Extensions;
 
-use Latte\Engine;
+use Twig\Environment;
 use Nicy\Framework\Bindings\View\Contracts\FunctionInterface;
 use LogicException;
 use Nicy\Framework\Main;
+use Twig\TwigFunction;
 
 class Asset implements FunctionInterface
 {
@@ -29,12 +30,12 @@ class Asset implements FunctionInterface
     /**
      * Register extension function.
      *
-     * @param Engine $engine
+     * @param Environment $engine
      * @return void
      */
-    public function register(Engine $engine) :void
+    public function register(Environment $engine) :void
     {
-        $engine->addFunction('asset', array($this, 'from'));
+        $engine->addFunction(new TwigFunction('asset', array($this, 'from')));
     }
 
     /**

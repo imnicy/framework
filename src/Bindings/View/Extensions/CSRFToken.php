@@ -2,10 +2,11 @@
 
 namespace Nicy\Framework\Bindings\View\Extensions;
 
-use Latte\Engine;
+use Twig\Environment;
 use Nicy\Framework\Bindings\View\Contracts\FunctionInterface;
 use Nicy\Container\Contracts\Container;
 use Nicy\Support\HtmlString;
+use Twig\TwigFunction;
 
 class CSRFToken implements FunctionInterface
 {
@@ -20,13 +21,13 @@ class CSRFToken implements FunctionInterface
     }
 
     /**
-     * @param Engine $engine
+     * @param Environment $engine
      * @return void
      */
-    public function register(Engine $engine) :void
+    public function register(Environment $engine) :void
     {
-        $engine->addFunction('csrf_token', [$this, 'buildCSRFToken']);
-        $engine->addFunction('csrf_field', [$this, 'buildCSRFField']);
+        $engine->addFunction(new TwigFunction('csrf_token', [$this, 'buildCSRFToken']));
+        $engine->addFunction(new TwigFunction('csrf_field', [$this, 'buildCSRFField']));
     }
 
     /**
