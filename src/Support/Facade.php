@@ -24,7 +24,6 @@ abstract class Facade
      * Hotswap the underlying instance behind the facade.
      *
      * @param mixed $instance
-     *
      * @return void
      */
     public static function swap($instance)

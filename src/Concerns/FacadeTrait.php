@@ -18,7 +18,6 @@ trait FacadeTrait
      *
      * @param bool $aliases
      * @param array $userAliases
-     *
      * @return void
      */
     public function withFacades($aliases=true, $userAliases=[])
@@ -34,7 +33,6 @@ trait FacadeTrait
      * Register the aliases for the application.
      *
      * @param array $userAliases
-     *
      * @return void
      */
     public function withAliases($userAliases=[])

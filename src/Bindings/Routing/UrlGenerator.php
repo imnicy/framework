@@ -2,24 +2,21 @@
 
 namespace Nicy\Framework\Bindings\Routing;
 
+use Nicy\Framework\Container;
 use Nicy\Support\Arr;
 use Nicy\Support\Str;
-use Slim\App;
-use Slim\Factory\ServerRequestCreatorFactory;
 
 class UrlGenerator
 {
     /**
-     * The application instance.
-     *
-     * @var \Slim\App
+     * @var \Nicy\Framework\Container
      */
-    protected $app;
+    protected $container;
 
     /**
-     * @var \Psr\Http\Message\ServerRequestInterface
+     * @var \Psr\Http\Message\UriInterface
      */
-    protected $request;
+    protected $uri;
 
     /**
      * The forced URL root.
@@ -52,23 +49,13 @@ class UrlGenerator
     /**
      * Create a new URL redirector instance.
      *
-     * @param \Slim\App $app
-     *
+     * @param \Nicy\Framework\Container
      * @return void
      */
-    public function __construct(App $app)
+    public function __construct(Container $container)
     {
-        $this->app = $app;
-        $this->request = $this->makeRequest();
-    }
-
-    /**
-     * @return \Psr\Http\Message\ServerRequestInterface
-     */
-    protected function makeRequest()
-    {
-        $serverRequestCreator = ServerRequestCreatorFactory::create();
-        return $serverRequestCreator->createServerRequestFromGlobals();
+        $this->container = $container;
+        $this->uri = $container->get('request')->getUri();
     }
 
     /**
@@ -78,12 +65,10 @@ class UrlGenerator
      */
     public function full()
     {
-        $uri = $this->request->getUri();
-
-        $scheme = $uri->getScheme();
-        $authority = $uri->getAuthority();
-        $path = $uri->getPath();
-        $query = $uri->getQuery();
+        $scheme = $this->uri->getScheme();
+        $authority = $this->uri->getAuthority();
+        $path = $this->uri->getPath();
+        $query = $this->uri->getQuery();
 
         $protocol = ($scheme ? $scheme . ':' : '') . ($authority ? '//' . $authority : '');
 
@@ -95,7 +80,7 @@ class UrlGenerator
      */
     public function path()
     {
-        return $this->request->getUri()->getPath();
+        return $this->uri->getPath();
     }
 
     /**
@@ -105,7 +90,7 @@ class UrlGenerator
      */
     public function current()
     {
-        return $this->to($this->request->getUri()->getPath());
+        return $this->to($this->uri->getPath());
     }
 
     /**
@@ -236,7 +221,7 @@ class UrlGenerator
         }
 
         if (is_null($this->cachedSchema)) {
-            $this->cachedSchema = $this->forceScheme ?: $this->request->getUri()->getScheme().'://';
+            $this->cachedSchema = $this->forceScheme ?: $this->uri->getScheme().'://';
         }
 
         return $this->cachedSchema;
@@ -255,8 +240,8 @@ class UrlGenerator
      */
     public function route($name, $parameters=[], $queryParams=[])
     {
-        return $this->app->getContainer()->get('router.parser')->fullUrlFor(
-            $this->request->getUri(), $name, $parameters, $queryParams
+        return $this->container->get('router.parser')->fullUrlFor(
+            $this->uri, $name, $parameters, $queryParams
         );
     }
 
@@ -338,7 +323,7 @@ class UrlGenerator
         if (is_null($root)) {
             if (is_null($this->cachedRoot)) {
                 if (! $this->forcedRoot) {
-                    $uri = $this->request->getUri();
+                    $uri = $this->uri;
 
                     $uriScheme = $uri->getScheme();
                     $uriAuthority = $uri->getAuthority();

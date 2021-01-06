@@ -1,6 +1,6 @@
 <?php
 
-namespace Nicy\Framework\Bindings\Log;
+namespace Nicy\Framework\Bindings\Logging;
 
 use Psr\Log\LoggerInterface;
 use Nicy\Support\Contracts\Jsonable;
@@ -19,7 +19,6 @@ class Logger implements LoggerInterface
      * Create a new log writer instance.
      *
      * @param \Psr\Log\LoggerInterface $logger
-     *
      * @return void
      */
     public function __construct(LoggerInterface $logger)
@@ -32,7 +31,6 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function emergency($message, array $context=[])
@@ -45,7 +43,6 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function alert($message, array $context=[])
@@ -58,7 +55,6 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function critical($message, array $context=[])
@@ -71,7 +67,6 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function error($message, array $context=[])
@@ -84,7 +79,6 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function warning($message, array $context=[])
@@ -97,7 +91,6 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function notice($message, array $context=[])
@@ -110,7 +103,6 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function info($message, array $context=[])
@@ -123,7 +115,6 @@ class Logger implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function debug($message, array $context=[])
@@ -137,7 +128,6 @@ class Logger implements LoggerInterface
      * @param string $level
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function log($level, $message, array $context=[])
@@ -151,7 +141,6 @@ class Logger implements LoggerInterface
      * @param string $level
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function write($level, $message, array $context=[])
@@ -165,7 +154,6 @@ class Logger implements LoggerInterface
      * @param string $level
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     protected function writeLog($level, $message, $context)
@@ -177,7 +165,6 @@ class Logger implements LoggerInterface
      * Format the parameters for the logger.
      *
      * @param mixed $message
-     *
      * @return mixed
      */
     protected function formatMessage($message)
@@ -208,7 +195,6 @@ class Logger implements LoggerInterface
      *
      * @param string $method
      * @param array $parameters
-     *
      * @return mixed
      */
     public function __call($method, $parameters)

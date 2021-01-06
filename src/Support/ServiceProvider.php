@@ -39,7 +39,6 @@ abstract class ServiceProvider implements Provider
      *
      * @param string $name
      * @param string $key
-     *
      * @return void
      */
     protected function mergeConfigFrom($name, $key)

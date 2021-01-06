@@ -4,7 +4,7 @@ namespace Nicy\Framework\Handlers\Strategies;
 
 use Nicy\Framework\Main;
 use Nicy\Framework\Bindings\Routing\RouterArguments;
-use Nicy\Framework\Support\Helpers\ResponseHelper;
+use Nicy\Framework\Support\Helpers\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Interfaces\InvocationStrategyInterface;
@@ -21,8 +21,7 @@ class RequestResponse implements InvocationStrategyInterface
      * @param callable               $callable
      * @param ServerRequestInterface $request
      * @param ResponseInterface      $response
-     * @param array                  $routeArguments
-     *
+     * @param array $routeArguments
      * @return ResponseInterface
      */
     public function __invoke(
@@ -45,6 +44,6 @@ class RequestResponse implements InvocationStrategyInterface
 
         $contents = $container->call($callable);
 
-        return ResponseHelper::prepare($contents);
+        return Response::prepare($contents);
     }
 }

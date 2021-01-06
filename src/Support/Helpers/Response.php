@@ -2,19 +2,18 @@
 
 namespace Nicy\Framework\Support\Helpers;
 
+use Slim\Psr7\Response as SimHttpResponse;
 use Nicy\Framework\Main;
 use Nicy\Support\Contracts\Arrayable;
 use Nicy\Support\Contracts\Jsonable;
 use Dflydev\FigCookies\SetCookie;
 use Psr\Http\Message\ResponseInterface;
-use Slim\Psr7\Response;
 
-class ResponseHelper
+class Response
 {
     /**
      * @param mixed $contents
-     *
-     * @return ResponseInterface|Response
+     * @return ResponseInterface
      */
     public static function prepare($contents)
     {
@@ -22,8 +21,10 @@ class ResponseHelper
             $response = $contents;
         }
         else {
-            $response = new Response();
+            $response = new SimHttpResponse();
         }
+
+        $responseBody = $response->getBody();
 
         if ($contents instanceof Jsonable) {
             $response = static::shouldBeJson($response, $contents->toJson());
@@ -32,7 +33,7 @@ class ResponseHelper
             $response = static::shouldBeJson($response, json_encode(is_array($contents) ? $contents : $contents->toArray()));
         }
         else if (is_string($contents) || is_bool($contents) || is_int($contents) || method_exists($contents, '__toString')) {
-            $response->getBody()->write((string) $contents);
+            $responseBody->write((string) $contents);
         }
         else if (is_null($contents)) {
             // invalid contents, will return empty response instance
@@ -41,13 +42,16 @@ class ResponseHelper
             // invalid contents,
         }
 
+        if ($responseBody->isSeekable()) {
+            $responseBody->rewind();
+        }
+
         return $response;
     }
 
     /**
      * @param ResponseInterface $response
      * @param string $contents
-     *
      * @return ResponseInterface
      */
     public static function shouldBeJson(ResponseInterface $response, $contents=null)
@@ -64,8 +68,7 @@ class ResponseHelper
     /**
      * @param $contents
      * @param SetCookie $cookie
-     *
-     * @return Response
+     * @return ResponseInterface
      */
     public static function responseWithCookie($contents, SetCookie $cookie)
     {

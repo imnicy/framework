@@ -1,41 +1,38 @@
 ## Framework
 
-provides mainstream features, such as DI, IoC, Events, ORM, Filesystem, etc.
+提供了一些很有用的功能, 比如 容器, 依赖注入, 事件, ORM, 文件系统等。
 
-### Features:
+### 功能:
 
-- Request & Response (use `slim\slim`, see: slim framework)
-- DI (use `php-di\php-di`)
-- Cache (use `phpfastcache/phpfastcache`)
-- Configure
+- 请求和响应 (`slim\slim`, see: slim framework)
+- 容器 (`php-di\php-di`)
+- 缓存 (`phpfastcache/phpfastcache`)
+- 配置
 - Cookie
-- Database (use `catfan/medoo`)
+- 数据库 (`catfan/medoo`)
 - ORM (based on `medoo`, provide two ways to invoke the data model, you can never use ORM at all.)
-- Encryption
-- Events (use `league/event`)
-- Filesystem (use `league/flysystem`)
+- 加密
+- 事件 (`league/event`)
+- 文件系统 (`league/flysystem`)
 - Session (with CSRF)
-- Validation (use `rakit/validation`)
-- View (use `latte/latte`)
-- Powerful libs (like Str, Arr, Collection, Manager...)
+- 表单验证 (`rakit/validation`)
+- 视图 (`twig/twig`)
+- 一些有用的小组件 (如 Str, Arr, Collection, Manager...等)
 
-> All packages are lazy to load. And you can expand many other useful packages to the framework.
+> 所有的功能都是懒加载的，如果你代码中不需要用到它们，他们不回被初始化
 
-## About
+## 关于
 
-The framework use slim/slim and php-di/php-di to provide routing requests, responses and container services.
+这个框架是使用 slim/slim 和 php-di/php-di 来提供路由请求、响应和容器的。
+及时有很少的需要依赖的包，但是它也能完成几乎你在开发过程中碰到的所有场景，而且它是非常容易扩展的，希望你能喜欢它。
 
-It's like laravel, but not as complex as laravel.
-
-I want to minimize the number of dependent packages, make the framework faster, and you can clearly see what it does.
-
-### Installation
+### 安装
 
 ```
 composer require imnicy\framework
 ```
 
-### Bootstrap
+### 引导
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
@@ -60,12 +57,12 @@ $framework->middleware(App\Events\StartSession::class);
 $framework->register(App\Providers\EventServiceProvider::class);
 
 // Add some routes
-Router::get('/home', 'HomeController:index');
+Route::get('/home', 'HomeController:index');
 
 $framework->run();
 ```
 
-### Controller
+### 控制器
 
 ```php
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -104,9 +101,9 @@ class HomeController extends Controller
 }
 ```
 
-### Model or Repository
+### 模型和仓库
 
-custom model
+定义模型
 
 ```php
 namespace App\Models;
@@ -134,7 +131,7 @@ class Custom extends Model
 }
 ```
 
-in controller
+在控制器中使用
 
 ```php
 namespace App\Http\Controllers;
@@ -180,7 +177,7 @@ class CustomController extends Controller
 }
 ```
 
-If you don't want to use ORM, there is also a repository model. like this:
+如果你不想使用ORM的话，系统中的仓库(Repository)功能也非常方便使用，并且体积更小，运行速度更快：
 
 ```php
 namespace App\Repositories;
@@ -197,11 +194,11 @@ class Custom extends Repository
 }
 ```
 
-It is similar to ORM in use and inheritance, but it does not provide attribute mapping and object operation. The results of data query and data operation are medoo based on the original state.
+它在使用和继承方面与ORM类似，但不提供属性映射和对象操作。数据查询和数据操作的结果是基于原始状态的medoo。
 
-### Container
+### 容器
 
-get container instance:
+获取容器管理实例:
 
 ```php
 $container = container();
@@ -210,7 +207,7 @@ $container = container();
 Main::getInstance()->contaner();
 ```
 
-get definition from container:
+从容器获取定义:
 
 ```php
 $definition = container('name');
@@ -222,7 +219,7 @@ $definition = container()->get('name');
 $definition = Main::getInstance()->container('name');;
 ```
 
-set a definition to container:
+将定义放入容器:
 
 ```php
 // give a callable or instance
@@ -234,7 +231,7 @@ container()->singleton(Support/Helper::class);
 
 ### Cookie
 
-set response with cookie:
+将Cookies放入响应:
 
 ```php
 use Nick\Framework\Support\Traits;
@@ -252,13 +249,13 @@ class Controller
         // or
         
         return $this->response('contents', $headers, $cookies = [
-                    set_cookie('token', 'token string')->withDomain('/')->with......,
+                    set_cookie('token', 'token string')->withDomain('/')->with...,
                 ]]);
     }
 }
 ```
 
-get cookie from request:
+从请求中获取Cookies:
 
 ```php
 use Nick\Framework\Support\Helpers;
@@ -269,30 +266,27 @@ class Service
     {
         $cookie = get_cookie('token', 'default');
         
-        // or use facede
+        // or use facade
         $cookie = Nicy\Framework\Facades\Cookie::get('token', 'default');
     }
 }
 ```
 
-### Events
+### 事件
 
-define a listener:
+定义侦听器:
 
 ```php
-use League\Event\ListenerInterface as Listener;
-use League\Event\EventInterface as Event;
-
-class AddedListener extend Listener
+class AddedListener
 {
-    public function handler(Event $event)
+    public function handler(AddedEvent $event)
     {
         // some codes
     }
 }
 ```
 
-define a event:
+定义事件:
 
 ```php
 use App\Models\Product;
@@ -306,10 +300,15 @@ class AddedEvent extend Event
     {
         $this->product = $product;
     }
+
+    public function getName()
+    {
+        return 'product.added';
+    }
 }
 ```
 
-dispatch a event:
+触发事件:
 
 ```php
 // in anywhere
@@ -317,7 +316,7 @@ dispatch a event:
 container('events')->dispatch('event_name', $payloads = []);
 ```
 
-listen any events in EventServiceProvider
+在 EventServiceProvider 中定义事件侦听列表
 
 ```php
 use Nicy\Framework\Providers\EventServiceProvider as ServiceProvider;
@@ -337,14 +336,14 @@ class EventServiceProvider extend ServiceProvider
 }
 ```
 
-### Filesystem
+### 文件系统
 
-basic use:
+基本使用:
 
 ```php
 container('filesystem')->put('path.txt', 'contents');
 
-// with facede
+// with facade
 Disk::put('path.txt', 'contents');
 
 // or
@@ -362,11 +361,11 @@ Storage::extend('qiniu', function() {
 Storage::driver('qiniu')->put('path.txt', 'contents');
 ```
 
-you will read league/flysystem document.
+更多内容你可以阅读league/flysystem的文档.
 
 ### Session
 
-basic use:
+基本使用:
 
 ```php
 session('name', 'default');
@@ -374,17 +373,17 @@ session('name', 'default');
 // set a session
 session(['name' => 'value']);
 
-// with facede
+// with facade
 Session::put(['name' => 'value']);
 
 Session::get('name', 'default');
 ```
-you can choose file, cache or null handlers for session.
+您可以为会话选择文件、缓存或空为处理程序。
 
 
-### Validation
+### 表单验证
 
-basic use:
+基本使用:
 
 ```php
 validate($inputs, [
@@ -395,32 +394,32 @@ validate($inputs, [
 
 // if fail it will throw a ValidationException.
 
-// with Facede
-$validator = Validator::validate($inputs, $rules = []);
+// with Facade
+$validator = Validator::make($inputs, $rules = []);
 
 if ($validator->fails()) {
     // some code
 }
 ```
 
-more rules, you will read rakit/validation document.
+更多的校验规则你可以阅读 rakit/validation 的文档
 
 
-### View
+### 视图
 
-basic use:
+基本使用:
 
 ```php
-class Controller()
+class Controller
 {
     public function display()
     {
-        return view('index.latte', $parameters = []);
+        return view('index.latte', $parameters=[]);
         
         // with Facade
-        return View::render('resource/home/index.html', $parameters = []);
+        return View::render('resource/home/index.twig', $parameters=[]);
     }
 }
 ```
 
-you can read the latte/latte document for more information.
+更多内容你可以阅读 twig/twig 文档

@@ -11,7 +11,6 @@ interface Dispatcher extends EmitterInterface
      *
      * @param string $event
      * @param mixed $listener
-     *
      * @return mixed
      */
     public function listen($event, $listener);
@@ -21,7 +20,6 @@ interface Dispatcher extends EmitterInterface
      *
      * @param string|object $event
      * @param mixed $payload
-     *
      * @return mixed
      */
     public function dispatch($event, $payload=[]);
@@ -29,17 +27,15 @@ interface Dispatcher extends EmitterInterface
     /**
      * Determine if a given event has listeners.
      *
-     * @param string $events
-     *
+     * @param string $event
      * @return bool
      */
-    public function hasListeners($events);
+    public function hasListeners($event);
 
     /**
      * Flush a set of pushed events.
      *
      * @param string $event
-     *
      * @return mixed
      */
     public function flush($event);

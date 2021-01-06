@@ -18,7 +18,6 @@ if (! function_exists('container')) {
      *
      * @param  string|null  $make
      * @param  array  $parameters
-     *
      * @return mixed|\Nicy\Container\Contracts\Container
      */
     function container($make=null, array $parameters=[])
@@ -35,7 +34,6 @@ if (! function_exists('config')) {
      *
      * @param  array|string|null  $key
      * @param  mixed  $default
-     *
      * @return mixed
      */
     function config($key=null, $default=null)
@@ -57,7 +55,6 @@ if (! function_exists('storage_path')) {
      * Get the path to the storage folder.
      *
      * @param  string  $path
-     *
      * @return string
      */
     function storage_path($path='')
@@ -71,7 +68,6 @@ if (! function_exists('resources_path')) {
      * Get the path to the resources folder.
      *
      * @param  string  $path
-     *
      * @return string
      */
     function resources_path($path='')
@@ -85,7 +81,6 @@ if (! function_exists('public_path')) {
      * Get the path to the public folder.
      *
      * @param  string  $path
-     *
      * @return string
      */
     function public_path($path='')
@@ -99,7 +94,6 @@ if (! function_exists('path')) {
      * Get the path to the base folder.
      *
      * @param  string  $path
-     *
      * @return string
      */
     function path($path='')
@@ -115,7 +109,6 @@ if (! function_exists('route')) {
      * @param string $routeName
      * @param array $data
      * @param array $queryParams
-     *
      * @return string
      */
     function route(string $routeName, array $data=[], array $queryParams=[]) :string
@@ -130,8 +123,7 @@ if (! function_exists('url')) {
      *
      * @param string $path
      * @param array $extra
-     * @param null $secure
-     *
+     * @param bool|null $secure
      * @return string
      */
     function url($path, $extra=[], $secure=null)
@@ -146,7 +138,6 @@ if (! function_exists('asset')) {
      *
      * @param $path
      * @param null $secure
-     *
      * @return string
      */
     function asset($path, $secure=null)
@@ -160,7 +151,6 @@ if (! function_exists('cache')) {
      * Get a cache instance
      *
      * @param string|null $driver
-     *
      * @return \Phpfastcache\Helper\Psr16Adapter
      */
     function cache($driver=null)
@@ -174,7 +164,6 @@ if (! function_exists('db')) {
      * Get a database instance from the connection
      *
      * @param string|null $connection
-     *
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     function db($connection=null)
@@ -190,7 +179,6 @@ if (! function_exists('validate')) {
      * @param array $inputs
      * @param array $rules
      * @param array $messages
-     *
      * @return void|bool
      */
     function validate(array $inputs, array $rules, array $messages=[])
@@ -205,7 +193,6 @@ if (! function_exists('view')) {
      *
      * @param string $name
      * @param array $context
-     *
      * @return string
      */
     function view($name, array $context=[])
@@ -220,7 +207,6 @@ if (! function_exists('info')) {
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     function info($message, array $context=[])
@@ -235,7 +221,6 @@ if (! function_exists('debug')) {
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     function debug($message, array $context=[])
@@ -250,7 +235,6 @@ if (! function_exists('warning')) {
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     function warning($message, array $context=[])
@@ -265,7 +249,6 @@ if (! function_exists('error')) {
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     function error($message, array $context=[])
@@ -280,7 +263,6 @@ if (! function_exists('notice')) {
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     function notice($message, array $context=[])
@@ -296,7 +278,6 @@ if (! function_exists('log')) {
      * @param int $level
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     function log($level, $message, array $context=[])
@@ -311,7 +292,6 @@ if (! function_exists('event')) {
      *
      * @param mixed $event
      * @param array $payload
-     *
      * @return mixed
      */
     function event($event, $payload=[])
@@ -328,7 +308,6 @@ if (! function_exists('session')) {
      *
      * @param array|string $key
      * @param mixed $default
-     *
      * @return mixed|\Nicy\Framework\Bindings\Session\Store|\Nicy\Framework\Bindings\Session\SessionManager
      */
     function session($key=null, $default=null)
@@ -350,7 +329,6 @@ if (! function_exists('csrf_token')) {
      * Get the CSRF token value.
      *
      * @return string
-     *
      * @throws \RuntimeException
      */
     function csrf_token()
@@ -381,7 +359,6 @@ if (! function_exists('get_cookie')) {
      *
      * @param string $name
      * @param string|null $value
-     *
      * @return mixed
      */
     function get_cookie(string $name, ?string $value=null)
@@ -396,7 +373,6 @@ if (! function_exists('set_cookie')) {
      *
      * @param string $name
      * @param string|null $value
-     *
      * @return \Dflydev\FigCookies\SetCookie
      */
     function set_cookie(string $name, ?string $value=null)

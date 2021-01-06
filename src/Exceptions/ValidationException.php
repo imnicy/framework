@@ -33,7 +33,6 @@ class ValidationException extends Exception
      * @param \Rakit\Validation\Validation  $validation
      * @param string $content
      * @param mixed $errorBag
-     *
      * @return void
      */
     public function __construct($validation, string $content=null, $errorBag=null)
@@ -58,7 +57,6 @@ class ValidationException extends Exception
      * Set the HTTP status code to be used for the response.
      *
      * @param int $status
-     *
      * @return $this
      */
     public function status($status)
@@ -72,7 +70,6 @@ class ValidationException extends Exception
      * Set the error bag on the exception.
      *
      * @param mixed $errorBag
-     *
      * @return $this
      */
     public function errorBag($errorBag)

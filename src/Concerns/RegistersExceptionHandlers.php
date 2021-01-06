@@ -67,7 +67,6 @@ trait RegistersExceptionHandlers
      * Determine if the error type is fatal.
      *
      * @param int $type
-     *
      * @return bool
      */
     protected function isFatalError($type)
@@ -85,7 +84,6 @@ trait RegistersExceptionHandlers
      * Handle an uncaught exception instance.
      *
      * @param Throwable $e
-     *
      * @return void
      */
     protected function handleUncaughtException($e)
@@ -103,7 +101,6 @@ trait RegistersExceptionHandlers
 
     /**
      * @param ResponseInterface $response
-     *
      * @return void
      */
     protected function emitterResponse($response)
@@ -131,7 +128,6 @@ trait RegistersExceptionHandlers
      * Set custom error handler
      *
      * @param string $handler
-     *
      * @return void
      */
     public function setErrorHandler(string $handler)

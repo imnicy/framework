@@ -2,14 +2,13 @@
 
 namespace Nicy\Framework\Facades;
 
-use Nicy\Framework\Bindings\Events\Contracts\Dispatcher;
 use Nicy\Framework\Support\Facade;
 
 /**
  * Class Events
  * @package Framework\Facades
  *
- * @method static Dispatcher|void listen($event, $listener)
+ * @method static \Nicy\Framework\Bindings\Events\Contracts\Dispatcher|void listen($event, $listener)
  * @method static mixed dispatch($event, $payload=[])
  *
  */

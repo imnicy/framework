@@ -23,7 +23,6 @@ class Dispatcher extends Emitter implements DispatcherContract
      *
      * @param string $event
      * @param mixed $listener
-     *
      * @return Dispatcher|void
      */
     public function listen($event, $listener)
@@ -36,7 +35,6 @@ class Dispatcher extends Emitter implements DispatcherContract
      *
      * @param string|object $event
      * @param mixed $payload
-     *
      * @return mixed
      */
     public function dispatch($event, $payload=[])
@@ -52,7 +50,6 @@ class Dispatcher extends Emitter implements DispatcherContract
      * Flush a set of pushed events.
      *
      * @param string $event
-     *
      * @return Dispatcher
      */
     public function flush($event)

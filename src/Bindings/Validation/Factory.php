@@ -36,7 +36,6 @@ class Factory
      * @param array $inputs
      * @param array $rules
      * @param array $messages
-     *
      * @return bool
      * @throws ValidationException
      */

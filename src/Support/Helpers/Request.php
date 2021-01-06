@@ -8,7 +8,7 @@ use Nicy\Support\Str;
 use InvalidArgumentException;
 use Psr\Http\Message\UploadedFileInterface;
 
-class RequestHelper
+class Request
 {
     /**
      * @var \Nicy\Support\Collection
@@ -20,7 +20,7 @@ class RequestHelper
      */
     public static function all()
     {
-        return static::newCollection(true, true, true);
+        return static::collection();
     }
 
     /**
@@ -28,7 +28,7 @@ class RequestHelper
      */
     public static function queries()
     {
-        return static::newCollection(true, false, false);
+        return static::collection(true, false, false, false);
     }
 
     /**
@@ -36,28 +36,55 @@ class RequestHelper
      */
     public static function requests()
     {
-        return static::newCollection(false, true, false);
+        return static::collection(false, true, false, false);
     }
 
+    /**
+     * @return Collection
+     */
     public static function files()
     {
-        return static::newCollection(false, false, true);
+        return static::collection(false, false, true, false);
+    }
+
+    /**
+     * @return Collection
+     */
+    public static function params()
+    {
+        return static::collection(false, false, false, true);
+    }
+
+    /**
+     * @return \Psr\Http\Message\ServerRequestInterface
+     */
+    public static function getRequest()
+    {
+        return Main::getInstance()->container('request');
+    }
+
+    /**
+     * @return \Psr\Http\Message\UriInterface
+     */
+    public static function getUri()
+    {
+        return static::getRequest()->getUri();
     }
 
     /**
      * @param bool $withQueries
      * @param bool $withRequests
      * @param bool $withFiles
-     *
+     * @param bool $withParams
      * @return \Nicy\Support\Collection
      */
-    protected static function newCollection($withQueries=true, $withRequests=true, $withFiles=true)
+    protected static function collection($withQueries=true, $withRequests=true, $withFiles=true, $withParams=false)
     {
         if (static::$attributes) {
             return static::$attributes;
         }
 
-        $request = Main::getInstance()->container('request');
+        $request = static::getRequest();
 
         if (Str::contains($request->getHeaderLine('Content-Type'), ['+json', '/json'])) {
             $request = $request->withParsedBody(json_decode($request->getBody()->getContents(), true));
@@ -77,13 +104,16 @@ class RequestHelper
             $attributes = $attributes + (array) $request->getUploadedFiles();
         }
 
+        if ($withParams) {
+            $attributes = $attributes + (array) $request->getServerParams();
+        }
+
         return static::$attributes = new Collection($attributes);
     }
 
     /**
      * @param string $name
-     * @param null $default
-     *
+     * @param null|mixed $default
      * @return mixed
      */
     public static function get(string $name, $default=null)
@@ -93,8 +123,7 @@ class RequestHelper
 
     /**
      * @param string $name
-     * @param null $default
-     *
+     * @param null|mixed $default
      * @return mixed
      */
     public static function request(string $name, $default=null)
@@ -104,7 +133,6 @@ class RequestHelper
 
     /**
      * @param string $name
-     *
      * @return mixed
      */
     public static function file(string $name)
@@ -114,8 +142,17 @@ class RequestHelper
 
     /**
      * @param string $name
-     * @param null $default
-     *
+     * @param null|mixed $default
+     * @return mixed
+     */
+    public static function param(string $name, $default=null)
+    {
+        return static::params()->get($name, $default);
+    }
+
+    /**
+     * @param string $name
+     * @param null|mixed $default
      * @return mixed
      */
     public static function input(string $name, $default=null)
@@ -127,7 +164,6 @@ class RequestHelper
      * @param string $key
      * @param bool $unique
      * @param string $disk
-     *
      * @return string|false
      */
     public static function upload(string $key, bool $unique=false, string $disk=null)

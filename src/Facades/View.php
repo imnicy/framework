@@ -2,7 +2,6 @@
 
 namespace Nicy\Framework\Facades;
 
-use Latte\Engine;
 use Nicy\Framework\Support\Facade;
 
 /**
@@ -10,7 +9,7 @@ use Nicy\Framework\Support\Facade;
  * @package Framework\Facades
  *
  * @method static string render($name, array $context=[])
- * @method static Engine getEngine()
+ * @method static \Twig\Environment getEngine()
  *
  */
 class View extends Facade

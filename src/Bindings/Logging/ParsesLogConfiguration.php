@@ -1,6 +1,6 @@
 <?php
 
-namespace Nicy\Framework\Bindings\Log;
+namespace Nicy\Framework\Bindings\Logging;
 
 use InvalidArgumentException;
 use Monolog\Logger as Monolog;
@@ -34,7 +34,6 @@ trait ParsesLogConfiguration
      * Parse the string level into a Monolog constant.
      *
      * @param array $config
-     *
      * @return int
      * @throws \InvalidArgumentException
      */
@@ -53,7 +52,6 @@ trait ParsesLogConfiguration
      * Extract the log channel from the given configuration.
      *
      * @param array $config
-     *
      * @return string
      */
     protected function parseChannel(array $config)

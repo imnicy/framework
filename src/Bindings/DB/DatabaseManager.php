@@ -50,7 +50,6 @@ class DatabaseManager
      * Get a database connection instance.
      *
      * @param string|null $name
-     *
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     public function connection($name=null)
@@ -69,7 +68,6 @@ class DatabaseManager
      * Make the database connection instance.
      *
      * @param string $name
-     *
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     protected function makeConnection($name)
@@ -84,7 +82,6 @@ class DatabaseManager
      *
      * @param string $name
      * @return array
-     *
      * @throws \InvalidArgumentException
      */
     protected function configuration($name)
@@ -114,7 +111,6 @@ class DatabaseManager
      *
      * @param string $method
      * @param array $parameters
-     *
      * @return mixed
      */
     public function __call($method, $parameters)

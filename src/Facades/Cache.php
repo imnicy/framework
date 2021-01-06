@@ -4,14 +4,13 @@ namespace Nicy\Framework\Facades;
 
 use Closure;
 use Nicy\Framework\Support\Facade;
-use Phpfastcache\Helper\Psr16Adapter;
 
 /**
  * Class Cache
  * @package Framework\Facades
  *
  * @method static $this extend($driver, Closure $callback)
- * @method static Psr16Adapter driver($name=null)
+ * @method static \Phpfastcache\Helper\Psr16Adapter driver($name=null)
  * @method static mixed|null get($key, $default=null)
  * @method static bool set($key, $value, $ttl=null)
  * @method static bool delete($key)

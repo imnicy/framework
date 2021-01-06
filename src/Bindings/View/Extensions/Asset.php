@@ -40,7 +40,6 @@ class Asset implements FunctionInterface
 
     /**
      * @param  string $url
-     *
      * @return string
      */
     public function from($url)

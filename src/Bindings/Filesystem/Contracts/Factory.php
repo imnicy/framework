@@ -8,8 +8,7 @@ interface Factory
      * Get a filesystem implementation.
      *
      * @param string|null $name
-     *
-     * @return \League\Flysystem\FilesystemInterface
+     * @return \League\Flysystem\FilesystemOperator
      */
     public function disk($name=null);
 }

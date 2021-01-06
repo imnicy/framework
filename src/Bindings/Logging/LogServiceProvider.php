@@ -1,6 +1,6 @@
 <?php
 
-namespace Nicy\Framework\Bindings\Log;
+namespace Nicy\Framework\Bindings\Logging;
 
 use Nicy\Framework\Support\ServiceProvider;
 

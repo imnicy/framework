@@ -1,34 +1,28 @@
 {
     "name": "imnicy/framework",
-    "type": "library",
-    "description": "simple framework package",
+    "description": "A Simple PHP Framework",
     "license": "MIT",
-    "homepage": "https://imnicy.com",
-    "authors": [
-        {
-            "name": "bin",
-            "email": "support@imnicy.com"
-        }
-    ],
+    "homepage": "https://framework.imnicy.com",
     "require": {
-        "php": ">=7.1.3",
-        "ext-json": "*",
-        "ext-openssl": "*",
-        "ext-pdo": "*",
+        "php": ">=7.3",
         "catfan/medoo": "^1.7",
         "dflydev/fig-cookies": "^2.0",
         "imnicy/container": "^1.0",
         "imnicy/support": "^1.0",
         "jasongrimes/paginator": "^1.0",
         "league/event": "^2.2",
-        "league/flysystem": "^1.0",
-        "monolog/monolog": "^1.24",
-        "phpfastcache/phpfastcache": "^7.0",
-        "rakit/validation": "^1.2",
-        "slim/psr7": "^0.5.0",
-        "slim/slim": "^4.1",
-        "tomasfejfar/enhanced-dump": "dev-master",
+        "league/flysystem": "^2.0",
+        "monolog/monolog": "^2.2",
+        "phpfastcache/phpfastcache": "^8.0",
+        "rakit/validation": "^1.4",
+        "slim/psr7": "^1.0",
+        "slim/slim": "^4.0",
+        "tomasfejfar/enhanced-dump": "^2.1",
         "twig/twig": "^3.0"
+    },
+    "require-dev": {
+      "mockery/mockery": "^1.4.2",
+      "phpunit/phpunit": "^8.5.8|^9.3.3"
     },
     "autoload": {
         "psr-4": {
@@ -38,8 +32,14 @@
             "src/helpers.php"
         ]
     },
-    "config": {
-        "sort-packages": true
+    "autoload-dev": {
+        "psr-4": {
+            "Nicy\\Tests\\": "tests/"
+        },
+        "classmap": [
+            "tests/"
+        ]
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

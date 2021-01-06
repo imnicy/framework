@@ -26,7 +26,6 @@ class Factory
      *
      * @param string $name
      * @param string|null $default
-     *
      * @return string
      */
     public function get(string $name, ? string $default=null)

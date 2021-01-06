@@ -8,7 +8,7 @@ use Nicy\Framework\Bindings\View\Contracts\Registerable;
 use Nicy\Framework\Bindings\View\Extensions\CSRFToken;
 use Nicy\Framework\Bindings\View\Extensions\Asset;
 use Nicy\Container\Contracts\Container;
-use Nicy\Framework\Bindings\View\Extensions\Uri;
+use Nicy\Framework\Bindings\View\Extensions\Url;
 use Nicy\Framework\Exceptions\ViewException;
 use Nicy\Support\Str;
 use Twig\TemplateWrapper;
@@ -146,6 +146,6 @@ class Factory
      */
     protected function uriExtension()
     {
-        $this->load(new Uri($this->container));
+        $this->load(new Url($this->container));
     }
 }

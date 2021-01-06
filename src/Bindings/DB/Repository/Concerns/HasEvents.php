@@ -26,8 +26,6 @@ trait HasEvents
      * Fire the given event for the repository.
      *
      * @param string $event
-     * @param bool $halt
-     *
      * @return mixed
      */
     protected function dispatchRepositoryEvent($event)
@@ -53,8 +51,6 @@ trait HasEvents
      * Fire a custom repository event for the given event.
      *
      * @param string $event
-     * @param string $method
-     *
      * @return mixed|void
      */
     protected function dispatchCustomRepositoryEvent($event)
@@ -74,7 +70,6 @@ trait HasEvents
      * Filter the repository event results.
      *
      * @param mixed $result
-     *
      * @return mixed
      */
     protected function filterRepositoryEventResults($result)
@@ -93,7 +88,6 @@ trait HasEvents
      *
      * @param string $event
      * @param \Closure|string $callback
-     *
      * @return void
      */
     protected static function registerRepositoryEvent($event, $callback)
@@ -109,7 +103,6 @@ trait HasEvents
      * Set the event dispatcher instance.
      *
      * @param \Nicy\Framework\Bindings\Events\Contracts\Dispatcher $dispatcher
-     *
      * @return void
      */
     public static function setEventDispatcher(DispatcherContract $dispatcher)
@@ -121,7 +114,6 @@ trait HasEvents
      * Register a saving repository event with the dispatcher.
      *
      * @param \Closure|string $callback
-     *
      * @return void
      */
     public static function saving($callback)
@@ -133,7 +125,6 @@ trait HasEvents
      * Register a saved repository event with the dispatcher.
      *
      * @param \Closure|string $callback
-     *
      * @return void
      */
     public static function saved($callback)
@@ -145,7 +136,6 @@ trait HasEvents
      * Register an updating repository event with the dispatcher.
      *
      * @param \Closure|string $callback
-     *
      * @return void
      */
     public static function updating($callback)
@@ -157,7 +147,6 @@ trait HasEvents
      * Register an updated repository event with the dispatcher.
      *
      * @param \Closure|string $callback
-     *
      * @return void
      */
     public static function updated($callback)
@@ -169,7 +158,6 @@ trait HasEvents
      * Register a creating repository event with the dispatcher.
      *
      * @param \Closure|string $callback
-     *
      * @return void
      */
     public static function creating($callback)
@@ -181,7 +169,6 @@ trait HasEvents
      * Register a created repository event with the dispatcher.
      *
      * @param \Closure|string $callback
-     *
      * @return void
      */
     public static function created($callback)
@@ -193,7 +180,6 @@ trait HasEvents
      * Register a deleting repository event with the dispatcher.
      *
      * @param \Closure|string $callback
-     *
      * @return void
      */
     public static function deleting($callback)
@@ -205,7 +191,6 @@ trait HasEvents
      * Register a deleted repository event with the dispatcher.
      *
      * @param \Closure|string $callback
-     *
      * @return void
      */
     public static function deleted($callback)

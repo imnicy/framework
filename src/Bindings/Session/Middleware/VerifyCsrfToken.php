@@ -38,7 +38,6 @@ class VerifyCsrfToken
      * Create a new middleware instance.
      *
      * @param \Nicy\Container\Contracts\Container $container
-     *
      * @return void
      */
     public function __construct(Container $container)

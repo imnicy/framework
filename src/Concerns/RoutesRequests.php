@@ -2,12 +2,37 @@
 
 namespace Nicy\Framework\Concerns;
 
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ServerRequestInterface as PsrRequestInterface;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 trait RoutesRequests
 {
+    /**
+     * Handle a request
+     *
+     * This method traverses the application middleware stack and then returns the
+     * resultant Response object.
+     *
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     */
+    public function handle(ServerRequestInterface $request) : ResponseInterface
+    {
+        // Boot container
+        $this->container->boot();
+
+        return $this->app()->handle($request);
+    }
+
+    /**
+     * Dispatch server request handler
+     *
+     * @param PsrRequestInterface|null $request
+     * @return PsrResponseInterface
+     */
     protected function dispatch(PsrRequestInterface $request=null)
     {
         // Run App & Emit Response
@@ -16,17 +41,13 @@ trait RoutesRequests
             $request = $serverRequestCreator->createServerRequestFromGlobals();
         }
 
-        $this->container->singleton('Psr\Http\Message\ServerRequestInterface', $request);
-        $this->container->boot();
-
-        return $this->app->handle($request);
+        return $this->handle($request);
     }
 
     /**
      * Run the application and send the response.
      *
      * @param PsrRequestInterface|null $request
-     *
      * @return void
      */
     public function run($request=null)

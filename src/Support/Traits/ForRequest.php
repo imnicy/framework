@@ -2,55 +2,72 @@
 
 namespace Nicy\Framework\Support\Traits;
 
-use Nicy\Framework\Support\Helpers\RequestHelper;
+use Nicy\Framework\Support\Helpers\Request;
 
 trait ForRequest
 {
     /**
+     * Get http request handler
+     *
+     * @return \Psr\Http\Message\ServerRequestInterface
+     */
+    protected function request()
+    {
+        return Request::getRequest();
+    }
+
+    /**
+     * Get Http message uri handler
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
+    protected function uri()
+    {
+        return Request::getUri();
+    }
+
+    /**
      * What is Mode?
      *      1: for queries,
      *      2: for requests,
-     *      1 || 2: for queries and requests
+     *      4: for params
+     *
+     *      1 | 2: for queries and requests
      *
      * @param int $mode
-     * @param null $key
-     * @param null $default
-     *
+     * @param null|string $key
+     * @param null|mixed $default
      * @return mixed|void|\Nicy\Support\Collection
      */
-    protected function request($mode = 1|2|4, $key=null, $default=null)
+    protected function input($mode = 1|2|4|8, $key=null, $default=null)
     {
         if ($mode == (1|2|4)) {
             if (! $key) {
-                return RequestHelper::all();
+                return Request::all();
             }
-            else {
-                return RequestHelper::input($key, $default);
-            }
+
+            return Request::input($key, $default);
         }
         else if ($mode & 1) {
             if (! $key) {
-                return RequestHelper::queries();
+                return Request::queries();
             }
-            else {
-                return RequestHelper::get($key, $default);
-            }
+
+            return Request::get($key, $default);
         }
         else if ($mode & 2) {
             if (! $key) {
-                return RequestHelper::requests();
+                return Request::requests();
             }
-            else {
-                return RequestHelper::request($key, $default);
-            }
+
+            return Request::request($key, $default);
         }
         else if ($mode & 4) {
             if (! $key) {
-                return RequestHelper::files();
+                return Request::files();
             }
-            else {
-                return RequestHelper::file($key);
-            }
+
+            return Request::file($key);
         }
 
         return ;
@@ -65,6 +82,6 @@ trait ForRequest
      */
     protected function upload(string $key, bool $unique=false, string $disk=null)
     {
-        return RequestHelper::upload($key, $unique, $disk);
+        return Request::upload($key, $unique, $disk);
     }
 }

@@ -3,7 +3,7 @@
 namespace Nicy\Framework\Support\Traits;
 
 use Dflydev\FigCookies\SetCookie;
-use Nicy\Framework\Support\Helpers\ResponseHelper;
+use Nicy\Framework\Support\Helpers\Response;
 
 trait ForResponse
 {
@@ -15,12 +15,11 @@ trait ForResponse
      * @param array $cookies
      * @param int|null $status
      * @param int|null $version
-     *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function response($contents, array $headers=[], array $cookies=[], int $status=null, int $version=null)
+    public function __response($contents, array $headers=[], array $cookies=[], int $status=null, int $version=null)
     {
-        $response = ResponseHelper::prepare($contents);
+        $response = Response::prepare($contents);
 
         foreach ($headers as $name => $value) {
             $response = $response->withHeader($name, $value);
@@ -34,7 +33,7 @@ trait ForResponse
                 $cookie = set_cookie($name, $value);
             }
 
-            $response = ResponseHelper::responseWithCookie($response, $cookie);
+            $response = Response::responseWithCookie($response, $cookie);
         }
 
         if ($status) {

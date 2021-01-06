@@ -29,7 +29,6 @@ class Encrypter implements EncrypterContract
      * @param  string  $key
      * @param  string  $cipher
      * @return void
-     *
      * @throws \RuntimeException
      */
     public function __construct($key, $cipher='AES-128-CBC')
@@ -76,7 +75,6 @@ class Encrypter implements EncrypterContract
      * @param  mixed  $value
      * @param  bool  $serialize
      * @return string
-     *
      * @throws \Nicy\Framework\Exceptions\EncryptException
      */
     public function encrypt($value, $serialize=true)
@@ -126,7 +124,6 @@ class Encrypter implements EncrypterContract
      * @param  mixed  $payload
      * @param  bool  $unserialize
      * @return mixed
-     *
      * @throws \Nicy\Framework\Exceptions\DecryptException
      */
     public function decrypt($payload, $unserialize=true)
@@ -177,7 +174,6 @@ class Encrypter implements EncrypterContract
      *
      * @param  string  $payload
      * @return array
-     *
      * @throws \Nicy\Framework\Exceptions\DecryptException
      */
     protected function getJsonPayload($payload)

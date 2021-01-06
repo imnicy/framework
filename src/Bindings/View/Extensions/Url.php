@@ -7,7 +7,7 @@ use Nicy\Container\Contracts\Container;
 use Nicy\Framework\Bindings\View\Contracts\FunctionInterface;
 use Twig\TwigFunction;
 
-class Uri implements FunctionInterface
+class Url implements FunctionInterface
 {
     /**
      * @var \Nicy\Container\Contracts\Container
@@ -34,7 +34,6 @@ class Uri implements FunctionInterface
      * @param string $path
      * @param array $extra
      * @param bool $secure
-     *
      * @return string
      */
     public function to(string $path, array $extra=[], bool $secure=false)
@@ -46,7 +45,6 @@ class Uri implements FunctionInterface
      * @param string $name
      * @param array $data
      * @param array $parameters
-     *
      * @return string
      */
     public function routeTo(string $name, array $data=[], array $parameters=[])

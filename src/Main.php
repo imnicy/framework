@@ -7,6 +7,8 @@ use Nicy\Support\Str;
 use Nicy\Container\Manager;
 use Nicy\Framework\Container as FrameworkContainer;
 use Nicy\Container\Contracts\Container as ContainerContract;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
 use Slim\App as SlimApplication;
 use Psr\Http\Server\MiddlewareInterface;
@@ -67,6 +69,8 @@ class Main
 
     /**
      * Main constructor.
+     *
+     * @param string $path
      */
     public function __construct($path)
     {
@@ -84,7 +88,6 @@ class Main
      * Set the shared instance of the main.
      *
      * @param \Nicy\Framework\Main|null $main
-     *
      * @return \Nicy\Framework\Main|static
      */
     public static function setInstance(Main $main = null)
@@ -138,7 +141,6 @@ class Main
     /**
      * @param MiddlewareInterface|string|callable $middleware
      * @param bool $shouldMake
-     *
      * @return $this
      */
     public function middleware($middleware, $shouldMake = true)
@@ -208,7 +210,6 @@ class Main
      *
      * @param string $name
      * @param array $parameters
-     *
      * @return FrameworkContainer|mixed
      */
     public function container($name = null, $parameters = [])
@@ -253,7 +254,6 @@ class Main
      * Register a service provider with the container.
      *
      * @param \Nicy\Framework\Support\ServiceProvider|string $provider
-     *
      * @return \Nicy\Framework\Support\ServiceProvider|void
      */
     public function register($provider)
@@ -279,7 +279,6 @@ class Main
      * Get the path to the application directory.
      *
      * @param string $path
-     *
      * @return string
      */
     public function path($path = '')
@@ -291,7 +290,6 @@ class Main
      * Load a configuration file into the application.
      *
      * @param string $name
-     *
      * @return void
      */
     public function configure($name)
@@ -315,7 +313,6 @@ class Main
      * @param string $config
      * @param array|string $providers
      * @param string|null $return
-     *
      * @return mixed
      */
     public function loadComponent($providers, $config = null, $return = null)
@@ -335,7 +332,6 @@ class Main
      * If no name is provided, then we'll return the path to the config folder.
      *
      * @param string|null $name
-     *
      * @return string
      */
     public function getConfigurationPath($name = null)
@@ -364,11 +360,10 @@ class Main
      *
      * @param string $method
      * @param array $parameters
-     *
      * @return mixed
      */
     public function __call($method, $parameters)
     {
-        return $this->container()->$method(...$parameters);
+        return $this->container->$method(...$parameters);
     }
 }

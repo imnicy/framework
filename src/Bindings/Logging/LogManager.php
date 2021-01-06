@@ -1,6 +1,6 @@
 <?php
 
-namespace Nicy\Framework\Bindings\Log;
+namespace Nicy\Framework\Bindings\Logging;
 
 use Closure;
 use Nicy\Framework\Main;
@@ -46,7 +46,6 @@ class LogManager implements LoggerInterface
      * Create a new Log manager instance.
      *
      * @param \Nicy\Container\Contracts\Container $container
-     *
      * @return void
      */
     public function __construct($container)
@@ -59,7 +58,6 @@ class LogManager implements LoggerInterface
      *
      * @param array $channels
      * @param string|null $channel
-     *
      * @return \Psr\Log\LoggerInterface
      */
     public function stack(array $channels, $channel=null)
@@ -71,7 +69,6 @@ class LogManager implements LoggerInterface
      * Get a log channel instance.
      *
      * @param string|null $channel
-     *
      * @return mixed
      */
     public function channel($channel=null)
@@ -83,7 +80,6 @@ class LogManager implements LoggerInterface
      * Get a log driver instance.
      *
      * @param string|null $driver
-     *
      * @return mixed
      */
     public function driver($driver=null)
@@ -95,7 +91,6 @@ class LogManager implements LoggerInterface
      * Attempt to get the log from the local cache.
      *
      * @param string $name
-     *
      * @return \Psr\Log\LoggerInterface
      */
     protected function get($name)
@@ -117,9 +112,8 @@ class LogManager implements LoggerInterface
      * Apply the configured taps for the logger.
      *
      * @param string $name
-     * @param \Nicy\Framework\Bindings\Log\Logger $logger
-     *
-     * @return \Nicy\Framework\Bindings\Log\Logger
+     * @param \Nicy\Framework\Bindings\Logging\Logger $logger
+     * @return \Nicy\Framework\Bindings\Logging\Logger
      */
     protected function tap($name, Logger $logger)
     {
@@ -136,7 +130,6 @@ class LogManager implements LoggerInterface
      * Parse the given tap class string into a class name and arguments string.
      *
      * @param string $tap
-     *
      * @return array
      */
     protected function parseTap($tap)
@@ -160,7 +153,6 @@ class LogManager implements LoggerInterface
      * Resolve the given log instance by name.
      *
      * @param string $name
-     *
      * @return \Psr\Log\LoggerInterface
      * @throws \InvalidArgumentException
      */
@@ -189,7 +181,6 @@ class LogManager implements LoggerInterface
      * Call a custom driver creator.
      *
      * @param array $config
-     *
      * @return mixed
      */
     protected function callCustomCreator(array $config)
@@ -201,7 +192,6 @@ class LogManager implements LoggerInterface
      * Create a custom log driver instance.
      *
      * @param array $config
-     *
      * @return \Psr\Log\LoggerInterface
      */
     protected function createCustomDriver(array $config)
@@ -215,7 +205,6 @@ class LogManager implements LoggerInterface
      * Create an aggregate log driver instance.
      *
      * @param array $config
-     *
      * @return \Psr\Log\LoggerInterface
      */
     protected function createStackDriver(array $config)
@@ -235,7 +224,6 @@ class LogManager implements LoggerInterface
      * Create an instance of the single file log driver.
      *
      * @param array $config
-     *
      * @return \Psr\Log\LoggerInterface
      */
     protected function createSingleDriver(array $config)
@@ -254,7 +242,6 @@ class LogManager implements LoggerInterface
      * Create an instance of the daily file log driver.
      *
      * @param array $config
-     *
      * @return \Psr\Log\LoggerInterface
      */
     protected function createDailyDriver(array $config)
@@ -271,7 +258,6 @@ class LogManager implements LoggerInterface
      * Create an instance of the syslog log driver.
      *
      * @param array $config
-     *
      * @return \Psr\Log\LoggerInterface
      */
     protected function createSyslogDriver(array $config)
@@ -288,7 +274,6 @@ class LogManager implements LoggerInterface
      * Create an instance of the "error log" log driver.
      *
      * @param array $config
-     *
      * @return \Psr\Log\LoggerInterface
      */
     protected function createErrorlogDriver(array $config)
@@ -304,7 +289,6 @@ class LogManager implements LoggerInterface
      * Create an instance of any handler available in Monolog.
      *
      * @param array $config
-     *
      * @return \Psr\Log\LoggerInterface
      * @throws \InvalidArgumentException
      */
@@ -331,7 +315,6 @@ class LogManager implements LoggerInterface
      * Prepare the handlers for usage by Monolog.
      *
      * @param array $handlers
-     *
      * @return array
      */
     protected function prepareHandlers(array $handlers)
@@ -348,7 +331,6 @@ class LogManager implements LoggerInterface
      *
      * @param \Monolog\Handler\HandlerInterface $handler
      * @param array $config
-     *
      * @return \Monolog\Handler\HandlerInterface
      */
     protected function prepareHandler(HandlerInterface $handler, array $config=[])
@@ -364,7 +346,6 @@ class LogManager implements LoggerInterface
 
     /**
      * Get a Monolog formatter instance.
-     *
      * @return \Monolog\Formatter\FormatterInterface
      */
     protected function formatter()
@@ -388,7 +369,6 @@ class LogManager implements LoggerInterface
      * Get the log connection configuration.
      *
      * @param string $name
-     *
      * @return array
      */
     protected function configurationFor($name)
@@ -410,7 +390,6 @@ class LogManager implements LoggerInterface
      * Set the default log driver name.
      *
      * @param string $name
-     *
      * @return void
      */
     public function setDefaultDriver($name)
@@ -423,7 +402,6 @@ class LogManager implements LoggerInterface
      *
      * @param string $driver
      * @param \Closure $callback
-     *
      * @return $this
      */
     public function extend($driver, Closure $callback)
@@ -438,7 +416,6 @@ class LogManager implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function emergency($message, array $context=[])
@@ -454,7 +431,6 @@ class LogManager implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function alert($message, array $context=[])
@@ -469,7 +445,6 @@ class LogManager implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function critical($message, array $context=[])
@@ -483,7 +458,6 @@ class LogManager implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function error($message, array $context=[])
@@ -499,7 +473,6 @@ class LogManager implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function warning($message, array $context=[])
@@ -512,7 +485,6 @@ class LogManager implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function notice($message, array $context=[])
@@ -527,7 +499,6 @@ class LogManager implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function info($message, array $context=[])
@@ -540,7 +511,6 @@ class LogManager implements LoggerInterface
      *
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function debug($message, array $context=[])
@@ -554,7 +524,6 @@ class LogManager implements LoggerInterface
      * @param mixed $level
      * @param string $message
      * @param array $context
-     *
      * @return void
      */
     public function log($level, $message, array $context=[])
@@ -567,7 +536,6 @@ class LogManager implements LoggerInterface
      *
      * @param string $method
      * @param array $parameters
-     *
      * @return mixed
      */
     public function __call($method, $parameters)

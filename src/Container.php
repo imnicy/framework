@@ -36,7 +36,6 @@ class Container extends DiContainer
      * Returns an entry of the container by its name.
      *
      * @param string $name Entry name or a class name.
-     *
      * @return mixed
      */
     public function get($name)
@@ -56,7 +55,6 @@ class Container extends DiContainer
      *
      * @param string $name
      * @param array $parameters
-     *
      * @return mixed
      */
     public function make($name, array $parameters = [])
@@ -88,7 +86,6 @@ class Container extends DiContainer
      * Register a service provider with the container.
      *
      * @param \Nicy\Framework\Support\ServiceProvider|string $provider
-     *
      * @return \Nicy\Framework\Support\ServiceProvider|void
      */
     public function register($provider)
@@ -131,10 +128,17 @@ class Container extends DiContainer
     }
 
     /**
+     * @return \Slim\App
+     */
+    public function getApp()
+    {
+        return $this->get('main')->app();
+    }
+
+    /**
      * Boot the given service provider.
      *
      * @param \Nicy\Framework\Support\ServiceProvider $provider
-     *
      * @return mixed|void
      */
     protected function bootProvider(ServiceProvider $provider)
@@ -161,25 +165,25 @@ class Container extends DiContainer
     protected function registerAppBindings()
     {
         $this->singleton('app', function() {
-            return $this->app;
+            return $this->getApp();
         });
     }
 
     protected function registerRoutingBindings()
     {
         $this->singleton('router', function() {
-            return new Router(Main::getInstance()->app());
+            return new Router($this->getApp());
         });
 
         $this->singleton('router.parser', function() {
-            return Main::getInstance()->app()->getRouteCollector()->getRouteParser();
+            return $this->getApp()->getRouteCollector()->getRouteParser();
         });
     }
 
     protected function registerUrlBindings()
     {
         $this->singleton('url', function() {
-            return new UrlGenerator($this->app);
+            return new UrlGenerator($this);
         });
     }
 

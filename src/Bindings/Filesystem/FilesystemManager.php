@@ -2,11 +2,12 @@
 
 namespace Nicy\Framework\Bindings\Filesystem;
 
+use League\Flysystem\UnixVisibility\PortableVisibilityConverter;
 use Nicy\Support\Arr;
-use League\Flysystem\Adapter\Local as LocalAdapter;
-use League\Flysystem\AdapterInterface;
+use League\Flysystem\Local\LocalFilesystemAdapter as LocalAdapter;
+use League\Flysystem\FilesystemAdapter;
 use League\Flysystem\Filesystem;
-use League\Flysystem\Cached\Storage\Memory as MemoryStore;
+use League\Flysystem\InMemory\InMemoryFilesystemAdapter;
 use Nicy\Container\Contracts\Container;
 use Nicy\Support\Manager;
 use Nicy\Framework\Bindings\Filesystem\Contracts\Factory as FilesystemFactory;
@@ -32,8 +33,7 @@ class FilesystemManager extends Manager implements FilesystemFactory
 
     /**
      * @param null|string $name
-     *
-     * @return \League\Flysystem\FilesystemInterface
+     * @return \League\Flysystem\FilesystemOperator
      */
     public function disk($name = null)
     {
@@ -57,71 +57,57 @@ class FilesystemManager extends Manager implements FilesystemFactory
     /**
      * Create an instance of the local driver.
      *
-     * @param array $config
-     *
-     * @return \League\Flysystem\FilesystemInterface
+     * @return \League\Flysystem\FilesystemOperator
      */
     protected function createLocalDriver()
     {
         $config = $this->config;
 
-        $permissions = $config['permissions'] ?? [];
-
         $links = ($config['links'] ?? null) === 'skip'
             ? LocalAdapter::SKIP_LINKS
             : LocalAdapter::DISALLOW_LINKS;
 
+        // Customize how visibility is converted to unix permissions
+        $permissions = PortableVisibilityConverter::fromArray([
+            'file' => [
+                'public' => 0640,
+                'private' => 0604,
+            ],
+            'dir' => [
+                'public' => 0740,
+                'private' => 7604,
+            ],
+        ]);
+
         return $this->createFlysystem(new LocalAdapter(
-            $config['root'], $config['lock'] ?? LOCK_EX, $links, $permissions
+            $config['root'], $permissions, $config['lock'] ?? LOCK_EX, $links
         ), $config);
     }
 
     /**
      * Create a Flysystem instance with the given adapter.
      *
-     * @param \League\Flysystem\AdapterInterface $adapter
+     * @param \League\Flysystem\FilesystemAdapter $adapter
      * @param array $config
-     *
-     * @return \League\Flysystem\FilesystemInterface
+     * @return \League\Flysystem\FilesystemOperator
      */
-    protected function createFlysystem(AdapterInterface $adapter, array $config)
+    protected function createFlysystem(FilesystemAdapter $adapter, array $config)
     {
-        $cache = Arr::pull($config, 'cache');
+        $inMemory = Arr::pull($config, 'in_memory');
 
         $config = Arr::only($config, ['visibility', 'disable_asserts', 'url']);
 
-        if ($cache) {
-            $adapter = new CachedAdapter($adapter, $this->createCacheStore($cache));
+        if ($inMemory) {
+            $adapter = new InMemoryFilesystemAdapter();
         }
 
-        return new Filesystem($adapter, count($config) > 0 ? $config : null);
-    }
-
-    /**
-     * Create a cache store instance.
-     *
-     * @param  mixed  $config
-     * @return \League\Flysystem\Cached\CacheInterface
-     *
-     * @throws \InvalidArgumentException
-     */
-    protected function createCacheStore($config)
-    {
-        if ($config === true) {
-            return new MemoryStore;
-        }
-
-        return $this->container['cache']->set(
-            $config['prefix'] ?? 'flysystem',
-            $config['expire'] ?? null
-        );
+        return new Filesystem($adapter, count($config) > 0 ? $config : []);
     }
 
     /**
      * Get the filesystem connection configuration.
      *
      * @param string $name
-     *
      * @return array
      */
     protected function getConfig($name)

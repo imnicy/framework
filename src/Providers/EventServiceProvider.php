@@ -2,8 +2,7 @@
 
 namespace Nicy\Framework\Providers;
 
-use Closure;
-use InvalidArgumentException;
+use Nicy\Support\Str;
 use Nicy\Framework\Support\ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -34,29 +33,54 @@ class EventServiceProvider extends ServiceProvider
 
         foreach ($this->listen as $event => $listeners) {
             foreach ($listeners as $listener) {
-                $events->listen($event, $this->builderListener($event, $listener));
+                $events->listen($event, $this->makeListener($listener));
             }
         }
     }
 
     /**
-     * @param string $event
-     * @param mixed $listener
+     * Register an event listener with the dispatcher.
      *
-     * @return mixed
+     * @param  \Closure|string  $listener
+     * @return \Closure
      */
-    protected function builderListener($event, $listener)
+    public function makeListener($listener)
     {
-        if ($listener instanceof Closure || is_callable($listener)) {
-            return $listener;
-        }
-        else if (class_exists($listener)) {
-            return new $listener;
+        if (is_string($listener)) {
+            return $this->createClassListener($listener);
         }
 
-        throw new InvalidArgumentException(
-            'A invalid listener for event '.$event.',  Listeners should be ListenerInterface, Closure or callable'
-        );
+        return function ($payload) use ($listener) {
+            return $listener(...array_values($payload));
+        };
+    }
+
+    /**
+     * Create a class based listener using the IoC container.
+     *
+     * @param  string  $listener
+     * @return \Closure
+     */
+    public function createClassListener($listener)
+    {
+        return function ($payload) use ($listener) {
+            return call_user_func_array(
+                $this->createClassCallable($listener), $payload
+            );
+        };
+    }
+
+    /**
+     * Create the class based event callable.
+     *
+     * @param  string  $listener
+     * @return callable
+     */
+    protected function createClassCallable($listener)
+    {
+        [$class, $method] = Str::parseCallback($listener, 'handle');;
+
+        return [$this->container->make($class), $method];
     }
 
     /**
@@ -64,7 +88,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function listens()
+    public function listen()
     {
         return $this->listen;
     }
