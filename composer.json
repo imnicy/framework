@@ -18,7 +18,8 @@
         "slim/psr7": "^1.0",
         "slim/slim": "^4.0",
         "tomasfejfar/enhanced-dump": "^2.1",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "josegonzalez/dotenv": "^3.2"
     },
     "require-dev": {
       "mockery/mockery": "^1.4.2",

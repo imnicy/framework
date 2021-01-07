@@ -1,6 +1,6 @@
 ## Framework
 
-提供了一些很有用的功能, 比如 容器, 依赖注入, 事件, ORM, 文件系统等。
+提供了一些很有用的功能, 比如 路由, 容器, 事件, ORM, 文件系统等。
 
 ### 功能:
 
@@ -10,26 +10,31 @@
 - 配置
 - Cookie
 - 数据库 (`catfan/medoo`)
-- ORM (based on `medoo`, provide two ways to invoke the data model, you can never use ORM at all.)
-- 加密
+- ORM (based on `medoo`, provide two ways to invoke the data model)
+- 加解密
 - 事件 (`league/event`)
 - 文件系统 (`league/flysystem`)
 - Session (with CSRF)
 - 表单验证 (`rakit/validation`)
 - 视图 (`twig/twig`)
-- 一些有用的小组件 (如 Str, Arr, Collection, Manager...等)
+- 其他 (如 Singleton, Str, Arr, Collection, Manager...等)
 
 > 所有的功能都是懒加载的，如果你代码中不需要用到它们，他们永远不会被初始化
 
 ## 关于
 
-这个框架是使用 SlimFramework 和 phpDI 来提供路由请求、响应和容器的。
-即使它有很少的需要依赖的包且代码很简单，但是能完成几乎你在开发过程中碰到的所有场景，而且它也非常容易扩展。
+- 这个框架是使用 Slim-Framework 和 PHP-DI 来提供路由请求、响应和服务容器等基础功能的。
+- 即使它的依赖包很少且代码简单，但是它的功能覆盖了几乎你在开发过程中碰到的所有场景。
+- 它非常容易扩展，通过创建自己的 `ServiceProvider` 然后注册至服务容器中既可以在任何地方使用它。
 
 ### 安装
 
 ```
-composer require imnicy\framework
+  {
+    "require": {
+      "imnicy/framework": "dev-master"
+    }
+  }
 ```
 
 ### 引导
@@ -37,6 +42,12 @@ composer require imnicy\framework
 ```php
 require __DIR__ . '/vendor/autoload.php';
 
+// Setup environment variables
+Nicy\Framework\LoadEnvironment::instance()->register(
+    dirname(__DIR__), '.env'
+)->bootstrap();
+
+// Create framework instance
 $framework = new Nicy\Framework\Main(
     dirname(__DIR__)
 );
@@ -46,18 +57,20 @@ $framework->withFacades();
 
 // Use contracts
 $framework->singleton(
-    Nicy\Framework\Support\Contracts\Handler::class,
+    Nicy\Framework\Exceptions\ExceptionHandler::class,
     Exceptions\Handler::class
 );
 
 // Add some middleware
-$framework->middleware(Events\StartSession::class);
+$framework->middleware(Middleware\StartSession::class);
 
 // Register some service providers
 $framework->register(Providers\EventServiceProvider::class);
 
 // Add some routes
-Route::get('/home', 'HomeController:index');
+Nicy\Framework\Facades\Route::get('/home', 'HomeController:index');
+// ro
+$framework->app()->get('/any', 'HomeController:any');
 
 $framework->run();
 ```
@@ -74,10 +87,10 @@ class HomeController extends Controller
 
     public function index(Arguments $arguments)
     {
-        // write your codes ...
+        // your codes ...
         ...
 
-        // for request params
+        // request params
         $requests = $this->request()->all();
 
         // or
@@ -87,15 +100,13 @@ class HomeController extends Controller
         //      1 | 2 => request && request mode. this is default value.
         $queries = $this->request(1)->only(['name', 'age']);
 
-        // or more...
-
-        // for response
-        return $this->response('contents', $headers = [], $cookies = []);
-        
-        // for route arguments as collection
+        // route arguments as collection
         $arguments->get('name', 'default');
         $arguments->all();
         ...
+
+        // response
+        return $this->response('contents', $headers = [], $cookies = []);
     }
 }
 ```
@@ -105,12 +116,7 @@ class HomeController extends Controller
 定义模型
 
 ```php
-namespace App\Models;
-
-use Nicy\Framework\Support\Model;
-use League\Event\EventInterface as Event;
-
-class Custom extends Model
+class Custom extends Nicy\Framework\Support\Model
 {
     protected $connection = 'default';
     
@@ -123,7 +129,7 @@ class Custom extends Model
     {
         parent::boot();
         
-        static::creating(function(Event $e, Model $model) {
+        static::creating(function(League\Event\EventInterface $e, Nicy\Framework\Support\Model $model) {
             // some code
         });
     }
@@ -133,10 +139,6 @@ class Custom extends Model
 在控制器中使用
 
 ```php
-namespace Http\Controllers;
-
-use Models\Custom;
-
 class CustomController extends Controller
 {
     public function demo(Custom $custom)
@@ -153,7 +155,7 @@ class CustomController extends Controller
         return $instance->paginate(1);
         
         // with some conditions and columns
-        // see medoo ducoments
+        // see medoo documents
         return $instance->all(['name[~]' => 'w%'], 'name, age');
         
         // find a item, fill and update
@@ -167,7 +169,7 @@ class CustomController extends Controller
             $found->delete();
         }
 
-        // for update with conditions
+        // update with conditions
         $instance->update(['name[~]' => 'w%'], ['mobile' => '156...']);
         
         // destroy any items with primary
@@ -176,19 +178,15 @@ class CustomController extends Controller
 }
 ```
 
-如果你不想使用ORM的话，系统中的仓库(Repository)功能也非常方便使用，并且体积更小，运行速度更快：
+如果你不想使用ORM的话，系统中的仓库(Repository)功能也非常方便，并且体积更小，运行速度更快：
 
 ```php
-namespace App\Repositories;
-
-use Nicy\Framework\Support\Repository;
-
-class Custom extends Repository
+class Custom extends Nicy\Framework\Support\Repository
 {
     // if donot set the default connection name, configure `database.php` config, set the database connection default value.
     protected $connection = 'default'; 
 
-    // your table name
+    // table name
     protected $table = 'customs';
 }
 ```
@@ -201,31 +199,28 @@ class Custom extends Repository
 
 ```php
 $container = container();
-
 // or
-Main::instance()->contaner();
+Nicy\Framework\Main::instance()->container();
 ```
 
 从容器获取定义:
 
 ```php
 $definition = container('name');
-
 // or
 $definition = container()->get('name');
-
 // or
-$definition = Main::instance()->container('name');;
+$definition = Nicy\Framework\Main::instance()->container('name');;
 ```
 
 将定义放入容器:
 
 ```php
 // give a callable or instance
-container()->singleton('name', $callable);
+container()->singleton('name', callable $callable);
 
-// or, Set the `$value` parameter to null, will definition a `Support\Helper` instance.
-container()->singleton(Support/Helper::class);
+// or, Set the `$value` parameter to null, will definition a `Your\ClassName` instance.
+container()->singleton(Your/ClassName::class);
 ```
 
 ### Cookie
@@ -233,20 +228,18 @@ container()->singleton(Support/Helper::class);
 将Cookies放入响应:
 
 ```php
-use Nicy\Framework\Support\Traits\ForResponse;
-
 class Controller
 {
-    use ForResponse;
+    use Nicy\Framework\Support\Traits\ForResponse;
 
     public function demo()
     {
-        return $this->response('contents', $headers, $cookies = [
+        return $this->response('contents', array $headers, array $cookies = [
             'token' => 'generate a token string',
         ]]);
         
         // or
-        return $this->response('contents', $headers, $cookies = [
+        return $this->response('contents', array $headers, array $cookies = [
                     set_cookie('token', 'token string')->withDomain('/')->with...,
                 ]]);
     }
@@ -256,17 +249,14 @@ class Controller
 从请求中获取Cookies:
 
 ```php
-use Nick\Framework\Support\Helpers;
-use Nicy\Framework\Facades\Cookie;
-
 class Service
 {
     public function provider()
     {
         $cookie = get_cookie('token', 'default');
         
-        // or use facade
-        $cookie = Cookie::get('token', 'default');
+        // or use Facade
+        $cookie = Nicy\Framework\Facades\Cookie::get('token', 'default');
     }
 }
 ```
@@ -276,11 +266,9 @@ class Service
 定义侦听器:
 
 ```php
-use League\Event\EventInterface as Event;
-
 class AddedListener
 {
-    public function handler(Event $event)
+    public function handler(League\Event\EventInterface $event)
     {
         // some codes
     }
@@ -290,10 +278,7 @@ class AddedListener
 定义事件:
 
 ```php
-use Models\Product;
-use League\Event\AbstractEvent as Event;
-
-class AddedEvent extends Event
+class AddedEvent extends League\Event\AbstractEvent
 {
     public $product;
     
@@ -312,9 +297,9 @@ class AddedEvent extends Event
 触发事件:
 
 ```php
-// in anywhere
+// anywhere
 // event name as custom string or event class name
-container('events')->dispatch('event_name', $payloads = []);
+container('events')->dispatch('event_name', array $payloads);
 ```
 
 在 EventServiceProvider 中定义事件侦听列表
@@ -342,29 +327,24 @@ class EventServiceProvider extends ServiceProvider
 基本使用:
 
 ```php
-use Nicy\Framework\Facades\Disk;
-use Nicy\Framework\Facades\Storage;
-
 container('filesystem')->write('path.txt', 'contents');
 
-// with facade
-Disk::write('path.txt', 'contents');
+// with Facade
+Nicy\Framework\Facades\Disk::write('path.txt', 'contents');
 
 // or
-Storage::driver('file')->write('path.txt', 'contents');
+Nicy\Framework\Facades\Storage::disk('file')->write('path.txt', 'contents');
 ```
 
 you can extend your custom filesystem driver.
 
 ```php
-use Nicy\Framework\Facades\Storage;
-
-Storage::extend('qiniu', function() {
+Nicy\Framework\Facades\Storage::extend('qiniu', function() {
     // some code
 });
 
 // usage
-Storage::driver('qiniu')->put('path.txt', 'contents');
+Nicy\Framework\Facades\Storage::disk('qiniu')->write('path.txt', 'contents');
 ```
 
 更多内容你可以阅读league/flysystem的文档.
@@ -374,17 +354,14 @@ Storage::driver('qiniu')->put('path.txt', 'contents');
 基本使用:
 
 ```php
-use Nicy\Framework\Facades\Session;
-
 session('name', 'default');
 
 // set a session
 session(['name' => 'value']);
 
-// with facade
-Session::put(['name' => 'value']);
-
-Session::get('name', 'default');
+// with Facade
+Nicy\Framework\Facades\Session::put(['name' => 'value']);
+Nicy\Framework\Facades\Session::get('name', 'default');
 ```
 您可以为会话选择文件、缓存或空为处理程序。
 
@@ -394,18 +371,16 @@ Session::get('name', 'default');
 基本使用:
 
 ```php
-use Nicy\Framework\Facades\Validator;
-
-validate($inputs, [
+validate(array $inputs, [
     'name' => 'required',
     'age' => 'required|numeric',
     ...
 ]);
 
-// if fail it will throw a ValidationException.
+// throw a ValidationException if fails.
 
 // with Facade
-$validator = Validator::make($inputs, $rules);
+$validator = Nicy\Framework\Facades\Validator::make(array $inputs, array $rules);
 
 if ($validator->fails()) {
     // some code
@@ -420,16 +395,14 @@ if ($validator->fails()) {
 基本使用:
 
 ```php
-use Nicy\Framework\Facades\View;
-
 class Controller
 {
     public function display()
     {
-        return view('index.latte', $parameters);
+        return view('index.twig', array $parameters);
         
         // with Facade
-        return View::render('resource/home/index.twig', $parameters);
+        return Nicy\Framework\Facades\View::render('resource/home/index.twig', $parameters);
     }
 }
 ```

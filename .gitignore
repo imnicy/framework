@@ -5,3 +5,4 @@
 /storage
 /resources
 .phpunit.result.cache
+.env
