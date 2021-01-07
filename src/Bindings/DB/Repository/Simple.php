@@ -55,7 +55,7 @@ abstract class Simple implements SimpleRepositoryInterface
      */
     public function newQuery()
     {
-        return Main::getInstance()->container('db')->connection($this->connection)->simpling();
+        return Main::instance()->container('db')->connection($this->connection)->simpling();
     }
 
     /**

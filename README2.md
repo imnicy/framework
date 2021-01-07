@@ -24,7 +24,7 @@
 ## 关于
 
 这个框架是使用 SlimFramework 和 phpDI 来提供路由请求、响应和容器的。
-即使它有很少的需要依赖的包且代码很简单，但是能完成几乎你在开发过程中碰到的所有场景，而且它是非常容易扩展的，希望你能喜欢它。
+即使它有很少的需要依赖的包且代码很简单，但是能完成几乎你在开发过程中碰到的所有场景，而且它也非常容易扩展。
 
 ### 安装
 
@@ -47,14 +47,14 @@ $framework->withFacades();
 // Use contracts
 $framework->singleton(
     Nicy\Framework\Support\Contracts\Handler::class,
-    App\Exceptions\Handler::class
+    Exceptions\Handler::class
 );
 
 // Add some middleware
-$framework->middleware(App\Events\StartSession::class);
+$framework->middleware(Events\StartSession::class);
 
 // Register some service providers
-$framework->register(App\Providers\EventServiceProvider::class);
+$framework->register(Providers\EventServiceProvider::class);
 
 // Add some routes
 Route::get('/home', 'HomeController:index');
@@ -65,9 +65,8 @@ $framework->run();
 ### 控制器
 
 ```php
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Nicy\Framework\Support\Contracts\Router\Arguments;
-use Nicy\Framework\Support\Traits\{ForRequest, ForResponse}
+use Nicy\Framework\Support\Traits\{ForRequest, ForResponse};
 
 class HomeController extends Controller
 {
@@ -134,9 +133,9 @@ class Custom extends Model
 在控制器中使用
 
 ```php
-namespace App\Http\Controllers;
+namespace Http\Controllers;
 
-use App\Models\Custom;
+use Models\Custom;
 
 class CustomController extends Controller
 {
@@ -167,11 +166,11 @@ class CustomController extends Controller
             // delete item
             $found->delete();
         }
-        
+
         // for update with conditions
         $instance->update(['name[~]' => 'w%'], ['mobile' => '156...']);
         
-        // destroy any items
+        // destroy any items with primary
         $instance->destroy([1,2,3,4]);
     }
 }
@@ -204,7 +203,7 @@ class Custom extends Repository
 $container = container();
 
 // or
-Main::getInstance()->contaner();
+Main::instance()->contaner();
 ```
 
 从容器获取定义:
@@ -216,14 +215,14 @@ $definition = container('name');
 $definition = container()->get('name');
 
 // or
-$definition = Main::getInstance()->container('name');;
+$definition = Main::instance()->container('name');;
 ```
 
 将定义放入容器:
 
 ```php
 // give a callable or instance
-container()->singleton('name', Callable $callable);
+container()->singleton('name', $callable);
 
 // or, Set the `$value` parameter to null, will definition a `Support\Helper` instance.
 container()->singleton(Support/Helper::class);
@@ -234,11 +233,11 @@ container()->singleton(Support/Helper::class);
 将Cookies放入响应:
 
 ```php
-use Nick\Framework\Support\Traits;
+use Nicy\Framework\Support\Traits\ForResponse;
 
 class Controller
 {
-    use Traits\ForResponse;
+    use ForResponse;
 
     public function demo()
     {
@@ -247,7 +246,6 @@ class Controller
         ]]);
         
         // or
-        
         return $this->response('contents', $headers, $cookies = [
                     set_cookie('token', 'token string')->withDomain('/')->with...,
                 ]]);
@@ -259,6 +257,7 @@ class Controller
 
 ```php
 use Nick\Framework\Support\Helpers;
+use Nicy\Framework\Facades\Cookie;
 
 class Service
 {
@@ -267,7 +266,7 @@ class Service
         $cookie = get_cookie('token', 'default');
         
         // or use facade
-        $cookie = Nicy\Framework\Facades\Cookie::get('token', 'default');
+        $cookie = Cookie::get('token', 'default');
     }
 }
 ```
@@ -277,9 +276,11 @@ class Service
 定义侦听器:
 
 ```php
+use League\Event\EventInterface as Event;
+
 class AddedListener
 {
-    public function handler(AddedEvent $event)
+    public function handler(Event $event)
     {
         // some codes
     }
@@ -289,12 +290,12 @@ class AddedListener
 定义事件:
 
 ```php
-use App\Models\Product;
+use Models\Product;
 use League\Event\AbstractEvent as Event;
 
-class AddedEvent extend Event
+class AddedEvent extends Event
 {
-    protected $product;
+    public $product;
     
     public function __construct(Product $product)
     {
@@ -321,7 +322,7 @@ container('events')->dispatch('event_name', $payloads = []);
 ```php
 use Nicy\Framework\Providers\EventServiceProvider as ServiceProvider;
 
-class EventServiceProvider extend ServiceProvider
+class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
         // for event name
@@ -341,18 +342,23 @@ class EventServiceProvider extend ServiceProvider
 基本使用:
 
 ```php
-container('filesystem')->put('path.txt', 'contents');
+use Nicy\Framework\Facades\Disk;
+use Nicy\Framework\Facades\Storage;
+
+container('filesystem')->write('path.txt', 'contents');
 
 // with facade
-Disk::put('path.txt', 'contents');
+Disk::write('path.txt', 'contents');
 
 // or
-Storage::driver('file')->put('path.txt', 'contents');
+Storage::driver('file')->write('path.txt', 'contents');
 ```
 
 you can extend your custom filesystem driver.
 
 ```php
+use Nicy\Framework\Facades\Storage;
+
 Storage::extend('qiniu', function() {
     // some code
 });
@@ -368,6 +374,8 @@ Storage::driver('qiniu')->put('path.txt', 'contents');
 基本使用:
 
 ```php
+use Nicy\Framework\Facades\Session;
+
 session('name', 'default');
 
 // set a session
@@ -386,6 +394,8 @@ Session::get('name', 'default');
 基本使用:
 
 ```php
+use Nicy\Framework\Facades\Validator;
+
 validate($inputs, [
     'name' => 'required',
     'age' => 'required|numeric',
@@ -395,7 +405,7 @@ validate($inputs, [
 // if fail it will throw a ValidationException.
 
 // with Facade
-$validator = Validator::make($inputs, $rules = []);
+$validator = Validator::make($inputs, $rules);
 
 if ($validator->fails()) {
     // some code
@@ -410,14 +420,16 @@ if ($validator->fails()) {
 基本使用:
 
 ```php
+use Nicy\Framework\Facades\View;
+
 class Controller
 {
     public function display()
     {
-        return view('index.latte', $parameters=[]);
+        return view('index.latte', $parameters);
         
         // with Facade
-        return View::render('resource/home/index.twig', $parameters=[]);
+        return View::render('resource/home/index.twig', $parameters);
     }
 }
 ```

@@ -25,7 +25,7 @@ class VerifyCsrfToken
      *
      * @var \Nicy\Framework\Bindings\Encryption\Contracts\Encrypter
      */
-    protected $encrypter;
+    protected $encryption;
 
     /**
      * Indicates whether the XSRF-TOKEN cookie should be set on the response.
@@ -44,7 +44,7 @@ class VerifyCsrfToken
     {
         $this->container = $container;
 
-        $this->encrypter = $this->container['encrypter'];
+        $this->encryption = $this->container['encryption'];
     }
 
     /**
@@ -147,7 +147,7 @@ class VerifyCsrfToken
         $token = $requestToken ?: $request->getHeaderLine('X-CSRF-TOKEN');
 
         if (! $token && $header = $request->getHeaderLine('X-XSRF-TOKEN')) {
-            $token = $this->encrypter->decrypt($header, false);
+            $token = $this->encryption->decrypt($header, false);
         }
 
         return $token;

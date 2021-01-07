@@ -35,7 +35,7 @@ class RequestResponse implements InvocationStrategyInterface
             $request = $request->withAttribute($k, $v);
         }
 
-        $container = Main::getInstance()->container();
+        $container = Main::instance()->container();
 
         $container->singleton('Psr\Http\Message\ServerRequestInterface', $request);
         $container->singleton('Nicy\Framework\Support\Contracts\Router\Arguments', function() use($routeArguments) {

@@ -7,20 +7,12 @@ use Nicy\Support\Str;
 use Nicy\Container\Manager;
 use Nicy\Framework\Container as FrameworkContainer;
 use Nicy\Container\Contracts\Container as ContainerContract;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Slim\Factory\AppFactory;
 use Slim\App as SlimApplication;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Nicy\Framework\Concerns\{FacadeTrait, RouterTrait, RegistersExceptionHandlers, RoutesRequests};
 
-/**
- * Class Main
- * @package Nicy\Framework
- *
- * @mixin \Nicy\Framework\Container
- */
 class Main
 {
     use RouterTrait,
@@ -80,6 +72,7 @@ class Main
 
         $this->bootstrapContainer();
         $this->configure('app');
+
         $this->registerErrorHandling();
         $this->bootstrapSlimApp();
     }
@@ -100,7 +93,7 @@ class Main
      *
      * @return \Nicy\Framework\Main
      */
-    public static function getInstance()
+    public static function instance()
     {
         return static::$instance;
     }

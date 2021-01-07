@@ -15,8 +15,7 @@ class EncryptionServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->container->singleton('encrypter', function () {
-
+        $this->container->singleton('encryption', function () {
             $config = $this->container['config']['app'];
 
             // If the key starts with "base64:", we will need to decode the key before handing
@@ -30,7 +29,7 @@ class EncryptionServiceProvider extends ServiceProvider
         });
 
         $this->container->singleton('Nicy\Framework\Bindings\Encryption\Contracts\Encrypter', function() {
-            return $this->container['encrypter'];
+            return $this->container['encryption'];
         });
     }
 

@@ -43,7 +43,7 @@ abstract class ServiceProvider implements Provider
      */
     protected function mergeConfigFrom($name, $key)
     {
-        Main::getInstance()->configure($name);
+        Main::instance()->configure($name);
 
         $config = $this->container['config']->get($key, []);
 

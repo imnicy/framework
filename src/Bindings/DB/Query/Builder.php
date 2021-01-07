@@ -62,7 +62,7 @@ class Builder extends Medoo
     {
         if (($error = $this->error()) && $error[1] && static::$errorThrowable) {
             // Dispatch a query error event, if query has error info.
-            Main::getInstance()->container('events')->dispatch('db.query.error', $error);
+            Main::instance()->container('events')->dispatch('db.query.error', $error);
 
             throw new QueryException($error[2]);
         }
@@ -79,7 +79,7 @@ class Builder extends Medoo
     public function exec($query, $map=[])
     {
         // Dispatch a query sql statements log, when sql running.
-        Main::getInstance()->container('events')->dispatch('db.query.sql',$sql = parent::generate($query, $map));
+        Main::instance()->container('events')->dispatch('db.query.sql',$sql = parent::generate($query, $map));
 
         $statement = parent::exec($query, $map);
         $this->prepareQueryWithError();

@@ -72,6 +72,6 @@ class Response
      */
     public static function responseWithCookie($contents, SetCookie $cookie)
     {
-        return Main::getInstance()->container('cookie')->setOnResponse(static::prepare($contents), $cookie);
+        return Main::instance()->container('cookie')->setOnResponse(static::prepare($contents), $cookie);
     }
 }

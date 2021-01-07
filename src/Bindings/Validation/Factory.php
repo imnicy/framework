@@ -48,7 +48,7 @@ class Factory
         if ($validation->fails()) {
 
             // Dispatch a validate failed event
-            Main::getInstance()->container('events')->dispatch('validate.fail', $validation->errors);
+            Main::instance()->container('events')->dispatch('validate.fail', $validation->errors);
 
             throw new ValidationException(
                 $validation,

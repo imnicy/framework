@@ -16,10 +16,9 @@ class SessionServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Main::getInstance()->configure('session');
+        Main::instance()->configure('session');
 
         $this->registerSessionManager();
-
         $this->registerSessionDriver();
 
         if ($this->container['config']['session.csrf_enable']) {

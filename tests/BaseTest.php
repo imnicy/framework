@@ -79,10 +79,11 @@ class BaseTest extends TestCase
     public function testEncryption()
     {
         $framework = $this->getFramework();
-        $encryption = $framework->get('encrypter');
+        $encryption = $framework->get('encryption');
 
         $encrypted = $encryption->encrypt('secret');
 
+        $this->assertNotEquals($encrypted, 'secret');
         $this->assertEquals($encryption->decrypt($encrypted), 'secret');
     }
 

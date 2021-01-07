@@ -8,7 +8,7 @@ if (! function_exists('main')) {
      */
     function main()
     {
-        return Nicy\Framework\Main::getInstance();
+        return Nicy\Framework\Main::instance();
     }
 }
 

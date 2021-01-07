@@ -145,7 +145,7 @@ class LogManager implements LoggerInterface
     protected function createEmergencyLogger()
     {
         return new Logger(new Monolog('framework', $this->prepareHandlers([new StreamHandler(
-            Main::getInstance()->path('/storage/logs/framework.log'), $this->level(['level' => 'debug'])
+            Main::instance()->path('/storage/logs/framework.log'), $this->level(['level' => 'debug'])
         )])));
     }
 

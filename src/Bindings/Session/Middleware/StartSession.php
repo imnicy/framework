@@ -24,7 +24,7 @@ class StartSession
     /**
      * Constructor
      *
-     * @param array $settings
+     * @param Container $container
      */
     public function __construct(Container $container)
     {
@@ -41,7 +41,6 @@ class StartSession
         ];
 
         if ($this->sessionConfigured()) {
-
             $this->settings = array_merge($defaults, $this->container['config']['session']);
 
             if (is_string($lifetime = $this->settings['lifetime'])) {
@@ -64,13 +63,11 @@ class StartSession
      * Get the session implementation from the container.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     *
      * @return \Nicy\Framework\Bindings\Session\Store
      */
     public function getSession(Request $request)
     {
         return tap($this->container['session.store'], function (Store $session) use ($request) {
-
             $session->setId($this->container['cookie']->getFromRequest($request, $session->getName()));
         });
     }
@@ -80,13 +77,11 @@ class StartSession
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request PSR7 request
      * @param \Psr\Http\Server\RequestHandlerInterface $handler PSR7 handler
-     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
         if ($this->sessionConfigured()) {
-
             $this->startSession($request);
 
             $sessionStore = $this->container['session.store'];
@@ -103,7 +98,6 @@ class StartSession
             $this->storeCurrentUrl($request, $sessionStore);
 
             $response = $this->addCookieToResponse($response, $sessionStore);
-
             $sessionStore->save();
         }
 
@@ -115,7 +109,6 @@ class StartSession
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request PSR7 request
      * @param \Nicy\Framework\Bindings\Session\Store $session
-     *
      * @return void
      */
     protected function storeCurrentUrl($request, $session)
@@ -135,7 +128,6 @@ class StartSession
      *
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param \Nicy\Framework\Bindings\Session\Store $session
-     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function addCookieToResponse(Response $response, Store $session)
@@ -157,7 +149,6 @@ class StartSession
      * Determine if the configured session driver is persistent.
      *
      * @param array|null $config
-     *
      * @return bool
      */
     protected function sessionIsPersistent(array $config)
@@ -169,13 +160,11 @@ class StartSession
      * Start session
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     *
      * @return void
      */
     protected function startSession(Request $request)
     {
         return tap($this->getSession($request), function (Store $session) {
-
             $session->start();
         });
     }

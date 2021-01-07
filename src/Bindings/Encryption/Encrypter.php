@@ -24,7 +24,7 @@ class Encrypter implements EncrypterContract
     protected $cipher;
 
     /**
-     * Create a new encrypter instance.
+     * Create a new encryption instance.
      *
      * @param  string  $key
      * @param  string  $cipher

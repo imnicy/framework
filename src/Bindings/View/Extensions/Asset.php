@@ -44,7 +44,7 @@ class Asset implements FunctionInterface
      */
     public function from($url)
     {
-        $main = Main::getInstance();
+        $main = Main::instance();
 
         $path = $this->path . DIRECTORY_SEPARATOR .  ltrim($url, DIRECTORY_SEPARATOR);
 

@@ -38,7 +38,7 @@ class Handler implements ExceptionHandler
         }
 
         try {
-            $logger = Main::getInstance()->container('logger');
+            $logger = Main::instance()->container('logger');
         } catch (Exception $ex) {
             throw $e; // throw the original exception
         }
@@ -96,7 +96,7 @@ class Handler implements ExceptionHandler
 
         $renderer = $this->getRenderer();
 
-        $body = call_user_func($renderer, $e, Main::getInstance()->container('config')->get('app.debug', false));
+        $body = call_user_func($renderer, $e, Main::instance()->container('config')->get('app.debug', false));
 
         $response->getBody()->write($body);
 
@@ -116,7 +116,7 @@ class Handler implements ExceptionHandler
             $code = $e->getCode();
         }
 
-        return Main::getInstance()->app()->getResponseFactory()->createResponse($code);
+        return Main::instance()->app()->getResponseFactory()->createResponse($code);
     }
 
     /**
@@ -124,7 +124,7 @@ class Handler implements ExceptionHandler
      */
     protected function getRenderer()
     {
-        return Main::getInstance()->app()->getCallableResolver()->resolve(
+        return Main::instance()->app()->getCallableResolver()->resolve(
             $this->defaultRenderer
         );
     }

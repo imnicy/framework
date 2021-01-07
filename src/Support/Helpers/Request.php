@@ -60,7 +60,7 @@ class Request
      */
     public static function getRequest()
     {
-        return Main::getInstance()->container('request');
+        return Main::instance()->container('request');
     }
 
     /**
@@ -174,7 +174,7 @@ class Request
             }
         }
 
-        $filesystemManager = Main::getInstance()->container('filesystem');
+        $filesystemManager = Main::instance()->container('filesystem');
         $filesystem = $filesystemManager->disk($disk);
 
         if ($file->getError() === UPLOAD_ERR_OK) {

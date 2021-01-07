@@ -96,7 +96,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      */
     protected static function boot()
     {
-        static::setEventDispatcher(Main::getInstance()->container('events'));
+        static::setEventDispatcher(Main::instance()->container('events'));
     }
 
     /**
@@ -352,7 +352,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      */
     public function newQuery()
     {
-        $query = Main::getInstance()->container('db')->connection($this->connection)->simpling(false);
+        $query = Main::instance()->container('db')->connection($this->connection)->simpling(false);
 
         return $query->setRepository($this);
     }

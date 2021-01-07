@@ -189,42 +189,42 @@ class Container extends DiContainer
 
     protected function registerCacheBindings()
     {
-        Main::getInstance()->loadComponent('Nicy\Framework\Bindings\Cache\CacheServiceProvider', 'cache');
+        Main::instance()->loadComponent('Nicy\Framework\Bindings\Cache\CacheServiceProvider', 'cache');
     }
 
     protected function registerDatabaseBindings()
     {
-        Main::getInstance()->loadComponent('Nicy\Framework\Bindings\DB\DatabaseServiceProvider', 'database');
+        Main::instance()->loadComponent('Nicy\Framework\Bindings\DB\DatabaseServiceProvider', 'database');
     }
 
     protected function registerEventsBindings()
     {
-        Main::getInstance()->loadComponent('Nicy\Framework\Bindings\Events\EventServiceProvider');
+        Main::instance()->loadComponent('Nicy\Framework\Bindings\Events\EventServiceProvider');
     }
 
     protected function registerValidationBindings()
     {
-        Main::getInstance()->loadComponent('Nicy\Framework\Bindings\Validation\ValidationServiceProvider');
+        Main::instance()->loadComponent('Nicy\Framework\Bindings\Validation\ValidationServiceProvider');
     }
 
     protected function registerLoggingBindings()
     {
-        Main::getInstance()->loadComponent('Nicy\Framework\Bindings\Log\LogServiceProvider', 'logging');
+        Main::instance()->loadComponent('Nicy\Framework\Bindings\Log\LogServiceProvider', 'logging');
     }
 
     protected function registerViewBindings()
     {
-        Main::getInstance()->loadComponent('Nicy\Framework\Bindings\View\ViewServiceProvider', 'view');
+        Main::instance()->loadComponent('Nicy\Framework\Bindings\View\ViewServiceProvider', 'view');
     }
 
     protected function registerFilesystemBindings()
     {
-        Main::getInstance()->loadComponent('Nicy\Framework\Bindings\Filesystem\FilesystemServiceProvider', 'filesystem');
+        Main::instance()->loadComponent('Nicy\Framework\Bindings\Filesystem\FilesystemServiceProvider', 'filesystem');
     }
 
     protected function registerEncryptionBindings()
     {
-        Main::getInstance()->loadComponent('Nicy\Framework\Bindings\Encryption\EncryptionServiceProvider', 'app');
+        Main::instance()->loadComponent('Nicy\Framework\Bindings\Encryption\EncryptionServiceProvider', 'app');
     }
 
     protected function getRequestAliasesBindings()
@@ -255,7 +255,7 @@ class Container extends DiContainer
         'view'              => 'registerViewBindings',
         'filesystem'        => 'registerFilesystemBindings',
         'filesystem.disk'   => 'registerFilesystemBindings',
-        'encrypter'         => 'registerEncryptionBindings',
+        'encryption'         => 'registerEncryptionBindings',
         'request'           => 'getRequestAliasesBindings',
 
         'Nicy\Framework\Bindings\Events\Contracts\Dispatcher' => 'registerEventsBindings',
