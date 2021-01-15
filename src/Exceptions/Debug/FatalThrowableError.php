@@ -4,7 +4,7 @@ namespace Nicy\Framework\Exceptions\Debug;
 
 class FatalThrowableError extends FatalErrorException
 {
-    private $originalClassName;
+    private string $originalClassName;
 
     public function __construct(\Throwable $e)
     {

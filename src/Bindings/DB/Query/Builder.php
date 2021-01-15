@@ -16,13 +16,25 @@ class Builder extends Medoo
      */
     public $simple = true;
 
-    public static $errorThrowable = true;
+    /**
+     * @var bool
+     */
+    public static bool $errorThrowable = true;
 
     /**
      * @var \Nicy\Framework\Bindings\DB\Repository\Base
      */
     protected $repository;
 
+    /**
+     * Query handler
+     *
+     * @param string $table
+     * @param string $join
+     * @param string|array $columns
+     * @param string|array $where
+     * @return array|\Nicy\Framework\Bindings\DB\Repository\Collection
+     */
     public function select($table, $join, $columns=null, $where=null)
     {
         $result = parent::select($table, $join, $columns, $where);
@@ -34,6 +46,15 @@ class Builder extends Medoo
         return $result;
     }
 
+    /**
+     * Result from query handler
+     *
+     * @param string $table
+     * @param string $join
+     * @param string|array $columns
+     * @param string|array $where
+     * @return Base
+     */
     public function get($table, $join=null, $columns=null, $where=null)
     {
         $result = parent::get($table, $join, $columns, $where);
@@ -73,7 +94,6 @@ class Builder extends Medoo
      *
      * @param string $query
      * @param array $map
-     *
      * @return bool|\PDOStatement
      */
     public function exec($query, $map=[])
@@ -91,7 +111,6 @@ class Builder extends Medoo
      * Create a collection of repositories from plain arrays.
      *
      * @param array $items
-     *
      * @return \Nicy\Framework\Bindings\DB\Repository\Collection
      */
     public function hydrate(array $items)
@@ -115,7 +134,6 @@ class Builder extends Medoo
      * Set a repository instance for the repository being queried.
      *
      * @param \Nicy\Framework\Bindings\DB\Repository\Base $repository
-     *
      * @return $this
      */
     public function setRepository(Base $repository)
@@ -128,7 +146,6 @@ class Builder extends Medoo
      * Set the simple to given state
      *
      * @param bool $state
-     *
      * @return Builder
      */
     public function simpling($state=true)
@@ -141,7 +158,6 @@ class Builder extends Medoo
      * Create a new instance of the repository being queried.
      *
      * @param array $attributes
-     *
      * @return \Nicy\Framework\Bindings\DB\Repository\Base|static
      */
     public function newRepositoryInstance($attributes=[])

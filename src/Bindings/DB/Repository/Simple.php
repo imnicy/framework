@@ -31,8 +31,7 @@ abstract class Simple implements SimpleRepositoryInterface
     /**
      * @param array $conditions
      * @param string $columns
-     *
-     * @return array|bool|mixed
+     * @return array|mixed
      */
     public function all(array $conditions=[], $columns='*')
     {
@@ -42,7 +41,6 @@ abstract class Simple implements SimpleRepositoryInterface
     /**
      * @param array $conditions
      * @param string $columns
-     *
      * @return mixed
      */
     public function one(array $conditions=[], $columns='*')
@@ -60,7 +58,6 @@ abstract class Simple implements SimpleRepositoryInterface
 
     /**
      * @param array $attributes
-     *
      * @return bool
      */
     public function create(array $attributes=[]) :bool
@@ -72,7 +69,6 @@ abstract class Simple implements SimpleRepositoryInterface
 
     /**
      * @param array $rows
-     *
      * @return bool
      */
     public function insert(array $rows=[])
@@ -84,7 +80,6 @@ abstract class Simple implements SimpleRepositoryInterface
 
     /**
      * @param array $condition
-     *
      * @return bool
      */
     public function delete($condition=[]): bool
@@ -97,7 +92,6 @@ abstract class Simple implements SimpleRepositoryInterface
     /**
      * @param array $attributes
      * @param array $conditions
-     *
      * @return bool
      */
     public function update($attributes=[], $conditions=[]): bool

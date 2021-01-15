@@ -4,7 +4,7 @@
     "license": "MIT",
     "homepage": "https://framework.imnicy.com",
     "require": {
-        "php": ">=7.3",
+        "php": "^7.4|^8.0",
         "catfan/medoo": "^1.7",
         "dflydev/fig-cookies": "^2.0",
         "imnicy/container": "^1.0",

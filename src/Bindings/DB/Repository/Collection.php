@@ -13,7 +13,6 @@ class Collection extends SupportCollection
      *
      * @param mixed $key
      * @param mixed $default
-     *
      * @return \Nicy\Framework\Bindings\DB\Repository\Base|static|null
      */
     public function find($key, $default=null)
@@ -45,7 +44,6 @@ class Collection extends SupportCollection
      * @param mixed $key
      * @param mixed $operator
      * @param mixed $value
-     *
      * @return bool
      */
     public function contains($key, $operator=null, $value=null)
@@ -81,7 +79,6 @@ class Collection extends SupportCollection
      * Merge the collection with the given items.
      *
      * @param \ArrayAccess|array $items
-     *
      * @return static
      */
     public function merge($items)
@@ -99,7 +96,6 @@ class Collection extends SupportCollection
      * Run a map over each of the items.
      *
      * @param callable $callback
-     *
      * @return \Nicy\Support\Collection|static
      */
     public function map(callable $callback)
@@ -115,7 +111,6 @@ class Collection extends SupportCollection
      * Diff the collection with the given items.
      *
      * @param \ArrayAccess|array $items
-     *
      * @return static
      */
     public function diff($items)
@@ -137,7 +132,6 @@ class Collection extends SupportCollection
      * Intersect the collection with the given items.
      *
      * @param \ArrayAccess|array $items
-     *
      * @return static
      */
     public function intersect($items)
@@ -160,7 +154,6 @@ class Collection extends SupportCollection
      *
      * @param string|callable|null $key
      * @param bool $strict
-     *
      * @return static|\Nicy\Support\Collection
      */
     public function unique($key=null, $strict=false)
@@ -176,7 +169,6 @@ class Collection extends SupportCollection
      * Returns only the repositories from the collection with the specified keys.
      *
      * @param mixed $keys
-     *
      * @return static
      */
     public function only($keys)
@@ -194,7 +186,6 @@ class Collection extends SupportCollection
      * Returns all repositories in the collection except the repositories with specified keys.
      *
      * @param mixed $keys
-     *
      * @return static
      */
     public function except($keys)
@@ -208,7 +199,6 @@ class Collection extends SupportCollection
      * Make the given, typically visible, attributes hidden across the entire collection.
      *
      * @param array|string $attributes
-     *
      * @return $this
      */
     public function makeHidden($attributes)
@@ -220,7 +210,6 @@ class Collection extends SupportCollection
      * Make the given, typically hidden, attributes visible across the entire collection.
      *
      * @param array|string $attributes
-     *
      * @return $this
      */
     public function makeVisible($attributes)
@@ -232,7 +221,6 @@ class Collection extends SupportCollection
      * Get a dictionary keyed by primary keys.
      *
      * @param \ArrayAccess|array|null $items
-     *
      * @return array
      */
     public function getDictionary($items=null)
@@ -253,7 +241,6 @@ class Collection extends SupportCollection
      *
      * @param string $value
      * @param string|null $key
-     *
      * @return \Nicy\Support\Collection
      */
     public function pluck($value, $key=null)
@@ -275,7 +262,6 @@ class Collection extends SupportCollection
      * Zip the collection together with one or more arrays.
      *
      * @param mixed ...$items
-     *
      * @return \Nicy\Support\Collection
      */
     public function zip($items)
@@ -297,7 +283,6 @@ class Collection extends SupportCollection
      * Get a flattened array of the items in the collection.
      *
      * @param int $depth
-     *
      * @return \Nicy\Support\Collection
      */
     public function flatten($depth=INF)
@@ -320,7 +305,6 @@ class Collection extends SupportCollection
      *
      * @param int $size
      * @param mixed $value
-     *
      * @return \Nicy\Support\Collection
      */
     public function pad($size, $value)
@@ -332,7 +316,6 @@ class Collection extends SupportCollection
      * Get the comparison function to detect duplicates.
      *
      * @param bool $strict
-     *
      * @return \Closure
      */
     protected function duplicateComparator($strict)

@@ -102,7 +102,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @param array $conditions
      * @param string $columns
-     *
      * @return Collection|mixed
      */
     public function all(array $conditions=[], $columns='*')
@@ -113,7 +112,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @param array $conditions
      * @param string $columns
-     *
      * @return Collection|mixed
      */
     public function one(array $conditions=[], $columns='*')
@@ -123,7 +121,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
 
     /**
      * @param array $attributes
-     *
      * @return RepositoryInterface
      */
     public function create(array $attributes=[]): RepositoryInterface
@@ -137,7 +134,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
 
     /**
      * @param array $rows
-     *
      * @return bool
      */
     public function insert(array $rows=[])
@@ -150,7 +146,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @param array $attributes
      * @param array $conditions
-     *
      * @return bool
      */
     public function update($attributes=[], $conditions=[]): bool
@@ -188,7 +183,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
 
     /**
      * @param array $ids
-     *
      * @return bool
      */
     public function destroy(array $ids=[]): bool
@@ -200,7 +194,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
 
     /**
      * @param array $options
-     *
      * @return bool
      */
     public function save(array $options=[]): bool
@@ -233,7 +226,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * Perform a model insert operation.
      *
      * @param \Nicy\Framework\Bindings\DB\Query\Builder $query
-     *
      * @return bool
      */
     protected function performInsert(Builder $query)
@@ -265,7 +257,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * Perform a model update operation.
      *
      * @param \Nicy\Framework\Bindings\DB\Query\Builder $query
-     *
      * @return bool
      */
     protected function performUpdate(Builder $query)
@@ -311,7 +302,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
 
     /**
      * @param array $attributes
-     *
      * @return RepositoryInterface
      */
     public function fill(array $attributes=[]): RepositoryInterface
@@ -339,7 +329,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * Remove the table name from a given key.
      *
      * @param string $key
-     *
      * @return string
      */
     protected function removeTableFromKey($key)
@@ -382,8 +371,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
-     * @param array|null $with
-     *
+     * @param array $with
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     public static function query(array $with=[])
@@ -404,7 +392,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @param array $attributes
      * @param bool $exists
-     *
      * @return static
      */
     public function newInstance($attributes=[], $exists=false)
@@ -438,7 +425,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * Determine if two repositories have the same ID and belong to the same table.
      *
      * @param \Nicy\Framework\Bindings\DB\Repository\Base|null $repository
-     *
      * @return bool
      */
     public function is($repository)
@@ -452,8 +438,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * Set the connection associated with the repository.
      *
-     * @param string|null $name
-     *
+     * @param string $name
      * @return $this
      */
     public function setConnection($name)
@@ -467,7 +452,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * Set the table associated with the repository.
      *
      * @param string $table
-     *
      * @return $this
      */
     public function setTable($table)
@@ -478,8 +462,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
-     * @param array|mixed $data
-     *
+     * @param mixed $data
      * @return \Nicy\Framework\Bindings\DB\Repository\Collection
      */
     public function newCollection($data)
@@ -501,7 +484,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * Determine if the given attribute exists.
      *
      * @param mixed $offset
-     *
      * @return bool
      */
     public function offsetExists($offset)
@@ -513,7 +495,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * Get the value for a given offset.
      *
      * @param mixed $offset
-     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -526,7 +507,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @param mixed $offset
      * @param mixed $value
-     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -538,7 +518,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * Unset the value for a given offset.
      *
      * @param mixed $offset
-     *
      * @return void
      */
     public function offsetUnset($offset)
@@ -551,7 +530,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @param string $method
      * @param array $parameters
-     *
      * @return mixed
      */
     public function __call($method, $parameters)
@@ -560,7 +538,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
-     * @return string|void
+     * @return string
      */
     public function __toString()
     {
@@ -571,7 +549,6 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * Convert the repository instance to JSON.
      *
      * @param int $options
-     *
      * @return string
      * @throws \RuntimeException
      */

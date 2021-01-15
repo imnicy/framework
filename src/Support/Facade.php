@@ -11,14 +11,14 @@ abstract class Facade
      *
      * @var \Nicy\Container\Contracts\Container
      */
-    protected static $container;
+    protected static \Nicy\Container\Contracts\Container $container;
 
     /**
      * The resolved object instances.
      *
      * @var array
      */
-    protected static $resolvedInstance;
+    protected static array $resolvedInstance;
 
     /**
      * Hotswap the underlying instance behind the facade.
@@ -61,7 +61,6 @@ abstract class Facade
      * Resolve the facade root instance from the container.
      *
      * @param object|string $name
-     *
      * @return mixed
      */
     protected static function resolveFacadeInstance($name)
@@ -91,7 +90,6 @@ abstract class Facade
      * Set the container instance.
      *
      * @param \Nicy\Container\Contracts\Container $container
-     *
      * @return void
      */
     public static function setFacadeContainer($container)
@@ -104,9 +102,7 @@ abstract class Facade
      *
      * @param string $method
      * @param array $args
-     *
      * @return mixed
-     *
      * @throws \RuntimeException
      */
     public static function __callStatic($method, $args)

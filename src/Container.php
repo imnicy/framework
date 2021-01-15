@@ -148,6 +148,9 @@ class Container extends DiContainer
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerConfigBindings()
     {
         $this->singleton('config', function () {
@@ -155,6 +158,9 @@ class Container extends DiContainer
         });
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerCookieBindings()
     {
         return $this->singleton('cookie', function() {
@@ -162,6 +168,9 @@ class Container extends DiContainer
         });
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerAppBindings()
     {
         $this->singleton('app', function() {
@@ -169,6 +178,9 @@ class Container extends DiContainer
         });
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerRoutingBindings()
     {
         $this->singleton('router', function() {
@@ -180,6 +192,9 @@ class Container extends DiContainer
         });
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerUrlBindings()
     {
         $this->singleton('url', function() {
@@ -187,46 +202,73 @@ class Container extends DiContainer
         });
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerCacheBindings()
     {
         Main::instance()->loadComponent('Nicy\Framework\Bindings\Cache\CacheServiceProvider', 'cache');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerDatabaseBindings()
     {
         Main::instance()->loadComponent('Nicy\Framework\Bindings\DB\DatabaseServiceProvider', 'database');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerEventsBindings()
     {
         Main::instance()->loadComponent('Nicy\Framework\Bindings\Events\EventServiceProvider');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerValidationBindings()
     {
         Main::instance()->loadComponent('Nicy\Framework\Bindings\Validation\ValidationServiceProvider');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerLoggingBindings()
     {
         Main::instance()->loadComponent('Nicy\Framework\Bindings\Log\LogServiceProvider', 'logging');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerViewBindings()
     {
         Main::instance()->loadComponent('Nicy\Framework\Bindings\View\ViewServiceProvider', 'view');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerFilesystemBindings()
     {
         Main::instance()->loadComponent('Nicy\Framework\Bindings\Filesystem\FilesystemServiceProvider', 'filesystem');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function registerEncryptionBindings()
     {
         Main::instance()->loadComponent('Nicy\Framework\Bindings\Encryption\EncryptionServiceProvider', 'app');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function getRequestAliasesBindings()
     {
         $this->singleton('request', function() {

@@ -37,7 +37,6 @@ class Factory
      * @param Request $request
      * @param string $name
      * @param string|null $value
-     *
      * @return string|null
      */
     public function getFromRequest(Request $request, string $name, ?string $value=null)
@@ -50,7 +49,6 @@ class Factory
      *
      * @param string $name
      * @param string|null $value
-     *
      * @return SetCookie
      */
     public function make(string $name, ?string $value=null) :SetCookie
@@ -63,7 +61,6 @@ class Factory
      *
      * @param Response $response
      * @param SetCookie $cookie
-     *
      * @return Response
      */
     public function setOnResponse(Response $response, SetCookie $cookie) :Response
@@ -74,7 +71,6 @@ class Factory
     /**
      * @param string $name
      * @param string|null $value
-     *
      * @return SetCookie
      */
     public static function setCookie(string $name, ?string $value=null) :SetCookie

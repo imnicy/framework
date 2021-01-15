@@ -9,7 +9,6 @@ interface SimpleRepositoryInterface
      *
      * @param array $conditions
      * @param string $columns
-     *
      * @return mixed
      */
     public function all(array $conditions=[], $columns='*');
@@ -19,7 +18,6 @@ interface SimpleRepositoryInterface
      *
      * @param array $conditions
      * @param string $columns
-     *
      * @return mixed
      */
     public function one(array $conditions=[], $columns='*');
@@ -28,8 +26,7 @@ interface SimpleRepositoryInterface
      * Create a new row
      *
      * @param array $attributes
-     *
-     * @return int
+     * @return bool
      */
     public function create(array $attributes=[]) :bool ;
 
@@ -37,7 +34,6 @@ interface SimpleRepositoryInterface
      * Delete the row with conditions
      *
      * @param array $conditions
-     *
      * @return bool
      */
     public function delete($conditions =[]) :bool ;
@@ -47,7 +43,6 @@ interface SimpleRepositoryInterface
      *
      * @param array $attributes
      * @param array $conditions
-     *
      * @return bool
      */
     public function update($attributes=[], $conditions=[]) :bool ;

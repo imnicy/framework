@@ -45,9 +45,6 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
     /**
      * Render the paginator using the given view.
      *
-     * @param string|null $view
-     * @param array  $data
-     *
      * @return string
      */
     public function links()
@@ -59,7 +56,6 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
      * Set the items for the paginator.
      *
      * @param mixed $items
-     *
      * @return void
      */
     protected function setItems($items)
@@ -141,7 +137,6 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
      * Convert the object to its JSON representation.
      *
      * @param int $options
-     *
      * @return string
      */
     public function toJson($options = 0)
@@ -153,7 +148,6 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
      * Determine if the given item exists.
      *
      * @param mixed $key
-     *
      * @return bool
      */
     public function offsetExists($key)
@@ -165,7 +159,6 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
      * Get the item at the given offset.
      *
      * @param mixed $key
-     *
      * @return mixed
      */
     public function offsetGet($key)
@@ -178,7 +171,6 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
      *
      * @param mixed $key
      * @param mixed $value
-     *
      * @return void
      */
     public function offsetSet($key, $value)
@@ -190,7 +182,6 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
      * Unset the item at the given key.
      *
      * @param mixed $key
-     *
      * @return void
      */
     public function offsetUnset($key)

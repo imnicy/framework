@@ -99,7 +99,6 @@ class UrlGenerator
      * @param string $path
      * @param array $extra
      * @param bool $secure
-     *
      * @return string
      */
     public function to($path, $extra=[], $secure=null)
@@ -124,7 +123,6 @@ class UrlGenerator
      *
      * @param string $path
      * @param array  $parameters
-     *
      * @return string
      */
     public function secure($path, $parameters=[])
@@ -137,7 +135,6 @@ class UrlGenerator
      *
      * @param string $path
      * @param bool|null $secure
-     *
      * @return string
      */
     public function asset($path, $secure=null)
@@ -157,7 +154,6 @@ class UrlGenerator
      * @param string $root
      * @param string $path
      * @param bool|null $secure
-     *
      * @return string
      */
     public function assetFrom($root, $path, $secure=null)
@@ -171,7 +167,6 @@ class UrlGenerator
      * Remove the index.php file from a path.
      *
      * @param string $root
-     *
      * @return string
      */
     protected function removeIndex($root)
@@ -185,7 +180,6 @@ class UrlGenerator
      * Generate a URL to a secure asset.
      *
      * @param string $path
-     *
      * @return string
      */
     public function secureAsset($path)
@@ -197,7 +191,6 @@ class UrlGenerator
      * Force the schema for URLs.
      *
      * @param string $schema
-     *
      * @return void
      */
     public function forceScheme($schema)
@@ -211,7 +204,6 @@ class UrlGenerator
      * Get the default scheme for a raw URL.
      *
      * @param bool|null $secure
-     *
      * @return string
      */
     public function formatScheme($secure)
@@ -233,9 +225,7 @@ class UrlGenerator
      * @param string $name
      * @param array  $parameters
      * @param array $queryParams
-     *
      * @return string
-     *
      * @throws \InvalidArgumentException
      */
     public function route($name, $parameters=[], $queryParams=[])
@@ -249,7 +239,6 @@ class UrlGenerator
      * Determine if the given path is a valid URL.
      *
      * @param string $path
-     *
      * @return bool
      */
     public function isValidUrl($path)
@@ -265,7 +254,6 @@ class UrlGenerator
      * Get the scheme for a raw URL.
      *
      * @param bool|null $secure
-     *
      * @return string
      */
     protected function getSchemeForUrl($secure)
@@ -285,7 +273,6 @@ class UrlGenerator
      * Format the array of URL parameters.
      *
      * @param mixed|array $parameters
-     *
      * @return array
      */
     public function formatParameters($parameters)
@@ -300,7 +287,6 @@ class UrlGenerator
      *
      * @param string $route
      * @param array $parameters
-     *
      * @return string
      */
     protected function replaceRouteParameters($route, &$parameters=[])
@@ -315,7 +301,6 @@ class UrlGenerator
      *
      * @param string $scheme
      * @param string $root
-     *
      * @return string
      */
     protected function getRootUrl($scheme, $root=null)
@@ -347,7 +332,6 @@ class UrlGenerator
      * Set the forced root URL.
      *
      * @param string $root
-     *
      * @return void
      */
     public function forceRootUrl($root)
@@ -363,7 +347,6 @@ class UrlGenerator
      * @param string $root
      * @param string $path
      * @param string $tail
-     *
      * @return string
      */
     protected function trimUrl($root, $path, $tail='')

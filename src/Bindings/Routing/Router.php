@@ -2,6 +2,7 @@
 
 namespace Nicy\Framework\Bindings\Routing;
 
+use Slim\App;
 use Slim\Interfaces\RouteGroupInterface;
 use Slim\Interfaces\RouteInterface;
 

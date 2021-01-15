@@ -2,7 +2,16 @@
 
 return [
 
-    // Default Database Connection Name
+    /*
+    |--------------------------------------------------------------------------
+    | Default Database Connection Name
+    |--------------------------------------------------------------------------
+    |
+    | This option defines the default database connection name that gets used
+    | when connect to database
+    |
+    */
+
     'default' => 'default',
 
     /*

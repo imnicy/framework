@@ -19,7 +19,7 @@
 - 视图 (`twig/twig`)
 - 其他 (如 Singleton, Str, Arr, Collection, Manager...等)
 
-> 所有的功能都是懒加载的，如果你代码中不需要用到它们，他们永远不会被初始化
+> 除了请求、响应、路由和容器这几个基本功能外其他都是懒加载，如果你的代码中不需要用到它们，他们永远不会被初始化
 
 ## 关于
 
@@ -210,7 +210,7 @@ $definition = container('name');
 // or
 $definition = container()->get('name');
 // or
-$definition = Nicy\Framework\Main::instance()->container('name');;
+$definition = Nicy\Framework\Main::instance()->container('name');
 ```
 
 将定义放入容器:

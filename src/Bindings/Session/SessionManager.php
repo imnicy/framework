@@ -20,11 +20,17 @@ class SessionManager extends Manager
         $this->container = $container;
     }
 
+    /**
+     * @return string
+     */
     public function getDefaultDriver()
     {
         return $this->container['config']['session.driver'];
     }
 
+    /**
+     * @return Store
+     */
     protected function createFileDriver()
     {
         $lifetime = $this->container['config']['session.lifetime'];
@@ -34,6 +40,9 @@ class SessionManager extends Manager
         ));
     }
 
+    /**
+     * @return Store
+     */
     protected function createCacheDriver()
     {
         $store = $this->container['config']['session.store'];
@@ -44,6 +53,9 @@ class SessionManager extends Manager
         ));
     }
 
+    /**
+     * @return Store
+     */
     protected function createNullDriver()
     {
         return $this->buildSession(new NullSessionHandler());
@@ -53,7 +65,6 @@ class SessionManager extends Manager
      * Build the session instance.
      *
      * @param \SessionHandlerInterface $handler
-     *
      * @return Store
      */
     protected function buildSession($handler)

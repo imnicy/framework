@@ -25,7 +25,6 @@ class ConnectionFactory
      *
      * @param array $config
      * @param string|null $name
-     *
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     public function make(array $config, string $name=null)
@@ -44,7 +43,6 @@ class ConnectionFactory
      *
      * @param array $config
      * @param string $name
-     *
      * @return array
      */
     protected function parseConfig(array $config, $name)
@@ -56,7 +54,6 @@ class ConnectionFactory
      * Create a single database connection instance.
      *
      * @param array$config
-     *
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     protected function createSingleConnection(array $config)

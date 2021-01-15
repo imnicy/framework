@@ -13,7 +13,7 @@ class Request
     /**
      * @var \Nicy\Support\Collection
      */
-    protected static $attributes;
+    protected static Collection $attributes;
 
     /**
      * @return \Nicy\Support\Collection

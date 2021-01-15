@@ -112,7 +112,6 @@ class VerifyCsrfToken
      * Determine if the session and input CSRF tokens match.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     *
      * @return bool
      */
     protected function tokensMatch($request)
@@ -128,7 +127,6 @@ class VerifyCsrfToken
      * Get the CSRF token from the request.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     *
      * @return string
      */
     protected function getTokenFromRequest($request)
@@ -167,7 +165,6 @@ class VerifyCsrfToken
      * Add the CSRF token to the response cookies.
      *
      * @param \Psr\Http\Message\ResponseInterface $response
-     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function addCookieToResponse($response)

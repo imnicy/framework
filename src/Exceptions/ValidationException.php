@@ -11,7 +11,7 @@ class ValidationException extends Exception
      *
      * @var \Rakit\Validation\Validation
      */
-    public $validation;
+    public \Rakit\Validation\Validation $validation;
 
     /**
      * The status code to use for the response.

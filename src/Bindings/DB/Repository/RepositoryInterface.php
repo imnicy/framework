@@ -9,7 +9,6 @@ interface RepositoryInterface
      *
      * @param array $conditions
      * @param string $columns
-     *
      * @return mixed
      */
     public function all(array $conditions=[], $columns='*');
@@ -19,7 +18,6 @@ interface RepositoryInterface
      *
      * @param array $conditions
      * @param string $columns
-     *
      * @return mixed
      */
     public function one(array $conditions=[], $columns='*');
@@ -28,7 +26,6 @@ interface RepositoryInterface
      * Create a new row
      *
      * @param array $attributes
-     *
      * @return RepositoryInterface
      */
     public function create(array $attributes=[]) :RepositoryInterface ;
@@ -45,7 +42,6 @@ interface RepositoryInterface
      *
      * @param array $attributes
      * @param array $conditions
-     *
      * @return bool
      */
     public function update($attributes=[], $conditions=[]) :bool ;
@@ -54,7 +50,6 @@ interface RepositoryInterface
      * Save changes attributes
      *
      * @param array $options
-     *
      * @return bool
      */
     public function save(array $options=[]) :bool ;
@@ -63,7 +58,6 @@ interface RepositoryInterface
      * Destroy items from table
      *
      * @param array $ids
-     *
      * @return bool
      */
     public function destroy(array $ids=[]) :bool ;
@@ -72,7 +66,6 @@ interface RepositoryInterface
      * Fill attributes for save
      *
      * @param array $attributes
-     *
      * @return RepositoryInterface
      */
     public function fill(array $attributes=[]) :RepositoryInterface ;

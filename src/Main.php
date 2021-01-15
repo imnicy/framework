@@ -45,7 +45,7 @@ class Main
     /**
      * @var Request
      */
-    protected $request;
+    protected Request $request;
 
     /**
      * All of the loaded configuration files.
@@ -57,7 +57,7 @@ class Main
     /**
      * @var \Nicy\Framework\Main
      */
-    protected static $instance;
+    protected static Main $instance;
 
     /**
      * Main constructor.

@@ -33,7 +33,6 @@ trait ForPaginate
      * Set the number of models to return per page.
      *
      * @param int $perPage
-     *
      * @return $this
      */
     public function setPerPage($perPage)
@@ -45,7 +44,6 @@ trait ForPaginate
 
     /**
      * @param string $pattern
-     *
      * @return $this
      */
     public function setUrlPattern($pattern)
@@ -62,7 +60,6 @@ trait ForPaginate
      * @param array $conditions
      * @param string $columns
      * @param int|null $perPage
-     *
      * @return Paginator
      */
     public function paginate(int $page = 1, array $conditions=[], $columns='*', int $perPage=null)

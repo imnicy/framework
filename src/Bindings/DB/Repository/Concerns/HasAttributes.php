@@ -38,7 +38,7 @@ trait HasAttributes
      *
      * @var bool
      */
-    public static $snakeAttributes = true;
+    public static bool $snakeAttributes = true;
 
     /**
      * The attributes that should be cast to native types.
@@ -52,13 +52,12 @@ trait HasAttributes
      *
      * @var array
      */
-    protected static $mutatorCache = [];
+    protected static array $mutatorCache = [];
 
     /**
      * Get an attribute from the repository.
      *
      * @param string $key
-     *
      * @return mixed|void
      */
     public function getAttribute($key)
@@ -83,7 +82,6 @@ trait HasAttributes
      * Get a plain attribute (not a relationship).
      *
      * @param string $key
-     *
      * @return mixed
      */
     public function getAttributeValue($key)
@@ -105,7 +103,6 @@ trait HasAttributes
      * Get an attribute from the $attributes array.
      *
      * @param string $key
-     *
      * @return mixed|void
      */
     protected function getAttributeFromArray($key)
@@ -119,7 +116,6 @@ trait HasAttributes
      * With any attributes
      *
      * @param array|string $attributes
-     *
      * @return $this
      */
     public function with($attributes)
@@ -180,7 +176,6 @@ trait HasAttributes
      *
      * @param array $attributes
      * @param array $mutatedAttributes
-     *
      * @return array
      */
     protected function addCastAttributesToArray(array $attributes, array $mutatedAttributes)
@@ -206,7 +201,6 @@ trait HasAttributes
      * Determine if the cast type is a custom date time cast.
      *
      * @param string $cast
-     *
      * @return bool
      */
     protected function isCustomDateTimeCast($cast)
@@ -235,7 +229,6 @@ trait HasAttributes
      * Extract and cache all the mutated attributes of a class.
      *
      * @param string $class
-     *
      * @return void
      */
     public static function cacheMutatedAttributes($class)
@@ -250,7 +243,6 @@ trait HasAttributes
      *
      * @param array $attributes
      * @param array $mutatedAttributes
-     *
      * @return array
      */
     protected function addMutatedAttributesToArray(array $attributes, array $mutatedAttributes)
@@ -273,7 +265,6 @@ trait HasAttributes
      *
      * @param string $key
      * @param mixed $value
-     *
      * @return mixed
      */
     protected function mutateAttributeForArray($key, $value)
@@ -287,7 +278,6 @@ trait HasAttributes
      * Determine if a get mutator exists for an attribute.
      *
      * @param string $key
-     *
      * @return bool
      */
     public function hasGetMutator($key)
@@ -300,7 +290,6 @@ trait HasAttributes
      *
      * @param string $key
      * @param mixed $value
-     *
      * @return mixed
      */
     protected function mutateAttribute($key, $value)
@@ -322,7 +311,6 @@ trait HasAttributes
      * Get an attribute array of all arrayable values.
      *
      * @param array $values
-     *
      * @return array
      */
     protected function getArrayableItems(array $values)
@@ -370,7 +358,6 @@ trait HasAttributes
      * Determine if the model or any of the given attribute(s) have been modified.
      *
      * @param array|string|null $attributes
-     *
      * @return bool
      */
     public function isDirty($attributes=null)
@@ -384,7 +371,6 @@ trait HasAttributes
      * Determine if the model and all the given attribute(s) have remained the same.
      *
      * @param array|string|null $attributes
-     *
      * @return bool
      */
     public function isClean($attributes=null)
@@ -415,7 +401,6 @@ trait HasAttributes
      *
      * @param string $key
      * @param mixed $current
-     *
      * @return bool
      */
     public function originalIsEquivalent($key, $current)
@@ -458,7 +443,6 @@ trait HasAttributes
      *
      * @param string $key
      * @param mixed $value
-     *
      * @return mixed
      */
     protected function castAttribute($key, $value)
@@ -505,7 +489,6 @@ trait HasAttributes
      * Decode the given float.
      *
      * @param mixed $value
-     *
      * @return mixed
      */
     public function fromFloat($value)
@@ -527,7 +510,6 @@ trait HasAttributes
      *
      * @param float $value
      * @param int $decimals
-     *
      * @return string
      */
     protected function asDecimal($value, $decimals)
@@ -540,7 +522,6 @@ trait HasAttributes
      *
      * @param string $value
      * @param bool $asObject
-     *
      * @return mixed
      */
     public function fromJson($value, $asObject=false)
@@ -552,7 +533,6 @@ trait HasAttributes
      * Return a date string
      *
      * @param mixed $value
-     *
      * @return string
      */
     protected function asDate($value)
@@ -564,7 +544,6 @@ trait HasAttributes
      * Return a datetime string
      *
      * @param mixed $value
-     *
      * @return string
      */
     protected function asDateTime($value)
@@ -577,7 +556,6 @@ trait HasAttributes
      *
      * @param string $key
      * @param array|string|null $types
-     *
      * @return bool
      */
     public function hasCast($key, $types=null)
@@ -593,7 +571,6 @@ trait HasAttributes
      * Return a timestamp as unix timestamp.
      *
      * @param mixed $value
-     *
      * @return int
      */
     protected function asTimestamp($value)
@@ -605,7 +582,6 @@ trait HasAttributes
      * Get the type of cast for a model attribute.
      *
      * @param string $key
-     *
      * @return string
      */
     protected function getCastType($key)
@@ -621,7 +597,6 @@ trait HasAttributes
      * Determine if the cast type is a decimal cast.
      *
      * @param string $cast
-     *
      * @return bool
      */
     protected function isDecimalCast($cast)
@@ -634,7 +609,6 @@ trait HasAttributes
      *
      * @param string|null $key
      * @param mixed $default
-     *
      * @return mixed|array
      */
     public function getOriginal($key=null, $default=null)
@@ -657,7 +631,6 @@ trait HasAttributes
      *
      * @param string $key
      * @param mixed $value
-     *
      * @return mixed
      */
     public function setAttribute($key, $value)
@@ -671,7 +644,6 @@ trait HasAttributes
      * Determine if the model or any of the given attribute(s) have been modified.
      *
      * @param array|string|null $attributes
-     *
      * @return bool
      */
     public function wasChanged($attributes=null)
@@ -696,7 +668,6 @@ trait HasAttributes
      *
      * @param array $changes
      * @param array|string|null $attributes
-     *
      * @return bool
      */
     protected function hasChanges($changes, $attributes=null)
@@ -716,7 +687,6 @@ trait HasAttributes
 
     /**
      * @param string $name
-     *
      * @return mixed|null
      */
     public function __get($name)
@@ -733,7 +703,6 @@ trait HasAttributes
      *
      * @param string $key
      * @param mixed $value
-     *
      * @return void
      */
     public function __set($key, $value)
@@ -745,7 +714,6 @@ trait HasAttributes
      * Get all of the attribute mutator methods.
      *
      * @param mixed $class
-     *
      * @return array
      */
     protected static function getMutatorMethods($class)
