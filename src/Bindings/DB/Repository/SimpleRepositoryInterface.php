@@ -5,6 +5,15 @@ namespace Nicy\Framework\Bindings\DB\Repository;
 interface SimpleRepositoryInterface
 {
     /**
+     * Get all counts from table with conditions
+     *
+     * @param array $conditions
+     * @param string $columns
+     * @return int
+     */
+    public function count(array $conditions=[], $columns='*');
+
+    /**
      * Get all entries from table with conditions
      *
      * @param array $conditions

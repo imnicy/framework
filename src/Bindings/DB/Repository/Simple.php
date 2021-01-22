@@ -31,6 +31,16 @@ abstract class Simple implements SimpleRepositoryInterface
     /**
      * @param array $conditions
      * @param string $columns
+     * @return int
+     */
+    public function count(array $conditions = [], $columns = '*')
+    {
+        return static::query()->count($this->table, $columns, $conditions);
+    }
+
+    /**
+     * @param array $conditions
+     * @param string $columns
      * @return array|mixed
      */
     public function all(array $conditions=[], $columns='*')

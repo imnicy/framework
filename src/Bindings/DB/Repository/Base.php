@@ -102,6 +102,16 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @param array $conditions
      * @param string $columns
+     * @return int
+     */
+    public function count(array $conditions = [], $columns = '*')
+    {
+        return $this->newQueryWith()->count($this->table, $columns, $conditions);
+    }
+
+    /**
+     * @param array $conditions
+     * @param string $columns
      * @return Collection|mixed
      */
     public function all(array $conditions=[], $columns='*')

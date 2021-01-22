@@ -68,7 +68,7 @@ trait ForPaginate
 
         $perPage = $perPage ?: $this->getPerPage();
 
-        $total = $this->all($conditions, $columns)->count();
+        $total = $this->count($conditions, $columns);
 
         if ($total) {
             $items = $this->all($conditions + ['LIMIT' => [($page - 1) * $perPage, $perPage]], $columns);
