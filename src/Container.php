@@ -239,7 +239,7 @@ class Container extends DiContainer
      */
     protected function registerLoggingBindings()
     {
-        Main::instance()->loadComponent('Nicy\Framework\Bindings\Log\LogServiceProvider', 'logging');
+        Main::instance()->loadComponent('Nicy\Framework\Bindings\Logging\LogServiceProvider', 'logging');
     }
 
     /**
