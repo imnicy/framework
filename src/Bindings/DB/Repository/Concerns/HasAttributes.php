@@ -52,7 +52,7 @@ trait HasAttributes
      *
      * @var array
      */
-    protected static array $mutatorCache = [];
+    protected static $mutatorCache = [];
 
     /**
      * Get an attribute from the repository.

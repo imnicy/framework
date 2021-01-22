@@ -20,7 +20,7 @@ trait HasEvents
      *
      * @var \Nicy\Framework\Bindings\Events\Contracts\Dispatcher
      */
-    protected static DispatcherContract $dispatcher;
+    protected static $dispatcher;
 
     /**
      * Fire the given event for the repository.

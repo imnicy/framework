@@ -11,14 +11,14 @@ abstract class Facade
      *
      * @var \Nicy\Container\Contracts\Container
      */
-    protected static \Nicy\Container\Contracts\Container $container;
+    protected static $container;
 
     /**
      * The resolved object instances.
      *
      * @var array
      */
-    protected static array $resolvedInstance;
+    protected static $resolvedInstance;
 
     /**
      * Hotswap the underlying instance behind the facade.

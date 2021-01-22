@@ -11,7 +11,7 @@ trait FacadeTrait
      *
      * @var bool
      */
-    protected static bool $aliasesRegistered = false;
+    protected static $aliasesRegistered = false;
 
     /**
      * Register the facades for the manager.

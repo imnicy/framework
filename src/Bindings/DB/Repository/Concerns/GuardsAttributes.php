@@ -25,7 +25,7 @@ trait GuardsAttributes
      *
      * @var bool
      */
-    protected static bool $unguarded = false;
+    protected static $unguarded = false;
 
     /**
      * Get the fillable attributes for the model.

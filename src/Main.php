@@ -57,7 +57,7 @@ class Main
     /**
      * @var \Nicy\Framework\Main
      */
-    protected static Main $instance;
+    protected static $instance;
 
     /**
      * Main constructor.
