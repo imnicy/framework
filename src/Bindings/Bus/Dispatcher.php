@@ -73,7 +73,22 @@ class Dispatcher
             };
         }
 
-        return $this->pipeline->send($command)->through($this->pipes)->then($callback);
+        return $this->pipeline->send($command)->through($this->throughMiddleware($command))->then($callback);
+    }
+
+    /**
+     * Set middleware pipes on command before execute
+     *
+     * @param mixed $command
+     * @return array
+     */
+    protected function throughMiddleware($command)
+    {
+        if (property_exists($command, 'middleware') && is_array($command->middleware)) {
+            return array_reverse(array_merge($this->pipes, $command->middleware));
+        }
+
+        return $this->pipes;
     }
 
     /**
