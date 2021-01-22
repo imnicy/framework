@@ -17,7 +17,7 @@ trait ForResponse
      * @param int|null $version
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function __response($contents, array $headers=[], array $cookies=[], int $status=null, int $version=null)
+    public function response($contents, array $headers=[], array $cookies=[], int $status=null, int $version=null)
     {
         $response = Response::prepare($contents);
 

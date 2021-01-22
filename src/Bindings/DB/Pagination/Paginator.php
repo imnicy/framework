@@ -92,6 +92,7 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
     public function toArray()
     {
         return [
+            'total'             => $this->getTotalItems(),
             'current_page'      => $this->getCurrentPage(),
             'data'              => $this->items->toArray(),
             'first_page_url'    => $this->getPageUrl(1),

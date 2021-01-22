@@ -39,7 +39,7 @@ trait ForRequest
      * @param null|mixed $default
      * @return mixed|void|\Nicy\Support\Collection
      */
-    protected function input($mode = 1|2|4|8, $key=null, $default=null)
+    protected function input($key=null, $default=null, $mode = 1|2|4)
     {
         if ($mode == (1|2|4)) {
             if (! $key) {
