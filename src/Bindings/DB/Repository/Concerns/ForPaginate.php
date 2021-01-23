@@ -60,12 +60,14 @@ trait ForPaginate
      * @param array $conditions
      * @param string $columns
      * @param int|null $perPage
+     * @param null $urlPattern
      * @return Paginator
      */
-    public function paginate(int $page = 1, array $conditions=[], $columns='*', int $perPage=null)
+    public function paginate(int $page = 1, array $conditions=[], $columns='*', int $perPage=null, $urlPattern=null)
     {
         unset($conditions['LIMIT']);
 
+        $urlPattern = $urlPattern ?: $this->urlPattern;
         $perPage = $perPage ?: $this->getPerPage();
 
         $total = $this->count($conditions, $columns);
@@ -77,6 +79,6 @@ trait ForPaginate
             $items = new Collection();
         }
 
-        return new Paginator($items, $total, $perPage, $page, $this->urlPattern);
+        return new Paginator($items, $total, $perPage, $page, $urlPattern);
     }
 }
