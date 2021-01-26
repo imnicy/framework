@@ -106,7 +106,7 @@ abstract class Simple implements SimpleRepositoryInterface
      */
     public function update($attributes=[], $conditions=[]): bool
     {
-        static::query()->update($this->table, $conditions);
+        static::query()->update($this->table, $attributes, $conditions);
 
         return true;
     }

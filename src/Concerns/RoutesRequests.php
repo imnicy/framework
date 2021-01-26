@@ -21,6 +21,9 @@ trait RoutesRequests
      */
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
+        // Set server request instance to container
+        $this->container->singleton('Psr\Http\Message\ServerRequestInterface', $request);
+
         // Boot container
         $this->container->boot();
 
