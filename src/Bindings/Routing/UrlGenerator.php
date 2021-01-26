@@ -86,11 +86,12 @@ class UrlGenerator
     /**
      * Get the current URL for the request.
      *
+     * @param null $secure
      * @return string
      */
-    public function current()
+    public function current($secure=null)
     {
-        return $this->to($this->uri->getPath());
+        return $this->to($this->uri->getPath(), $this->uri->getQuery(), $secure);
     }
 
     /**
@@ -110,11 +111,10 @@ class UrlGenerator
         $scheme = $this->getSchemeForUrl($secure);
         $extra = $this->formatParameters($extra);
 
-        $tail = implode('/', array_map(
-                'rawurlencode', (array) $extra)
-        );
+        $tail = implode('/', array_map('rawurlencode', (array) $extra));
 
         $root = $this->getRootUrl($scheme);
+
         return $this->trimUrl($root, $path, $tail);
     }
 
