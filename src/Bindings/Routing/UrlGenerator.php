@@ -86,12 +86,11 @@ class UrlGenerator
     /**
      * Get the current URL for the request.
      *
-     * @param null $secure
      * @return string
      */
-    public function current($secure=null)
+    public function current()
     {
-        return $this->to($this->uri->getPath(), $this->uri->getQuery(), $secure);
+        return $this->to($this->uri->getPath());
     }
 
     /**
