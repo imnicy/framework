@@ -76,10 +76,24 @@ trait ForPaginate
             $this->setPerPage($perPage);
         }
 
-        $total = $this->count($join, $columns, $conditions);
+        if ($conditions == null) {
+            $total = $this->count('*', $columns);
+        }
+        else {
+            $total = $this->count($join, '*', $conditions);
+        }
 
         if ($total) {
-            $items = $this->all($join, $conditions, $conditions + ['LIMIT' => [($page - 1) * $perPage, $perPage]]);
+            $limit = ['LIMIT' => [($page - 1) * $perPage, $perPage]];
+
+            if ($conditions == null) {
+                $columns = $columns + $limit;
+            }
+            else {
+                $conditions = $conditions + $limit;
+            }
+
+            $items = $this->all($join, $columns, $conditions);
         }
         else {
             $items = new Collection();
