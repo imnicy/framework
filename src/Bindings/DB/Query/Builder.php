@@ -139,6 +139,7 @@ class Builder extends Medoo
     public function setRepository(Base $repository)
     {
         $this->repository = $repository;
+
         return $this;
     }
 
@@ -151,6 +152,7 @@ class Builder extends Medoo
     public function simpling($state=true)
     {
         $this->simple = $state;
+
         return $this;
     }
 

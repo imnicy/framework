@@ -56,29 +56,35 @@ trait ForPaginate
     /**
      * Get items for pagination
      *
-     * @param int $page
+     * @param string|array $join
+     * @param string|array $columns
      * @param array $conditions
-     * @param string $columns
-     * @param int|null $perPage
-     * @param null $urlPattern
+     * @param int $page
+     * @param int $perPage
+     * @param string $urlPattern
      * @return Paginator
      */
-    public function paginate(int $page = 1, array $conditions=[], $columns='*', int $perPage=null, $urlPattern=null)
+    public function paginate($join=null, $columns=null, $conditions=null, int $page=1, int $perPage=null, $urlPattern=null)
     {
         unset($conditions['LIMIT']);
 
-        $urlPattern = $urlPattern ?: $this->urlPattern;
-        $perPage = $perPage ?: $this->getPerPage();
+        if ($urlPattern) {
+            $this->setUrlPattern($urlPattern);
+        }
 
-        $total = $this->count($conditions, $columns);
+        if ($perPage) {
+            $this->setPerPage($perPage);
+        }
+
+        $total = $this->count($join, $columns, $conditions);
 
         if ($total) {
-            $items = $this->all($conditions + ['LIMIT' => [($page - 1) * $perPage, $perPage]], $columns);
+            $items = $this->all($join, $conditions, $conditions + ['LIMIT' => [($page - 1) * $perPage, $perPage]]);
         }
         else {
             $items = new Collection();
         }
 
-        return new Paginator($items, $total, $perPage, $page, $urlPattern);
+        return new Paginator($items, $total, $page, $this->perPage, $this->urlPattern);
     }
 }

@@ -29,33 +29,36 @@ abstract class Simple implements SimpleRepositoryInterface
     }
 
     /**
+     * @param array|string $join
+     * @param string|string $columns
      * @param array $conditions
-     * @param string $columns
      * @return int
      */
-    public function count(array $conditions = [], $columns = '*')
+    public function count($join=null, $columns=null, $conditions=null)
     {
-        return static::query()->count($this->table, $columns, $conditions);
+        return static::query()->count($this->table, $join, $columns, $conditions);
     }
 
     /**
+     * @param array|string $join
+     * @param string|string $columns
      * @param array $conditions
-     * @param string $columns
-     * @return array|mixed
+     * @return array
      */
-    public function all(array $conditions=[], $columns='*')
+    public function all($join=null, $columns=null, $conditions=null)
     {
-        return static::query()->select($this->table, $columns, $conditions);
+        return static::query()->select($this->table, $join, $columns, $conditions);
     }
 
     /**
+     * @param array|string $join
+     * @param string|string $columns
      * @param array $conditions
-     * @param string $columns
      * @return mixed
      */
-    public function one(array $conditions=[], $columns='*')
+    public function one($join=null, $columns=null, $conditions=null)
     {
-        return static::query()->get($this->table, $columns, $conditions);
+        return static::query()->get($this->table, $join, $columns, $conditions);
     }
 
     /**
@@ -64,17 +67,6 @@ abstract class Simple implements SimpleRepositoryInterface
     public function newQuery()
     {
         return Main::instance()->container('db')->connection($this->connection)->simpling();
-    }
-
-    /**
-     * @param array $attributes
-     * @return bool
-     */
-    public function create(array $attributes=[]) :bool
-    {
-        static::query()->create($this->table, $attributes);
-
-        return true;
     }
 
     /**

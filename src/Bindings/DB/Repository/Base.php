@@ -100,33 +100,36 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
+     * @param string|array $join
+     * @param string|array $columns
      * @param array $conditions
-     * @param string $columns
      * @return int
      */
-    public function count(array $conditions = [], $columns = '*')
+    public function count($join=null, $columns=null, $conditions=null)
     {
-        return $this->newQueryWith()->count($this->table, $columns, $conditions);
+        return $this->newQueryWith()->count($this->table, $join, $columns, $conditions);
     }
 
     /**
+     * @param string|array $join
+     * @param string|array $columns
      * @param array $conditions
-     * @param string $columns
      * @return Collection|mixed
      */
-    public function all(array $conditions=[], $columns='*')
+    public function all($join=null, $columns=null, $conditions=null)
     {
-        return $this->newQueryWith()->select($this->table, $columns, $conditions);
+        return $this->newQueryWith()->select($this->table, $join, $columns, $conditions);
     }
 
     /**
+     * @param string|array $join
+     * @param string|array $columns
      * @param array $conditions
-     * @param string $columns
      * @return Collection|mixed
      */
-    public function one(array $conditions=[], $columns='*')
+    public function one($join=null, $columns=null, $conditions=null)
     {
-        return $this->newQueryWith()->get($this->table, $columns, $conditions);
+        return $this->newQueryWith()->get($this->table, $join, $columns, $conditions);
     }
 
     /**
