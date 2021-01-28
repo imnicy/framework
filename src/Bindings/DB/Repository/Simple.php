@@ -73,11 +73,19 @@ abstract class Simple implements SimpleRepositoryInterface
      * @param array $rows
      * @return bool
      */
-    public function insert(array $rows=[])
+    public function insert(array $rows=[]): bool
     {
         static::query()->insert($this->table, $rows);
 
         return true;
+    }
+
+    /**
+     * @return int
+     */
+    public function id(): int
+    {
+        return static::query()->id();
     }
 
     /**

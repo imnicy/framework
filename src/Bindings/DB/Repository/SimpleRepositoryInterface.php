@@ -32,12 +32,19 @@ interface SimpleRepositoryInterface
     public function one(array $conditions=[], $columns='*');
 
     /**
-     * Create a new row
+     * Insert rows
      *
-     * @param array $attributes
+     * @param array $rows
      * @return bool
      */
-    public function create(array $attributes=[]) :bool ;
+    public function insert(array $rows=[]): bool ;
+
+    /**
+     * Get insert id
+     *
+     * @return int
+     */
+    public function id(): int ;
 
     /**
      * Delete the row with conditions
@@ -45,7 +52,7 @@ interface SimpleRepositoryInterface
      * @param array $conditions
      * @return bool
      */
-    public function delete($conditions =[]) :bool ;
+    public function delete($conditions=[]): bool ;
 
     /**
      * Update table with conditions
@@ -54,7 +61,7 @@ interface SimpleRepositoryInterface
      * @param array $conditions
      * @return bool
      */
-    public function update($attributes=[], $conditions=[]) :bool ;
+    public function update($attributes=[], $conditions=[]): bool ;
 
     /**
      * Get a query builder instance
