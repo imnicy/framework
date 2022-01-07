@@ -255,6 +255,17 @@ class Main
     }
 
     /**
+     * Define an object or a value in the container.
+     *
+     * @param string $name
+     * @param mixed|null $value
+     */
+    public function singleton(string $name, $value = null)
+    {
+        return $this->container->singleton($name, $value);
+    }
+
+    /**
      * Return the slim application instance
      *
      * @return SlimApplication
@@ -346,6 +357,7 @@ class Main
                 return $path;
             }
         }
+        return '.';
     }
 
     /**
