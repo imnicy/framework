@@ -11,9 +11,9 @@ return [
     |
     */
 
-    'env' => 'production',
+    'env' => env('ENV', 'development'),
 
-    'debug' => true,
+    'debug' => env('DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ return [
     |
     */
 
-    'key' => 'hyrE3XcHojOg1m7FpJ6KtTfRk4QYI8aW',
+    'key' => env('KEY', 'default-framework-key'),
 
     'cipher' => 'AES-256-CBC',
 ];

@@ -50,6 +50,20 @@ if (! function_exists('config')) {
     }
 }
 
+if (! function_exists('env')) {
+    /**
+     * Gets the value of an environment variable with default value
+     *
+     * @param string $name
+     * @param mixed $default
+     * @return mixed
+     */
+    function env(string $name, $default = null)
+    {
+        return getenv($name) ?? $default;
+    }
+}
+
 if (! function_exists('storage_path')) {
     /**
      * Get the path to the storage folder.

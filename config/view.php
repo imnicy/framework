@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'debug' => true,
+    'debug' => env('VIEW_DEBUG', true),
 
     'assets_path' => resources_path('assets'),
 
