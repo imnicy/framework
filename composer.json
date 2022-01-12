@@ -6,7 +6,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "catfan/medoo": "^1.7",
-        "dflydev/fig-cookies": "^2.0",
+        "dflydev/fig-cookies": "^3.0",
         "imnicy/container": "^1.0",
         "imnicy/support": "^1.0",
         "jasongrimes/paginator": "^1.0",

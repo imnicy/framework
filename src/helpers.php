@@ -218,7 +218,7 @@ if (! function_exists('validate')) {
      */
     function validate(array $inputs, array $rules, array $messages=[])
     {
-        return container('validator')->validate($inputs, $rules, $messages);
+        return container('validation')->validate($inputs, $rules, $messages);
     }
 }
 
