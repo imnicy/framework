@@ -25,10 +25,10 @@ class Factory
      * Get cookie value from request
      *
      * @param string $name
-     * @param string|null $default
+     * @param string $default
      * @return string
      */
-    public function get(string $name, ? string $default=null)
+    public function get($name, $default=null)
     {
         return FigRequestCookies::get($this->container['request'], $name, $default)->getValue();
     }
@@ -36,10 +36,10 @@ class Factory
     /**
      * @param Request $request
      * @param string $name
-     * @param string|null $value
-     * @return string|null
+     * @param string $value
+     * @return string
      */
-    public function getFromRequest(Request $request, string $name, ?string $value=null)
+    public function getFromRequest(Request $request, $name, $value=null)
     {
         return FigRequestCookies::get($request, $name, $value)->getValue();
     }
@@ -48,10 +48,10 @@ class Factory
      * Make A SetCookie instance
      *
      * @param string $name
-     * @param string|null $value
+     * @param string $value
      * @return SetCookie
      */
-    public function make(string $name, ?string $value=null) :SetCookie
+    public function make($name, $value=null) :SetCookie
     {
         return static::setCookie($name, $value);
     }
@@ -70,10 +70,10 @@ class Factory
 
     /**
      * @param string $name
-     * @param string|null $value
+     * @param string $value
      * @return SetCookie
      */
-    public static function setCookie(string $name, ?string $value=null) :SetCookie
+    public static function setCookie($name, $value=null) :SetCookie
     {
         return SetCookie::create($name, $value);
     }

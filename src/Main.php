@@ -48,7 +48,7 @@ class Main
     protected Request $request;
 
     /**
-     * All of the loaded configuration files.
+     * All the loaded configuration files.
      *
      * @var array
      */
@@ -83,7 +83,7 @@ class Main
      * @param \Nicy\Framework\Main|null $main
      * @return \Nicy\Framework\Main|static
      */
-    public static function setInstance(Main $main = null)
+    public static function setInstance(Main $main=null)
     {
         return static::$instance = $main;
     }
@@ -136,7 +136,7 @@ class Main
      * @param bool $shouldMake
      * @return $this
      */
-    public function middleware($middleware, $shouldMake = true)
+    public function middleware($middleware, $shouldMake=true)
     {
         if ($shouldMake && is_string($middleware) && class_exists($middleware)) {
             $middleware = $this->container->make($middleware);
@@ -159,7 +159,7 @@ class Main
     }
 
     /**
-     * Create a application and register to container
+     * Create an application and register to container
      *
      * @return void
      */
@@ -205,7 +205,7 @@ class Main
      * @param array $parameters
      * @return FrameworkContainer|mixed
      */
-    public function container($name = null, $parameters = [])
+    public function container($name=null, $parameters=[])
     {
         if (is_null($name)) {
             return $this->container;
@@ -221,7 +221,6 @@ class Main
     /**
      * Get or check the current application environment.
      *
-     * @param  mixed
      * @return string
      */
     public function environment()
@@ -258,11 +257,11 @@ class Main
      * Define an object or a value in the container.
      *
      * @param string $name
-     * @param mixed|null $value
+     * @param mixed $value
      */
-    public function singleton(string $name, $value = null)
+    public function singleton($name, $value=null)
     {
-        return $this->container->singleton($name, $value);
+        $this->container->singleton($name, $value);
     }
 
     /**
@@ -285,7 +284,7 @@ class Main
      * @param string $path
      * @return string
      */
-    public function path($path = '')
+    public function path($path='')
     {
         return $this->path.($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
@@ -316,10 +315,10 @@ class Main
      *
      * @param string $config
      * @param array|string $providers
-     * @param string|null $return
+     * @param string $return
      * @return mixed
      */
-    public function loadComponent($providers, $config = null, $return = null)
+    public function loadComponent($providers, $config=null, $return=null)
     {
         $config && $this->configure($config);
 
@@ -335,10 +334,10 @@ class Main
      *
      * If no name is provided, then we'll return the path to the config folder.
      *
-     * @param string|null $name
+     * @param string $name
      * @return string
      */
-    public function getConfigurationPath($name = null)
+    public function getConfigurationPath($name=null)
     {
         if (! $name) {
             $appConfigDir = $this->path('config').'/';

@@ -35,7 +35,7 @@ class FilesystemManager extends Manager implements FilesystemFactory
      * @param null|string $name
      * @return \League\Flysystem\FilesystemOperator
      */
-    public function disk($name = null)
+    public function disk($name=null)
     {
         return $this->driver($name);
     }
@@ -91,15 +91,9 @@ class FilesystemManager extends Manager implements FilesystemFactory
      * @param array $config
      * @return \League\Flysystem\FilesystemOperator
      */
-    protected function createFlysystem(FilesystemAdapter $adapter, array $config)
+    protected function createFlysystem(FilesystemAdapter $adapter, $config)
     {
-        $inMemory = Arr::pull($config, 'in_memory');
-
         $config = Arr::only($config, ['visibility', 'disable_asserts', 'url']);
-
-        if ($inMemory) {
-            $adapter = new InMemoryFilesystemAdapter();
-        }
 
         return new Filesystem($adapter, count($config) > 0 ? $config : []);
     }
@@ -112,6 +106,6 @@ class FilesystemManager extends Manager implements FilesystemFactory
      */
     protected function getConfig($name)
     {
-        return $this->container['config']["filesystem.disks.{$name}"];
+        return $this->container['config']["filesystem.disks.$name"];
     }
 }

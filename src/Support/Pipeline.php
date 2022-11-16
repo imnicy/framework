@@ -42,7 +42,7 @@ class Pipeline
      * @param \Nicy\Container\Contracts\Container|null $container
      * @return void
      */
-    public function __construct(Container $container = null)
+    public function __construct(Container $container=null)
     {
         $this->container = $container;
     }
@@ -89,7 +89,7 @@ class Pipeline
     /**
      * Run the pipeline with a final destination callback.
      *
-     * @param \Closure $destination
+     * @param Closure $destination
      * @return mixed
      */
     public function then(Closure $destination)
@@ -116,8 +116,8 @@ class Pipeline
     /**
      * Get the final piece of the Closure onion.
      *
-     * @param \Closure $destination
-     * @return \Closure
+     * @param Closure $destination
+     * @return Closure
      */
     protected function prepareDestination(Closure $destination)
     {
@@ -129,7 +129,7 @@ class Pipeline
     /**
      * Get a Closure that represents a slice of the application onion.
      *
-     * @return \Closure
+     * @return Closure
      */
     protected function carry()
     {

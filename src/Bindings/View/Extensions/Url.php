@@ -36,7 +36,7 @@ class Url implements FunctionInterface
      * @param bool $secure
      * @return string
      */
-    public function to(string $path, array $extra=[], bool $secure=false)
+    public function to($path, $extra=[], $secure=false)
     {
         return $this->container['url']->to($path, $extra, $secure);
     }
@@ -47,7 +47,7 @@ class Url implements FunctionInterface
      * @param array $parameters
      * @return string
      */
-    public function routeTo(string $name, array $data=[], array $parameters=[])
+    public function routeTo($name, $data=[], $parameters=[])
     {
         return $this->container['url']->route($name, $data, $parameters);
     }

@@ -2,6 +2,7 @@
 
 namespace Nicy\Framework\Bindings\DB\Repository;
 
+use Closure;
 use Nicy\Support\Arr;
 use Nicy\Support\Contracts\Arrayable;
 use Nicy\Support\Collection as SupportCollection;
@@ -316,7 +317,7 @@ class Collection extends SupportCollection
      * Get the comparison function to detect duplicates.
      *
      * @param bool $strict
-     * @return \Closure
+     * @return Closure
      */
     protected function duplicateComparator($strict)
     {

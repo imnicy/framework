@@ -19,7 +19,7 @@ class Builder extends Medoo
     /**
      * @var bool
      */
-    public static bool $errorThrowable = true;
+    public static $errorThrowable = true;
 
     /**
      * @var \Nicy\Framework\Bindings\DB\Repository\Base
@@ -30,14 +30,14 @@ class Builder extends Medoo
      * Query handler
      *
      * @param string $table
-     * @param string $join
-     * @param string|array $columns
-     * @param string|array $where
+     * @param string|array $join
+     * @param array $columns
+     * @param array $where
      * @return array|\Nicy\Framework\Bindings\DB\Repository\Collection
      */
-    public function select($table, $join, $columns=null, $where=null)
+    public function select($table, $join=null, $columns=null, $where=null)
     {
-        $result = parent::select($table, $join, $columns, $where);
+        $result = parent::select($table, $join ?: '*', $columns, $where);
 
         if (false === $this->isSimple() && is_array($result)) {
             return $this->hydrate($result);
@@ -50,14 +50,14 @@ class Builder extends Medoo
      * Result from query handler
      *
      * @param string $table
-     * @param string $join
-     * @param string|array $columns
-     * @param string|array $where
-     * @return Base
+     * @param string|array $join
+     * @param array $columns
+     * @param array $where
+     * @return array|\Nicy\Framework\Bindings\DB\Repository\Base
      */
     public function get($table, $join=null, $columns=null, $where=null)
     {
-        $result = parent::get($table, $join, $columns, $where);
+        $result = parent::get($table, $join ?: '*', $columns, $where);
 
         if (false === $this->isSimple() && is_array($result)) {
             return $this->newRepositoryInstance($result)->with($this->repository->getWiths());
@@ -67,15 +67,27 @@ class Builder extends Medoo
     }
 
     /**
+     * @param string $table
+     * @param string|array $join
+     * @param array $column
+     * @param array $where
+     * @return false|float|int|mixed|string
+     */
+    public function count($table, $join=null, $column=null, $where=null)
+    {
+        return parent::count($table, $join ?: '*', $column, $where);
+    }
+
+    /**
      * @return bool
      */
     public function isSimple()
     {
-        return (bool) $this->simple;
+        return $this->simple;
     }
 
     /**
-     * If statement execution fails, an exception will thrown
+     * If statement execution fails, an exception will throw
      *
      * @return void
      */
@@ -99,7 +111,7 @@ class Builder extends Medoo
     public function exec($query, $map=[])
     {
         // Dispatch a query sql statements log, when sql running.
-        Main::instance()->container('events')->dispatch('db.query.sql',$sql = parent::generate($query, $map));
+        Main::instance()->container('events')->dispatch('db.query.sql', parent::generate($query, $map));
 
         $statement = parent::exec($query, $map);
         $this->prepareQueryWithError();
@@ -113,9 +125,11 @@ class Builder extends Medoo
      * @param array $items
      * @return \Nicy\Framework\Bindings\DB\Repository\Collection
      */
-    public function hydrate(array $items)
+    public function hydrate($items)
     {
-        return $this->repository->newCollection(array_map(function ($item) {
+        $repository = $this->repository->newInstance();
+
+        return $repository->newCollection(array_map(function ($item) {
             return $this->newRepositoryInstance($item)->with($this->repository->getWiths());
         }, $items));
     }

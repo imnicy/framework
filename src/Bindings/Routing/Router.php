@@ -77,7 +77,7 @@ class Router
     /**
      * {@inheritdoc}
      */
-    public function map(array $methods, string $pattern, $callable): RouteInterface
+    public function map($methods, $pattern, $callable): RouteInterface
     {
         return $this->app->map($methods, $pattern, $callable);
     }

@@ -25,10 +25,7 @@ class RequestResponse implements InvocationStrategyInterface
      * @return ResponseInterface
      */
     public function __invoke(
-        callable $callable,
-        ServerRequestInterface $request,
-        ResponseInterface $response,
-        array $routeArguments
+        callable $callable, ServerRequestInterface $request, ResponseInterface $response, $routeArguments
     ): ResponseInterface {
 
         foreach ($routeArguments as $k => $v) {

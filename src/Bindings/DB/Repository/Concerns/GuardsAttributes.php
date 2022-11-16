@@ -43,7 +43,7 @@ trait GuardsAttributes
      * @param array $fillable
      * @return $this
      */
-    public function fillable(array $fillable)
+    public function fillable($fillable)
     {
         $this->fillable = $fillable;
 
@@ -66,7 +66,7 @@ trait GuardsAttributes
      * @param array $guarded
      * @return $this
      */
-    public function guard(array $guarded)
+    public function guard($guarded)
     {
         $this->guarded = $guarded;
 
@@ -176,7 +176,7 @@ trait GuardsAttributes
      * @param array $attributes
      * @return array
      */
-    protected function fillableFromArray(array $attributes)
+    protected function fillableFromArray($attributes)
     {
         if (count($this->getFillable()) > 0 && ! static::$unguarded) {
             return array_intersect_key($attributes, array_flip($this->getFillable()));

@@ -49,7 +49,7 @@ class DatabaseManager
     /**
      * Get a database connection instance.
      *
-     * @param string|null $name
+     * @param string $name
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
     public function connection($name=null)

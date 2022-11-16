@@ -7,29 +7,26 @@ interface RepositoryInterface
     /**
      * Get all entry count from table
      *
-     * @param array $conditions
-     * @param string $columns
+     * @param array $args
      * @return int
      */
-    public function count(array $conditions=[], $columns='*');
+    public function count(...$args);
 
     /**
      * Get all entries from table with conditions
      *
-     * @param array $conditions
-     * @param string $columns
+     * @param array $args
      * @return mixed
      */
-    public function all(array $conditions=[], $columns='*');
+    public function all(...$args);
 
     /**
      * Get a row from table with conditions
      *
-     * @param array $conditions
-     * @param string $columns
+     * @param array $args
      * @return mixed
      */
-    public function one(array $conditions=[], $columns='*');
+    public function one(...$args);
 
     /**
      * Create a new row
@@ -37,7 +34,7 @@ interface RepositoryInterface
      * @param array $attributes
      * @return RepositoryInterface
      */
-    public function create(array $attributes=[]): RepositoryInterface ;
+    public function create($attributes=[]): RepositoryInterface ;
 
     /**
      * Delete the row with conditions
@@ -61,7 +58,7 @@ interface RepositoryInterface
      * @param array $options
      * @return bool
      */
-    public function save(array $options=[]): bool ;
+    public function save($options=[]): bool ;
 
     /**
      * Destroy items from table
@@ -69,7 +66,7 @@ interface RepositoryInterface
      * @param array $ids
      * @return bool
      */
-    public function destroy(array $ids=[]): bool ;
+    public function destroy($ids=[]): bool ;
 
     /**
      * Fill attributes for save
@@ -77,7 +74,7 @@ interface RepositoryInterface
      * @param array $attributes
      * @return RepositoryInterface
      */
-    public function fill(array $attributes=[]): RepositoryInterface ;
+    public function fill($attributes=[]): RepositoryInterface ;
 
     /**
      * Get a query builder instance

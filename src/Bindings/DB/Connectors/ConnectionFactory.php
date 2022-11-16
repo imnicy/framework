@@ -2,6 +2,7 @@
 
 namespace Nicy\Framework\Bindings\DB\Connectors;
 
+use PDO;
 use Nicy\Support\Arr;
 use Nicy\Container\Contracts\Container;
 use Nicy\Framework\Bindings\DB\Query\Builder;
@@ -24,10 +25,10 @@ class ConnectionFactory
      * Establish a PDO connection based on the configuration.
      *
      * @param array $config
-     * @param string|null $name
+     * @param string $name
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public function make(array $config, string $name=null)
+    public function make($config, $name)
     {
         $config = $this->parseConfig($config, $name);
 
@@ -45,7 +46,7 @@ class ConnectionFactory
      * @param string $name
      * @return array
      */
-    protected function parseConfig(array $config, $name)
+    protected function parseConfig($config, $name)
     {
         return Arr::add(Arr::add($config, 'prefix', ''), 'name', $name);
     }
@@ -56,8 +57,11 @@ class ConnectionFactory
      * @param array$config
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    protected function createSingleConnection(array $config)
+    protected function createSingleConnection($config)
     {
-        return new Builder($config);
+        $builder = new Builder($config);
+        $builder->pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+        $builder->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        return $builder;
     }
 }

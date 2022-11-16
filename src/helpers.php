@@ -16,11 +16,11 @@ if (! function_exists('container')) {
     /**
      * Get the available container instance.
      *
-     * @param  string|null  $make
+     * @param  string  $make
      * @param  array  $parameters
      * @return mixed|\Nicy\Container\Contracts\Container
      */
-    function container($make=null, array $parameters=[])
+    function container($make=null, $parameters=[])
     {
         return main()->container($make, $parameters);
     }
@@ -29,10 +29,9 @@ if (! function_exists('container')) {
 if (! function_exists('config')) {
     /**
      * Get / set the specified configuration value.
-     *
      * If an array is passed as the key, we will assume you want to set an array of values.
      *
-     * @param  array|string|null  $key
+     * @param  array|string  $key
      * @param  mixed  $default
      * @return mixed
      */
@@ -58,7 +57,7 @@ if (! function_exists('env')) {
      * @param mixed $default
      * @return mixed
      */
-    function env(string $name, $default = null)
+    function env($name, $default=null)
     {
         $value = getenv($name);
         if ($value === false) {
@@ -76,7 +75,7 @@ if (! function_exists('env')) {
                 return '';
             case 'null':
             case '(null)':
-                return;
+                return null;
         }
         if (preg_match('/\A([\'"])(.*)\1\z/', $value, $matches)) {
             return $matches[2];
@@ -89,7 +88,7 @@ if (! function_exists('storage_path')) {
     /**
      * Get the path to the storage folder.
      *
-     * @param  string  $path
+     * @param string $path
      * @return string
      */
     function storage_path($path='')
@@ -100,9 +99,9 @@ if (! function_exists('storage_path')) {
 
 if (! function_exists('resources_path')) {
     /**
-     * Get the path to the resources folder.
+     * Get the path to the resources' folder.
      *
-     * @param  string  $path
+     * @param string $path
      * @return string
      */
     function resources_path($path='')
@@ -115,7 +114,7 @@ if (! function_exists('public_path')) {
     /**
      * Get the path to the public folder.
      *
-     * @param  string  $path
+     * @param string $path
      * @return string
      */
     function public_path($path='')
@@ -128,7 +127,7 @@ if (! function_exists('path')) {
     /**
      * Get the path to the base folder.
      *
-     * @param  string  $path
+     * @param string $path
      * @return string
      */
     function path($path='')
@@ -146,7 +145,7 @@ if (! function_exists('route')) {
      * @param array $queryParams
      * @return string
      */
-    function route(string $routeName, array $data=[], array $queryParams=[]) :string
+    function route($routeName, $data=[], $queryParams=[]) :string
     {
         return container('url')->route($routeName, $data, $queryParams);
     }
@@ -171,8 +170,8 @@ if (! function_exists('asset')) {
     /**
      * Get asset url from request uri
      *
-     * @param $path
-     * @param null $secure
+     * @param string $path
+     * @param string $secure
      * @return string
      */
     function asset($path, $secure=null)
@@ -185,7 +184,7 @@ if (! function_exists('cache')) {
     /**
      * Get a cache instance
      *
-     * @param string|null $driver
+     * @param string $driver
      * @return \Phpfastcache\Helper\Psr16Adapter
      */
     function cache($driver=null)
@@ -216,7 +215,7 @@ if (! function_exists('validate')) {
      * @param array $messages
      * @return void|bool
      */
-    function validate(array $inputs, array $rules, array $messages=[])
+    function validate($inputs, $rules, $messages=[])
     {
         return container('validation')->validate($inputs, $rules, $messages);
     }
@@ -230,7 +229,7 @@ if (! function_exists('view')) {
      * @param array $context
      * @return string
      */
-    function view($name, array $context=[])
+    function view($name, $context=[])
     {
         return container('view')->render($name, $context);
     }
@@ -244,7 +243,7 @@ if (! function_exists('info')) {
      * @param array $context
      * @return void
      */
-    function info($message, array $context=[])
+    function info($message, $context=[])
     {
         return container('logger')->info($message, $context);
     }
@@ -258,7 +257,7 @@ if (! function_exists('debug')) {
      * @param array $context
      * @return void
      */
-    function debug($message, array $context=[])
+    function debug($message, $context=[])
     {
         return container('logger')->debug($message, $context);
     }
@@ -272,7 +271,7 @@ if (! function_exists('warning')) {
      * @param array $context
      * @return void
      */
-    function warning($message, array $context=[])
+    function warning($message, $context=[])
     {
         return container('logger')->warning($message, $context);
     }
@@ -286,7 +285,7 @@ if (! function_exists('error')) {
      * @param array $context
      * @return void
      */
-    function error($message, array $context=[])
+    function error($message, $context=[])
     {
         return container('logger')->error($message, $context);
     }
@@ -300,7 +299,7 @@ if (! function_exists('notice')) {
      * @param array $context
      * @return void
      */
-    function notice($message, array $context=[])
+    function notice($message, $context=[])
     {
         return container('logger')->notice($message, $context);
     }
@@ -315,7 +314,7 @@ if (! function_exists('log')) {
      * @param array $context
      * @return void
      */
-    function log($level, $message, array $context=[])
+    function log($level, $message, $context=[])
     {
         return container('logger')->log($level, $message, $context);
     }
@@ -393,10 +392,10 @@ if (! function_exists('get_cookie')) {
      * Get cookie from request
      *
      * @param string $name
-     * @param string|null $value
+     * @param string $value
      * @return mixed
      */
-    function get_cookie(string $name, ?string $value=null)
+    function get_cookie($name, $value=null)
     {
         return container('cookie')->get($name, $value);
     }
@@ -407,10 +406,10 @@ if (! function_exists('set_cookie')) {
      * Make a SetCookie instance
      *
      * @param string $name
-     * @param string|null $value
+     * @param string $value
      * @return \Dflydev\FigCookies\SetCookie
      */
-    function set_cookie(string $name, ?string $value=null)
+    function set_cookie($name, $value=null)
     {
         return Nicy\Framework\Bindings\Cookie\Factory::setCookie($name, $value);
     }

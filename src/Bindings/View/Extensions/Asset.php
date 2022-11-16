@@ -20,7 +20,7 @@ class Asset implements FunctionInterface
     /**
      * Create new Asset instance.
      *
-     * @param string  $path
+     * @param string $path
      */
     public function __construct($path)
     {
@@ -39,7 +39,7 @@ class Asset implements FunctionInterface
     }
 
     /**
-     * @param  string $url
+     * @param string $url
      * @return string
      */
     public function from($url)

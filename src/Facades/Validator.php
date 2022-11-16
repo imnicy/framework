@@ -8,8 +8,8 @@ use Nicy\Framework\Support\Facade;
  * Class Validator
  * @package Framework\Facades
  *
- * @method static \Rakit\Validation\Validation make(array $inputs, array $rules, array $messages=[])
- * @method static void|bool validate(array $inputs, array $rules, array $messages=[])
+ * @method static \Rakit\Validation\Validation make($inputs, $rules, $messages=[])
+ * @method static void|bool validate($inputs, $rules, $messages=[])
  *
  */
 class Validator extends Facade

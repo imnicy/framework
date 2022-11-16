@@ -25,7 +25,7 @@ class Factory
      * @param array $messages
      * @return \Rakit\Validation\Validation
      */
-    public function make(array $inputs, array $rules, array $messages=[])
+    public function make($inputs, $rules, $messages=[])
     {
         return $this->getValidationFactory()->make($inputs, $rules, $messages);
     }
@@ -39,7 +39,7 @@ class Factory
      * @return bool
      * @throws ValidationException
      */
-    public function validate(array $inputs, array $rules, array $messages=[])
+    public function validate($inputs, $rules, $messages=[])
     {
         $validation = $this->make($inputs, $rules, $messages);
 
@@ -47,7 +47,7 @@ class Factory
 
         if ($validation->fails()) {
 
-            // Dispatch a validate failed event
+            // Dispatch a validated failed event
             Main::instance()->container('events')->dispatch('validate.fail', $validation->errors);
 
             throw new ValidationException(

@@ -23,7 +23,7 @@ class Dispatcher extends Emitter implements DispatcherContract
      *
      * @param string $event
      * @param mixed $listener
-     * @return Dispatcher|void
+     * @return Dispatcher
      */
     public function listen($event, $listener)
     {

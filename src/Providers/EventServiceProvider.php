@@ -2,6 +2,7 @@
 
 namespace Nicy\Framework\Providers;
 
+use Closure;
 use Nicy\Support\Str;
 use Nicy\Framework\Support\ServiceProvider;
 
@@ -41,8 +42,8 @@ class EventServiceProvider extends ServiceProvider
     /**
      * Register an event listener with the dispatcher.
      *
-     * @param  \Closure|string  $listener
-     * @return \Closure
+     * @param Closure|string $listener
+     * @return Closure
      */
     public function makeListener($listener)
     {
@@ -58,8 +59,8 @@ class EventServiceProvider extends ServiceProvider
     /**
      * Create a class based listener using the IoC container.
      *
-     * @param  string  $listener
-     * @return \Closure
+     * @param string $listener
+     * @return Closure
      */
     public function createClassListener($listener)
     {
@@ -73,7 +74,7 @@ class EventServiceProvider extends ServiceProvider
     /**
      * Create the class based event callable.
      *
-     * @param  string  $listener
+     * @param string $listener
      * @return callable
      */
     protected function createClassCallable($listener)

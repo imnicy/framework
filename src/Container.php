@@ -57,7 +57,7 @@ class Container extends DiContainer
      * @param array $parameters
      * @return mixed
      */
-    public function make($name, array $parameters = [])
+    public function make($name, $parameters=[])
     {
         $this->isAvailableBindings($name);
 
@@ -68,7 +68,6 @@ class Container extends DiContainer
      * If its name in available bindings, register that
      *
      * @param string $name
-     *
      * @return void
      */
     protected function isAvailableBindings($name)
@@ -163,7 +162,7 @@ class Container extends DiContainer
      */
     protected function registerCookieBindings()
     {
-        return $this->singleton('cookie', function() {
+        $this->singleton('cookie', function() {
             return new Factory($this);
         });
     }

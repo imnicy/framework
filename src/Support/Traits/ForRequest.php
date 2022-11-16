@@ -34,12 +34,12 @@ trait ForRequest
      *
      *      1 | 2: for queries and requests
      *
+     * @param string $key
+     * @param mixed $default
      * @param int $mode
-     * @param null|string $key
-     * @param null|mixed $default
      * @return mixed|void|\Nicy\Support\Collection
      */
-    protected function input($key=null, $default=null, $mode = 1|2|4)
+    protected function input($key=null, $default=null, $mode=1|2|4)
     {
         if ($mode == (1|2|4)) {
             if (! $key) {
@@ -69,18 +69,16 @@ trait ForRequest
 
             return Request::file($key);
         }
-
-        return ;
     }
 
     /**
      * @param string $key
      * @param bool $unique
-     * @param string|null $disk
+     * @param string $disk
      *
      * @return false|string
      */
-    protected function upload(string $key, bool $unique=false, string $disk=null)
+    protected function upload($key, $unique=false, $disk=null)
     {
         return Request::upload($key, $unique, $disk);
     }

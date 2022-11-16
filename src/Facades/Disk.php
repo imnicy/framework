@@ -10,13 +10,13 @@ use Nicy\Framework\Support\Facade;
  *
  * @mixin \League\Flysystem\Filesystem
  *
- * @method static void write(string $location, string $contents, array $config = [])
- * @method static void delete(string $location)
- * @method static void createDirectory(string $location, array $config = [])
- * @method static void move(string $source, string $destination, array $config = [])
- * @method static void copy(string $source, string $destination, array $config = [])
- * @method static string read(string $location)
- * @method static bool fileExists(string $location)
+ * @method static void write($location, $contents, $config=[])
+ * @method static void delete($location)
+ * @method static void createDirectory($location, $config=[])
+ * @method static void move($source, $destination, $config=[])
+ * @method static void copy($source, $destination, $config=[])
+ * @method static string read($location)
+ * @method static bool fileExists($location)
  *
  */
 class Disk extends Facade

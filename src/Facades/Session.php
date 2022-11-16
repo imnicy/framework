@@ -11,18 +11,18 @@ use phpDocumentor\Reflection\Types\Array_;
  *
  * @mixin \Nicy\Framework\Bindings\Session\Store
  *
- * @method static mixed pull($key, $default = null)
+ * @method static mixed pull($key, $default=null)
  * @method static void put($key, $value=null)
- * @method static mixed remember($key, \Closure $callback)
+ * @method static mixed remember($key, $callback)
  * @method static void push($key, $value)
- * @method static void flash(string $key, $value=true)
+ * @method static void flash($key, $value=true)
  * @method static mixed remove($key)
  * @method static void forget($keys)
  * @method static void flush()
- * @method static mixed get($key, $default = null)
+ * @method static mixed get($key, $default=null)
  * @method static bool has($key)
  * @method static bool exists($key)
- * @method static array only(array $keys)
+ * @method static array only($keys)
  * @method static array all()
  *
  */

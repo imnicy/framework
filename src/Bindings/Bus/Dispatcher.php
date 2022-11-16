@@ -45,7 +45,7 @@ class Dispatcher
     /**
      * Create a new command dispatcher instance.
      *
-     * @param  \Nicy\Container\Contracts\Container  $container
+     * @param \Nicy\Container\Contracts\Container $container
      * @return void
      */
     public function __construct(Container $container)
@@ -57,8 +57,8 @@ class Dispatcher
     /**
      * Dispatch a command to its appropriate handler in the current process.
      *
-     * @param  mixed  $command
-     * @param  mixed  $handler
+     * @param mixed $command
+     * @param mixed $handler
      * @return mixed
      */
     public function dispatch($command, $handler=null)
@@ -94,7 +94,7 @@ class Dispatcher
     /**
      * Determine if the given command has a handler.
      *
-     * @param  mixed  $command
+     * @param mixed $command
      * @return bool
      */
     public function hasCommandHandler($command)
@@ -119,7 +119,7 @@ class Dispatcher
     /**
      * Retrieve the handler for a command.
      *
-     * @param  mixed  $command
+     * @param mixed $command
      * @return bool|mixed
      */
     public function getCommandHandler($command)
@@ -134,10 +134,10 @@ class Dispatcher
     /**
      * Set the pipes through which commands should be piped before dispatching.
      *
-     * @param  array  $pipes
+     * @param array $pipes
      * @return $this
      */
-    public function pipeThrough(array $pipes)
+    public function pipeThrough($pipes)
     {
         $this->pipes = $pipes;
 
@@ -147,10 +147,10 @@ class Dispatcher
     /**
      * Map a command to a handler.
      *
-     * @param  array  $map
+     * @param array $map
      * @return $this
      */
-    public function map(array $map)
+    public function map($map)
     {
         $this->handlers = array_merge($this->handlers, $map);
 
@@ -163,7 +163,7 @@ class Dispatcher
      * @param callable|null $mapper
      * @return void
      */
-    public function mapUsing(callable $mapper = null)
+    public function mapUsing(callable $mapper=null)
     {
         $this->mapper = $mapper;
     }
@@ -176,7 +176,7 @@ class Dispatcher
      * @param string $handlerNamespace
      * @return string
      */
-    public static function simpleMapping($command, string $commandNamespace, string $handlerNamespace)
+    public static function simpleMapping($command, $commandNamespace, $handlerNamespace)
     {
         $command = str_replace($commandNamespace, '', get_class($command));
 

@@ -24,8 +24,8 @@ class CacheSessionHandler implements SessionHandlerInterface
     /**
      * Create a new cache driven handler instance.
      *
-     * @param  \Phpfastcache\Helper\Psr16Adapter  $cache
-     * @param  int  $minutes
+     * @param \Phpfastcache\Helper\Psr16Adapter $cache
+     * @param int $minutes
      * @return void
      */
     public function __construct(CacheContract $cache, $minutes)

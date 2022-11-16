@@ -49,7 +49,7 @@ class UrlGenerator
     /**
      * Create a new URL redirector instance.
      *
-     * @param \Nicy\Framework\Container
+     * @param \Nicy\Framework\Container $container
      * @return void
      */
     public function __construct(Container $container)
@@ -98,7 +98,7 @@ class UrlGenerator
      *
      * @param string $path
      * @param array $extra
-     * @param bool $secure
+     * @param bool|null $secure
      * @return string
      */
     public function to($path, $extra=[], $secure=null)
@@ -276,9 +276,7 @@ class UrlGenerator
      */
     public function formatParameters($parameters)
     {
-        $parameters = Arr::wrap($parameters);
-
-        return $parameters;
+        return Arr::wrap($parameters);
     }
 
     /**

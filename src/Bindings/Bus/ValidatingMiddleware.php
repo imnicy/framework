@@ -31,7 +31,7 @@ class ValidatingMiddleware
      * Validate the command before execution.
      *
      * @param object $command
-     * @param \Closure $next
+     * @param Closure $next
      * @return void
      * @throws \ReflectionException
      * @throws \Nicy\Framework\Exceptions\ValidationException

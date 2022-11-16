@@ -8,7 +8,7 @@ use Nicy\Support\Arr;
 class Repository implements ArrayAccess
 {
     /**
-     * All of the configuration items.
+     * All the configuration items.
      *
      * @var array
      */
@@ -20,7 +20,7 @@ class Repository implements ArrayAccess
      * @param array $items
      * @return void
      */
-    public function __construct(array $items=[])
+    public function __construct($items=[])
     {
         $this->items = $items;
     }
@@ -122,7 +122,7 @@ class Repository implements ArrayAccess
     }
 
     /**
-     * Get all of the configuration items for the application.
+     * Get all the configuration items for the application.
      *
      * @return array
      */
@@ -158,7 +158,6 @@ class Repository implements ArrayAccess
      *
      * @param string $key
      * @param mixed $value
-     *
      * @return void
      */
     public function offsetSet($key, $value)
@@ -170,7 +169,6 @@ class Repository implements ArrayAccess
      * Unset a configuration option.
      *
      * @param string $key
-     *
      * @return void
      */
     public function offsetUnset($key)

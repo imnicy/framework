@@ -34,12 +34,6 @@ trait RegistersExceptionHandlers
     {
         error_reporting(-1);
 
-        set_error_handler(function ($level, $message, $file = '', $line = 0) {
-            if (error_reporting() & $level) {
-                throw new ErrorException($message, 0, $level, $file, $line);
-            }
-        });
-
         set_exception_handler(function ($e) {
             $this->handleUncaughtException($e);
         });

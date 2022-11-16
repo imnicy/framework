@@ -7,29 +7,26 @@ interface SimpleRepositoryInterface
     /**
      * Get all counts from table with conditions
      *
-     * @param array $conditions
-     * @param string $columns
+     * @param array $args
      * @return int
      */
-    public function count(array $conditions=[], $columns='*');
+    public function count(...$args);
 
     /**
      * Get all entries from table with conditions
      *
-     * @param array $conditions
-     * @param string $columns
-     * @return mixed
+     * @param array $args
+     * @return array
      */
-    public function all(array $conditions=[], $columns='*');
+    public function all(...$args);
 
     /**
      * Get a row from table with conditions
      *
-     * @param array $conditions
-     * @param string $columns
-     * @return mixed
+     * @param array $args
+     * @return array
      */
-    public function one(array $conditions=[], $columns='*');
+    public function one(...$args);
 
     /**
      * Insert rows
@@ -37,7 +34,7 @@ interface SimpleRepositoryInterface
      * @param array $rows
      * @return bool
      */
-    public function insert(array $rows=[]): bool ;
+    public function insert($rows=[]): bool ;
 
     /**
      * Get insert id

@@ -44,7 +44,7 @@ class StartSession
             $this->settings = array_merge($defaults, $this->container['config']['session']);
 
             if (is_string($lifetime = $this->settings['lifetime'])) {
-                $settings['lifetime'] = strtotime($lifetime) - time();
+                $this->settings['lifetime'] = strtotime($lifetime) - time();
             }
         }
     }
@@ -148,10 +148,10 @@ class StartSession
     /**
      * Determine if the configured session driver is persistent.
      *
-     * @param array|null $config
+     * @param array $config
      * @return bool
      */
-    protected function sessionIsPersistent(array $config)
+    protected function sessionIsPersistent($config)
     {
         return ! in_array($config['driver'], [null]);
     }

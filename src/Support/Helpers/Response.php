@@ -35,11 +35,8 @@ class Response
         else if (is_string($contents) || is_bool($contents) || is_int($contents) || method_exists($contents, '__toString')) {
             $responseBody->write((string) $contents);
         }
-        else if (is_null($contents)) {
-            // invalid contents, will return empty response instance
-        }
         else {
-            // invalid contents,
+            return null;
         }
 
         if ($responseBody->isSeekable()) {

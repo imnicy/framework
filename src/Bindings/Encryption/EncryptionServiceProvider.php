@@ -36,11 +36,11 @@ class EncryptionServiceProvider extends ServiceProvider
     /**
      * Extract the encryption key from the given configuration.
      *
-     * @param  array  $config
+     * @param array $config
      * @return string
      * @throws \RuntimeException
      */
-    protected function key(array $config)
+    protected function key($config)
     {
         return tap($config['key'], function ($key) {
             if (empty($key)) {

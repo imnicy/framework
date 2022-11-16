@@ -28,7 +28,7 @@ class QueryException extends PDOException
      * @param array $bindings
      * @return void
      */
-    public function __construct($sql, array $bindings=[])
+    public function __construct($sql, $bindings=[])
     {
         parent::__construct('', 0);
 

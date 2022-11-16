@@ -57,10 +57,10 @@ class LogManager implements LoggerInterface
      * Create a new, on-demand aggregate logger instance.
      *
      * @param array $channels
-     * @param string|null $channel
+     * @param string $channel
      * @return \Psr\Log\LoggerInterface
      */
-    public function stack(array $channels, $channel=null)
+    public function stack($channels, $channel=null)
     {
         return new Logger($this->createStackDriver(compact('channels', 'channel')));
     }
@@ -68,7 +68,7 @@ class LogManager implements LoggerInterface
     /**
      * Get a log channel instance.
      *
-     * @param string|null $channel
+     * @param string $channel
      * @return mixed
      */
     public function channel($channel=null)
@@ -79,7 +79,7 @@ class LogManager implements LoggerInterface
     /**
      * Get a log driver instance.
      *
-     * @param string|null $driver
+     * @param string $driver
      * @return mixed
      */
     public function driver($driver=null)
@@ -183,7 +183,7 @@ class LogManager implements LoggerInterface
      * @param array $config
      * @return mixed
      */
-    protected function callCustomCreator(array $config)
+    protected function callCustomCreator($config)
     {
         return $this->customCreators[$config['driver']]($this->container, $config);
     }
@@ -194,7 +194,7 @@ class LogManager implements LoggerInterface
      * @param array $config
      * @return \Psr\Log\LoggerInterface
      */
-    protected function createCustomDriver(array $config)
+    protected function createCustomDriver($config)
     {
         $factory = is_callable($via = $config['via']) ? $via : $this->container->make($via);
 
@@ -207,7 +207,7 @@ class LogManager implements LoggerInterface
      * @param array $config
      * @return \Psr\Log\LoggerInterface
      */
-    protected function createStackDriver(array $config)
+    protected function createStackDriver($config)
     {
         $handlers = collect($config['channels'])->flatMap(function ($channel) {
             return $this->channel($channel)->getHandlers();
@@ -226,7 +226,7 @@ class LogManager implements LoggerInterface
      * @param array $config
      * @return \Psr\Log\LoggerInterface
      */
-    protected function createSingleDriver(array $config)
+    protected function createSingleDriver($config)
     {
         return new Monolog($this->parseChannel($config), [
             $this->prepareHandler(
@@ -244,7 +244,7 @@ class LogManager implements LoggerInterface
      * @param array $config
      * @return \Psr\Log\LoggerInterface
      */
-    protected function createDailyDriver(array $config)
+    protected function createDailyDriver($config)
     {
         return new Monolog($this->parseChannel($config), [
             $this->prepareHandler(new RotatingFileHandler(
@@ -260,7 +260,7 @@ class LogManager implements LoggerInterface
      * @param array $config
      * @return \Psr\Log\LoggerInterface
      */
-    protected function createSyslogDriver(array $config)
+    protected function createSyslogDriver($config)
     {
         return new Monolog($this->parseChannel($config), [
             $this->prepareHandler(new SyslogHandler(
@@ -276,7 +276,7 @@ class LogManager implements LoggerInterface
      * @param array $config
      * @return \Psr\Log\LoggerInterface
      */
-    protected function createErrorlogDriver(array $config)
+    protected function createErrorlogDriver($config)
     {
         return new Monolog($this->parseChannel($config), [
             $this->prepareHandler(new ErrorLogHandler(
@@ -292,7 +292,7 @@ class LogManager implements LoggerInterface
      * @return \Psr\Log\LoggerInterface
      * @throws \InvalidArgumentException
      */
-    protected function createMonologDriver(array $config)
+    protected function createMonologDriver($config)
     {
         if (! is_a($config['handler'], HandlerInterface::class, true)) {
             throw new InvalidArgumentException(
@@ -317,7 +317,7 @@ class LogManager implements LoggerInterface
      * @param array $handlers
      * @return array
      */
-    protected function prepareHandlers(array $handlers)
+    protected function prepareHandlers($handlers)
     {
         foreach ($handlers as $key => $handler) {
             $handlers[$key] = $this->prepareHandler($handler);
@@ -333,7 +333,7 @@ class LogManager implements LoggerInterface
      * @param array $config
      * @return \Monolog\Handler\HandlerInterface
      */
-    protected function prepareHandler(HandlerInterface $handler, array $config=[])
+    protected function prepareHandler(HandlerInterface $handler, $config=[])
     {
         if (! isset($config['formatter'])) {
             $handler->setFormatter($this->formatter());
@@ -401,7 +401,7 @@ class LogManager implements LoggerInterface
      * Register a custom driver creator Closure.
      *
      * @param string $driver
-     * @param \Closure $callback
+     * @param Closure $callback
      * @return $this
      */
     public function extend($driver, Closure $callback)
@@ -418,7 +418,7 @@ class LogManager implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function emergency($message, array $context=[])
+    public function emergency($message, $context=[])
     {
         $this->driver()->emergency($message, $context);
     }
@@ -433,7 +433,7 @@ class LogManager implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function alert($message, array $context=[])
+    public function alert($message, $context=[])
     {
         $this->driver()->alert($message, $context);
     }
@@ -447,7 +447,7 @@ class LogManager implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function critical($message, array $context=[])
+    public function critical($message, $context=[])
     {
         $this->driver()->critical($message, $context);
     }
@@ -460,7 +460,7 @@ class LogManager implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function error($message, array $context=[])
+    public function error($message, $context=[])
     {
         $this->driver()->error($message, $context);
     }
@@ -475,7 +475,7 @@ class LogManager implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function warning($message, array $context=[])
+    public function warning($message, $context=[])
     {
         $this->driver()->warning($message, $context);
     }
@@ -487,7 +487,7 @@ class LogManager implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function notice($message, array $context=[])
+    public function notice($message, $context=[])
     {
         $this->driver()->notice($message, $context);
     }
@@ -501,7 +501,7 @@ class LogManager implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function info($message, array $context=[])
+    public function info($message, $context=[])
     {
         $this->driver()->info($message, $context);
     }
@@ -513,7 +513,7 @@ class LogManager implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function debug($message, array $context=[])
+    public function debug($message, $context=[])
     {
         $this->driver()->debug($message, $context);
     }
@@ -526,7 +526,7 @@ class LogManager implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function log($level, $message, array $context=[])
+    public function log($level, $message, $context=[])
     {
         $this->driver()->log($level, $message, $context);
     }

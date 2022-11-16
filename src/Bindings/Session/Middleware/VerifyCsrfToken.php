@@ -52,7 +52,6 @@ class VerifyCsrfToken
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request PSR7 request
      * @param \Psr\Http\Server\RequestHandlerInterface $handler PSR7 handler
-     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function __invoke(Request $request, RequestHandler $handler): Response
@@ -78,7 +77,6 @@ class VerifyCsrfToken
      * Determine if the HTTP request uses a ‘read’ verb.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     *
      * @return bool
      */
     protected function isReading($request)
@@ -173,14 +171,12 @@ class VerifyCsrfToken
 
         $sessionStore = $this->container['session'];
 
-        $response = FigResponseCookies::set($response, SetCookie::create(
+        return FigResponseCookies::set($response, SetCookie::create(
                 $sessionStore->getName(), $sessionStore->getId()
             )
             ->withDomain($config['domain'])
             ->withSecure($config['secure'])
             ->withHttpOnly($config['http_only'])
         );
-
-        return $response;
     }
 }

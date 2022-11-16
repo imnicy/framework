@@ -31,10 +31,10 @@ return [
         'default' => [
             // required
             'database_type' => 'mysql',
-            'database_name' => 'test',
-            'server' => '192.168.254.220',
-            'username' => 'root',
-            'password' => 'abcdEF122',
+            'database_name' => env('DB_NAME', 'sample'),
+            'server' => env('DB_HOST', '127.0.0.1'),
+            'username' => env('DB_USER', 'root'),
+            'password' => env('DB_PASSWORD'),
 
             // [optional]
             'charset' => 'utf8',

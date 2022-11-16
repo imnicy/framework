@@ -217,7 +217,7 @@ $definition = Nicy\Framework\Main::instance()->container('name');
 
 ```php
 // give a callable or instance
-container()->singleton('name', callable $callable);
+container()->singleton('name', $callable);
 
 // or, Set the `$value` parameter to null, will definition a `Your\ClassName` instance.
 container()->singleton(Your/ClassName::class);
@@ -234,12 +234,12 @@ class Controller
 
     public function demo()
     {
-        return $this->response('contents', array $headers, array $cookies = [
+        return $this->response('contents',$headers, $cookies = [
             'token' => 'generate a token string',
         ]]);
         
         // or
-        return $this->response('contents', array $headers, array $cookies = [
+        return $this->response('contents', $headers, $cookies = [
                     set_cookie('token', 'token string')->withDomain('/')->with...,
                 ]]);
     }
@@ -299,7 +299,7 @@ class AddedEvent extends League\Event\AbstractEvent
 ```php
 // anywhere
 // event name as custom string or event class name
-container('events')->dispatch('event_name', array $payloads);
+container('events')->dispatch('event_name', $payloads);
 ```
 
 在 EventServiceProvider 中定义事件侦听列表
@@ -371,7 +371,7 @@ Nicy\Framework\Facades\Session::get('name', 'default');
 基本使用:
 
 ```php
-validate(array $inputs, [
+validate($inputs, [
     'name' => 'required',
     'age' => 'required|numeric',
     ...
@@ -380,7 +380,7 @@ validate(array $inputs, [
 // throw a ValidationException if fails.
 
 // with Facade
-$validator = Nicy\Framework\Facades\Validator::make(array $inputs, array $rules);
+$validator = Nicy\Framework\Facades\Validator::make$inputs, $rules);
 
 if ($validator->fails()) {
     // some code
@@ -399,7 +399,7 @@ class Controller
 {
     public function display()
     {
-        return view('index.twig', array $parameters);
+        return view('index.twig', $parameters);
         
         // with Facade
         return Nicy\Framework\Facades\View::render('resource/home/index.twig', $parameters);

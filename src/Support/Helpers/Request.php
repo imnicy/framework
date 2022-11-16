@@ -113,20 +113,20 @@ class Request
 
     /**
      * @param string $name
-     * @param null|mixed $default
+     * @param mixed $default
      * @return mixed
      */
-    public static function get(string $name, $default=null)
+    public static function get($name, $default=null)
     {
         return static::queries()->get($name, $default);
     }
 
     /**
      * @param string $name
-     * @param null|mixed $default
+     * @param mixed $default
      * @return mixed
      */
-    public static function request(string $name, $default=null)
+    public static function request($name, $default=null)
     {
         return static::requests()->get($name, $default);
     }
@@ -135,27 +135,27 @@ class Request
      * @param string $name
      * @return mixed
      */
-    public static function file(string $name)
+    public static function file($name)
     {
         return static::files()->get($name);
     }
 
     /**
      * @param string $name
-     * @param null|mixed $default
+     * @param mixed $default
      * @return mixed
      */
-    public static function param(string $name, $default=null)
+    public static function param($name, $default=null)
     {
         return static::params()->get($name, $default);
     }
 
     /**
      * @param string $name
-     * @param null|mixed $default
+     * @param mixed $default
      * @return mixed
      */
-    public static function input(string $name, $default=null)
+    public static function input($name, $default=null)
     {
         return static::all()->get($name, $default);
     }
@@ -166,7 +166,7 @@ class Request
      * @param string $disk
      * @return string|false
      */
-    public static function upload(string $key, bool $unique=false, string $disk=null)
+    public static function upload($key, $unique=false, $disk=null)
     {
         if ($file = static::file($key)) {
             if (! $file instanceof UploadedFileInterface) {

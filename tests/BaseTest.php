@@ -23,7 +23,7 @@ class BaseTest extends TestCase
         return $this->framework = new Framework(dirname(__DIR__));
     }
 
-    protected function createRequest(string $method, string $uri, array $params=[])
+    protected function createRequest($method, $uri, $params=[])
     {
         return (new ServerRequestFactory())->createServerRequest($method, $uri, $params);
     }

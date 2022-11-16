@@ -29,36 +29,30 @@ abstract class Simple implements SimpleRepositoryInterface
     }
 
     /**
-     * @param array|string $join
-     * @param string|string $columns
-     * @param array $conditions
+     * @param array $args
      * @return int
      */
-    public function count($join=null, $columns=null, $conditions=null)
+    public function count(...$args)
     {
-        return static::query()->count($this->table, $join, $columns, $conditions);
+        return static::query()->count($this->table, ...$args);
     }
 
     /**
-     * @param array|string $join
-     * @param string|string $columns
-     * @param array $conditions
+     * @param array $args
      * @return array
      */
-    public function all($join=null, $columns=null, $conditions=null)
+    public function all(...$args)
     {
-        return static::query()->select($this->table, $join, $columns, $conditions);
+        return static::query()->select($this->table, ...$args);
     }
 
     /**
-     * @param array|string $join
-     * @param string|string $columns
-     * @param array $conditions
-     * @return mixed
+     * @param array $args
+     * @return array
      */
-    public function one($join=null, $columns=null, $conditions=null)
+    public function one(...$args)
     {
-        return static::query()->get($this->table, $join, $columns, $conditions);
+        return static::query()->get($this->table, ...$args);
     }
 
     /**
@@ -73,7 +67,7 @@ abstract class Simple implements SimpleRepositoryInterface
      * @param array $rows
      * @return bool
      */
-    public function insert(array $rows=[]): bool
+    public function insert($rows=[]): bool
     {
         static::query()->insert($this->table, $rows);
 

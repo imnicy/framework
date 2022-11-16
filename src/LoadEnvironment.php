@@ -31,8 +31,8 @@ class LoadEnvironment
     /**
      * register a new loads environment variables instance.
      *
-     * @param  string  $path
-     * @param  string|null  $name
+     * @param string $path
+     * @param string $name
      * @return $this
      */
     public function register($path, $name=null)
@@ -81,10 +81,10 @@ class LoadEnvironment
     /**
      * Write the error information to the screen and exit.
      *
-     * @param  string[]  $errors
+     * @param string[] $errors
      * @return void
      */
-    protected function writeErrorAndDie(array $errors)
+    protected function writeErrorAndDie($errors)
     {
         foreach ($errors as $error) {
             echo $error . PHP_EOL;

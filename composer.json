@@ -5,6 +5,7 @@
     "homepage": "https://framework.imnicy.com",
     "require": {
         "php": "^7.4 || ^8.0",
+        "ext-pdo": "*",
         "catfan/medoo": "^1.7",
         "dflydev/fig-cookies": "^3.0",
         "imnicy/container": "^1.0",
@@ -17,14 +18,14 @@
         "rakit/validation": "^1.4",
         "slim/psr7": "^1.0",
         "slim/slim": "^4.0",
-        "tomasfejfar/enhanced-dump": "^2.1",
         "twig/twig": "^3.0",
         "josegonzalez/dotenv": "^3.2",
         "psr/log": "^1.0"
     },
     "require-dev": {
-      "mockery/mockery": "^1.4.2",
-      "phpunit/phpunit": "^8.5.8|^9.3.3"
+        "mockery/mockery": "^1.4.2",
+        "phpunit/phpunit": "^8.5.8|^9.3.3",
+        "tomasfejfar/enhanced-dump": "^2.1"
     },
     "autoload": {
         "psr-4": {

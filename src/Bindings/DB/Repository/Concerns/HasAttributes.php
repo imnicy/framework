@@ -38,7 +38,7 @@ trait HasAttributes
      *
      * @var bool
      */
-    public static bool $snakeAttributes = true;
+    public static $snakeAttributes = true;
 
     /**
      * The attributes that should be cast to native types.

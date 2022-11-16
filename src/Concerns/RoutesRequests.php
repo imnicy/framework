@@ -53,7 +53,7 @@ trait RoutesRequests
      * @param PsrRequestInterface|null $request
      * @return void
      */
-    public function run($request=null)
+    public function run(PsrRequestInterface $request=null)
     {
         $response = $this->dispatch($request);
 
