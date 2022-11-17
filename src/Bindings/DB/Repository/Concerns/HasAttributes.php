@@ -62,17 +62,13 @@ trait HasAttributes
      */
     public function getAttribute($key)
     {
-        if (! $key) {
+        if (! $key || ! is_string($key)) {
             return;
         }
 
         if (array_key_exists($key, $this->attributes) ||
             $this->hasGetMutator($key)) {
             return $this->getAttributeValue($key);
-        }
-
-        if (method_exists(self::class, $key)) {
-            return;
         }
 
         return;
@@ -346,6 +342,10 @@ trait HasAttributes
         $appends = [];
 
         foreach ($this->with as $item) {
+            if (! is_string($item)) {
+                continue;
+            }
+
             if ($value = $this->getAttribute($item)) {
                 $appends[$item] = $value;
             }

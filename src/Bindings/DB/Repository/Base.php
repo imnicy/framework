@@ -3,6 +3,7 @@
 namespace Nicy\Framework\Bindings\DB\Repository;
 
 use ArrayAccess;
+use RuntimeException;
 use Nicy\Framework\Main;
 use Nicy\Support\Str;
 use Nicy\Support\Contracts\Arrayable;
@@ -109,22 +110,34 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     public function all(...$args)
     {
         return tap($this->newQueryWith()->all($this->table, ...$args), function($results) {
-            return $this->loadingRelationships($results);
+            return $this->hydrateRelationships($results);
         });
     }
 
     /**
      * @param array $args
-     * @return Base
+     * @return Base|$this
      */
     public function one(...$args)
     {
-        return $this->newQueryWith()->one($this->table, ...$args);
+        return tap($this->newQueryWith()->one($this->table, ...$args), function($result) {
+            return $this->hydrateRelationships($result);
+        });
+    }
+
+    /**
+     * @param int|string $id
+     * @param string|array $columns
+     * @return Base|$this
+     */
+    public function find($id, $columns=null)
+    {
+        return $this->one($columns, [$this->primary => $id]);
     }
 
     /**
      * @param array $attributes
-     * @return RepositoryInterface
+     * @return RepositoryInterface|Base|$this
      */
     public function create($attributes=[]): RepositoryInterface
     {
@@ -317,7 +330,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
             if ($this->isFillable($key)) {
                 $this->setAttribute($key, $value);
             } elseif ($totallyGuarded) {
-                throw new \RuntimeException(sprintf(
+                throw new RuntimeException(sprintf(
                     'Add [%s] to fillable property to allow mass assignment on [%s].',
                     $key, get_class($this)
                 ));
@@ -552,14 +565,14 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @param int $options
      * @return string
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function toJson($options=0)
     {
         $json = json_encode($this->toArray(), $options);
 
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 'Error encoding repository ['.get_class($this).'] to JSON: '.json_last_error_msg()
             );
         }
