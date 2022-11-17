@@ -2,6 +2,7 @@
 
 namespace Nicy\Framework\Bindings\DB\Query;
 
+use PDOStatement;
 use Nicy\Framework\Exceptions\QueryException;
 use Nicy\Framework\Bindings\DB\Repository\Base;
 use Nicy\Framework\Main;
@@ -35,7 +36,7 @@ class Builder extends Medoo
      * @param array $where
      * @return array|\Nicy\Framework\Bindings\DB\Repository\Collection
      */
-    public function select($table, $join=null, $columns=null, $where=null)
+    public function all($table, $join=null, $columns=null, $where=null)
     {
         $result = parent::select($table, $join ?: '*', $columns, $where);
 
@@ -55,7 +56,7 @@ class Builder extends Medoo
      * @param array $where
      * @return array|\Nicy\Framework\Bindings\DB\Repository\Base
      */
-    public function get($table, $join=null, $columns=null, $where=null)
+    public function one($table, $join=null, $columns=null, $where=null)
     {
         $result = parent::get($table, $join ?: '*', $columns, $where);
 
@@ -71,9 +72,9 @@ class Builder extends Medoo
      * @param string|array $join
      * @param array $column
      * @param array $where
-     * @return false|float|int|mixed|string
+     * @return int
      */
-    public function count($table, $join=null, $column=null, $where=null)
+    public function count($table, $join=null, $column=null, $where=null) :int
     {
         return parent::count($table, $join ?: '*', $column, $where);
     }
@@ -93,7 +94,7 @@ class Builder extends Medoo
      */
     protected function prepareQueryWithError()
     {
-        if (($error = $this->error()) && $error[1] && static::$errorThrowable) {
+        if (($error = $this->error) && $error[1] && static::$errorThrowable) {
             // Dispatch a query error event, if query has error info.
             Main::instance()->container('events')->dispatch('db.query.error', $error);
 
@@ -106,9 +107,10 @@ class Builder extends Medoo
      *
      * @param string $query
      * @param array $map
-     * @return bool|\PDOStatement
+     * @param callable $callback
+     * @return bool|PDOStatement
      */
-    public function exec($query, $map=[])
+    public function exec($query, $map=[], callable $callback=null) : ?PDOStatement
     {
         // Dispatch a query sql statements log, when sql running.
         Main::instance()->container('events')->dispatch('db.query.sql', $sql = parent::generate($query, $map));

@@ -43,7 +43,7 @@ abstract class Simple implements SimpleRepositoryInterface
      */
     public function all(...$args)
     {
-        return static::query()->select($this->table, ...$args);
+        return static::query()->all($this->table, ...$args);
     }
 
     /**
@@ -52,7 +52,7 @@ abstract class Simple implements SimpleRepositoryInterface
      */
     public function one(...$args)
     {
-        return static::query()->get($this->table, ...$args);
+        return static::query()->one($this->table, ...$args);
     }
 
     /**

@@ -108,7 +108,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      */
     public function all(...$args)
     {
-        return tap($this->newQueryWith()->select($this->table, ...$args), function($results) {
+        return tap($this->newQueryWith()->all($this->table, ...$args), function($results) {
             return $this->loadingRelationships($results);
         });
     }
@@ -119,7 +119,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      */
     public function one(...$args)
     {
-        return $this->newQueryWith()->get($this->table, ...$args);
+        return $this->newQueryWith()->one($this->table, ...$args);
     }
 
     /**

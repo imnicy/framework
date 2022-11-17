@@ -6,7 +6,8 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-pdo": "*",
-        "catfan/medoo": "^1.7",
+        "ext-json": "*",
+        "catfan/medoo": "^2.1",
         "dflydev/fig-cookies": "^3.0",
         "imnicy/container": "^1.0",
         "imnicy/support": "^1.0",

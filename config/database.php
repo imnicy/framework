@@ -30,9 +30,9 @@ return [
 
         'default' => [
             // required
-            'database_type' => 'mysql',
-            'database_name' => env('DB_NAME', 'sample'),
-            'server' => env('DB_HOST', '127.0.0.1:3306'),
+            'type' => 'mysql',
+            'database' => env('DB_NAME', 'sample'),
+            'host' => env('DB_HOST', '127.0.0.1:3306'),
             'username' => env('DB_USER', 'root'),
             'password' => env('DB_PASSWORD'),
 
