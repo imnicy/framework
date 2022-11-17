@@ -9,12 +9,12 @@ use Nicy\Support\Contracts\Arrayable;
 use Nicy\Support\Contracts\Jsonable;
 use Nicy\Framework\Bindings\DB\Query\Builder;
 use Nicy\Framework\Bindings\DB\Repository\Concerns\{
-    HasAttributes, GuardsAttributes, HidesAttributes, HasEvents, ForPaginate
+    HasAttributes, HasRelationships, GuardsAttributes, HidesAttributes, HasEvents, ForPaginate
 };
 
 class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
 {
-    use ForwardsCalls, HasAttributes, GuardsAttributes, HidesAttributes, HasEvents, ForPaginate;
+    use ForwardsCalls, HasAttributes, HasRelationships, GuardsAttributes, HidesAttributes, HasEvents, ForPaginate;
 
     /**
      * @var bool
@@ -108,7 +108,9 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      */
     public function all(...$args)
     {
-        return $this->newQueryWith()->select($this->table, ...$args);
+        return tap($this->newQueryWith()->select($this->table, ...$args), function($results) {
+            return $this->loadingRelationships($results);
+        });
     }
 
     /**
@@ -380,7 +382,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
-     * @return \Nicy\Framework\Bindings\DB\Repository\Base
+     * @return \Nicy\Framework\Bindings\DB\Repository\Base|$this
      */
     public static function instance()
     {
@@ -522,7 +524,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        unset($this->attributes[$offset], $this->relations[$offset]);
+        unset($this->attributes[$offset]);
     }
 
     /**

@@ -111,7 +111,7 @@ class Builder extends Medoo
     public function exec($query, $map=[])
     {
         // Dispatch a query sql statements log, when sql running.
-        Main::instance()->container('events')->dispatch('db.query.sql', parent::generate($query, $map));
+        Main::instance()->container('events')->dispatch('db.query.sql', $sql = parent::generate($query, $map));
 
         $statement = parent::exec($query, $map);
         $this->prepareQueryWithError();
