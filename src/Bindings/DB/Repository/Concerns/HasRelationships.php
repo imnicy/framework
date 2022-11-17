@@ -132,16 +132,18 @@ trait HasRelationships
      */
     protected function loadingRelationships(Collection $results)
     {
+        if (! $this->relations) {
+            return $results;
+        }
+
         $this->setResults($results);
 
         foreach ($this->relations as $name => $relation) {
             list($type, $args, ) = $relation;
             switch ($type) {
-                case 'many':
-                    $loadMethod = 'loadManyFromConditions';
-                    break;
                 case 'one':
-                    $loadMethod = 'loadOneFromConditions';
+                case 'many':
+                    $loadMethod = 'loadOneOrManyFromConditions';
                     break;
                 case 'manyThrough':
                     $loadMethod = 'loadManyThroughFromConditions';
@@ -149,6 +151,9 @@ trait HasRelationships
                 default:
                     return $results;
             }
+
+            // Attach one condition to loading method
+            $args[] = $type == 'one';
 
             list($repository, $conditions) = $this->getLoadRepository($name);
 
@@ -183,34 +188,17 @@ trait HasRelationships
      * @param array $conditions
      * @param string $key
      * @param string $foreignKey
+     * @param bool $one
      * @return Collection
      */
-    private function loadManyFromConditions(Base $repository, $conditions, $key, $foreignKey)
+    private function loadOneOrManyFromConditions(Base $repository, $conditions, $key, $foreignKey, $one=false)
     {
         list($results, $foreignResults) = $this->getOneOrManyResults(
             $repository, $conditions, $key, $foreignKey
         );
 
         return $this->attachForeignResults(
-            get_class($repository), $results, $foreignResults, $key, $foreignKey
-        );
-    }
-
-    /**
-     * @param Base $repository
-     * @param array $conditions
-     * @param string $key
-     * @param string $foreignKey
-     * @return Collection
-     */
-    private function loadOneFromConditions(Base $repository, $conditions, $key, $foreignKey)
-    {
-        list($results, $foreignResults) = $this->getOneOrManyResults(
-            $repository, $conditions, $key, $foreignKey
-        );
-
-        return $this->attachForeignResults(
-            get_class($repository), $results, $foreignResults, $key, $foreignKey
+            get_class($repository), $results, $foreignResults, $key, $foreignKey, $one
         );
     }
 

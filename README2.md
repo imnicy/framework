@@ -4,13 +4,13 @@
 
 ### 功能:
 
-- 请求和响应 (`slim\slim`, see: slim framework)
+- 路由 (`slim\slim`)
 - 容器 (`php-di\php-di`)
 - 缓存 (`phpfastcache/phpfastcache`)
 - 配置
 - Cookie
 - 数据库 (`catfan/medoo`)
-- ORM (based on `medoo`, provide two ways to invoke the data model)
+- ORM (based on `medoo`)
 - 加解密
 - 事件 (`league/event`)
 - 文件系统 (`league/flysystem`)
@@ -37,7 +37,7 @@
   }
 ```
 
-### 引导
+### 开始使用
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
@@ -156,11 +156,11 @@ class CustomController extends Controller
         
         // with some conditions and columns
         // see medoo documents
-        return $instance->all(['name[~]' => 'w%'], 'name, age');
-        
+        return $instance->all('*', ['name[~]' => 'w%']);
+
         // find a item, fill and update
-        $found = $instance->one(['name' => 'bin']);
-        
+        $found = $instance->one('*', ['name' => 'bin']);
+
         if ($found) {
             $found->mobile = '156...';
             $found->save();
@@ -171,7 +171,7 @@ class CustomController extends Controller
 
         // update with conditions
         $instance->update(['name[~]' => 'w%'], ['mobile' => '156...']);
-        
+
         // destroy any items with primary
         $instance->destroy([1,2,3,4]);
     }
@@ -339,12 +339,12 @@ Nicy\Framework\Facades\Storage::disk('file')->write('path.txt', 'contents');
 you can extend your custom filesystem driver.
 
 ```php
-Nicy\Framework\Facades\Storage::extend('qiniu', function() {
+Nicy\Framework\Facades\Storage::extend('cos', function() {
     // some code
 });
 
 // usage
-Nicy\Framework\Facades\Storage::disk('qiniu')->write('path.txt', 'contents');
+Nicy\Framework\Facades\Storage::disk('cos')->write('path.txt', 'contents');
 ```
 
 更多内容你可以阅读league/flysystem的文档.
@@ -373,7 +373,7 @@ Nicy\Framework\Facades\Session::get('name', 'default');
 ```php
 validate($inputs, [
     'name' => 'required',
-    'age' => 'required|numeric',
+    'age' => 'required|numeric|in:0,1',
     ...
 ]);
 
