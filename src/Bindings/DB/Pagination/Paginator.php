@@ -61,6 +61,7 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
     protected function setItems($items)
     {
         $this->items = $items instanceof Collection ? $items : Collection::make($items);
+
         $this->items = $this->items->slice(0, $this->itemsPerPage);
     }
 

@@ -98,7 +98,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $args
      * @return int
      */
-    public function count(...$args)
+    public function count(...$args) :int
     {
         return $this->newQueryWith()->count($this->table, ...$args);
     }
@@ -107,7 +107,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $args
      * @return Collection
      */
-    public function all(...$args)
+    public function all(...$args) :Collection
     {
         return tap($this->newQueryWith()->all($this->table, ...$args), function($results) {
             return $this->hydrateRelationships($results);
@@ -116,9 +116,9 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
 
     /**
      * @param array $args
-     * @return Base|$this
+     * @return RepositoryInterface|Base|$this
      */
-    public function one(...$args)
+    public function one(...$args) :RepositoryInterface
     {
         return tap($this->newQueryWith()->one($this->table, ...$args), function($result) {
             return $this->hydrateRelationships($result);
@@ -128,9 +128,9 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @param int|string $id
      * @param string|array $columns
-     * @return Base|$this
+     * @return RepositoryInterface|Base|$this
      */
-    public function find($id, $columns=null)
+    public function find($id, $columns=null) :RepositoryInterface
     {
         return $this->one($columns, [$this->primary => $id]);
     }
@@ -152,7 +152,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $rows
      * @return bool
      */
-    public function insert($rows=[])
+    public function insert($rows=[]) :bool
     {
         static::query()->insert($this->table, $rows);
 
@@ -317,9 +317,9 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
 
     /**
      * @param array $attributes
-     * @return RepositoryInterface
+     * @return Base
      */
-    public function fill($attributes=[]): RepositoryInterface
+    public function fill($attributes=[]): Base
     {
         $totallyGuarded = $this->totallyGuarded();
 
@@ -354,7 +354,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public function newQuery()
+    public function newQuery() :Builder
     {
         $query = clone Main::instance()->container('db')->connection($this->connection);
 
@@ -364,7 +364,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public function newQueryWith()
+    public function newQueryWith() :Builder
     {
         return static::query($this->with);
     }
@@ -389,7 +389,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $with
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public static function query($with=[])
+    public static function query($with=[]) :Builder
     {
         return (new static)->with($with)->newQuery();
     }
@@ -409,7 +409,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param bool $exists
      * @return static
      */
-    public function newInstance($attributes=[], $exists=false)
+    public function newInstance($attributes=[], $exists=false) :Base
     {
         $instance = new static((array) $attributes);
 

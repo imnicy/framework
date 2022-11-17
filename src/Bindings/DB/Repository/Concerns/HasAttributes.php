@@ -2,6 +2,8 @@
 
 namespace Nicy\Framework\Bindings\DB\Repository\Concerns;
 
+use Nicy\Framework\Bindings\DB\Repository\Base;
+use Nicy\Framework\Bindings\DB\Repository\RepositoryInterface;
 use Nicy\Support\Arr;
 use Nicy\Support\Contracts\Arrayable;
 use Nicy\Support\Str;
@@ -112,9 +114,9 @@ trait HasAttributes
      * With any attributes
      *
      * @param array|string $attributes
-     * @return $this
+     * @return RepositoryInterface|Base|$this
      */
-    public function with($attributes)
+    public function with($attributes) :RepositoryInterface
     {
         if (! is_array($attributes)) {
             if (! is_string($attributes)) {

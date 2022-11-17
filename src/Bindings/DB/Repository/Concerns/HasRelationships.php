@@ -6,21 +6,33 @@ use InvalidArgumentException;
 use Nicy\Framework\Bindings\DB\Repository\Base;
 use Nicy\Framework\Bindings\DB\Repository\Collection;
 use Nicy\Framework\Bindings\DB\Repository\Relationship;
+use Nicy\Framework\Bindings\DB\Repository\RepositoryInterface;
 use Nicy\Framework\Exceptions\AttributeError;
 
 trait HasRelationships
 {
     /**
+     * Relationship for this repository
+     *
      * @var array|Relationship[]
      */
     protected $relations = [];
 
     /**
-     * @param array|string $relations
-     * @return $this
+     * @var array
      */
-    public function load($relations)
+    protected $load = [];
+
+    /**
+     * Load any has defined relationships
+     *
+     * @param array|string $relations
+     * @return RepositoryInterface|Base|$this
+     */
+    public function load($relations) :RepositoryInterface
     {
+        $this->load = array_merge($this->load, $relations);
+
         if (! is_array($relations)) {
             if (! is_string($relations)) {
                 return $this;
@@ -83,13 +95,13 @@ trait HasRelationships
     }
 
     /**
-     * @param array $parent
+     * @param array $eagerRelations
      * @return Base
      */
-    protected function getRelated($parent)
+    protected function getRelated($eagerRelations)
     {
         $related = $this;
-        foreach ($parent as $item) {
+        foreach ($eagerRelations as $item) {
             if (! array_key_exists($item, $related->relations)) {
                 return null;
             }
@@ -102,24 +114,22 @@ trait HasRelationships
      * @param string|array|Base $relation
      * @param string $key
      * @param string $foreignKey
-     * @param string $name
      * @return Relationship
      */
-    protected function loadMany($relation, $key, $foreignKey, $name=null)
+    protected function loadMany($relation, $key, $foreignKey)
     {
-        return $this->loadRelation('many', $name, $relation, $key, $foreignKey, $name);
+        return $this->loadRelation('many', null, $relation, $key, $foreignKey);
     }
 
     /**
      * @param string|array|Base $relation
      * @param string $key
      * @param string $foreignKey
-     * @param string $name
      * @return Relationship
      */
-    protected function loadOne($relation, $key, $foreignKey, $name=null)
+    protected function loadOne($relation, $key, $foreignKey)
     {
-        return $this->loadRelation('one', $name, $relation, $key, $foreignKey);
+        return $this->loadRelation('one', null, $relation, $key, $foreignKey);
     }
 
     /**
@@ -129,15 +139,14 @@ trait HasRelationships
      * @param string $throughForeignKey
      * @param string $key
      * @param string $foreignKey
-     * @param string $name
      * @return Relationship
      */
     protected function loadManyThrough(
-        $relation, $through, $throughKey, $throughForeignKey, $key, $foreignKey, $name=null
+        $relation, $through, $throughKey, $throughForeignKey, $key, $foreignKey
     )
     {
         return $this->loadRelation(
-            'manyThrough', $name, $relation, $through, $throughKey, $throughForeignKey, $key, $foreignKey
+            'manyThrough', null, $relation, $through, $throughKey, $throughForeignKey, $key, $foreignKey
         );
     }
 
@@ -252,5 +261,13 @@ trait HasRelationships
             $results = $relationship->{$loadMethod}($results);
         }
         return $results;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLoads()
+    {
+        return $this->load;
     }
 }

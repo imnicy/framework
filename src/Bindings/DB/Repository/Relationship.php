@@ -3,40 +3,60 @@
 namespace Nicy\Framework\Bindings\DB\Repository;
 
 use RuntimeException;
+use Nicy\Support\Str;
 use Nicy\Support\Contracts\Arrayable;
 use Nicy\Framework\Bindings\DB\Repository\Concerns\HasRelationships;
 
 class Relationship implements Arrayable
 {
     /**
+     * Parent repository
+     *
      * @var Base
      */
     protected $repository;
 
     /**
+     * Relation repository
+     *
      * @var Base
      */
     protected $relation;
 
     /**
+     * Relation types: many | one | manyThrough
+     *
      * @var string
      */
     protected $type;
 
     /**
+     * Relation args
+     *
      * @var array
      */
     protected $args;
 
     /**
+     * Relationship name
+     *
      * @var string
      */
     protected $name;
 
     /**
+     * Relation query conditions
+     *
      * @var array
      */
     protected $conditions;
+
+    /**
+     * Indicates whether relationship name are snake cased on arrays.
+     *
+     * @var bool
+     */
+    public static $snakeNames = false;
 
     /**
      * Relationship constructor.
@@ -63,15 +83,17 @@ class Relationship implements Arrayable
      */
     protected function attachForeignResults($results, $foreignResults, $key, $foreignKey)
     {
+        $name = lcfirst(static::$snakeNames ? Str::snake($this->name) : $this->name);
+
         if ($results instanceof Collection) {
-            return $results->each(function($item) use ($foreignResults, $key, $foreignKey) {
-                $item->{$this->name} = $this->filterForeignResults(
+            return $results->each(function($item) use ($name, $foreignResults, $key, $foreignKey) {
+                $item->{$name} = $this->filterForeignResults(
                     $foreignResults, $foreignKey,  $item->{$key}
                 );
             });
         }
 
-        $results->{$this->name} = $this->filterForeignResults($foreignResults, $foreignKey, $results->{$key});
+        $results->{$name} = $this->filterForeignResults($foreignResults, $foreignKey, $results->{$key});
 
         return $results;
     }
@@ -90,6 +112,8 @@ class Relationship implements Arrayable
     }
 
     /**
+     * Load relation data to results, type of 'one' or 'many' relationship
+     *
      * @param Collection|Base $results
      * @return Collection|Base
      */
@@ -107,6 +131,8 @@ class Relationship implements Arrayable
     }
 
     /**
+     * Load relation data to results, type of 'many-though' relationship
+     *
      * @param Collection|Base $results
      * @return Collection|Base
      */
@@ -118,15 +144,18 @@ class Relationship implements Arrayable
 
         $foreignResults = $this->relation->all(
             '*', array_merge($this->conditions, [
-                $foreignKey => $this->repository->newQueryWith()->all($this->repository->table(), [
-                    '[><]' . $throughTable => [
-                        $key => $throughKey
-                    ],
-                ], [
-                    $throughTable . '.' . $throughForeignKey
-                ], [
-                    $throughTable . '.' . $throughKey => $this->getResultsValues($results, $key)
-                ])->pluck($throughForeignKey)->toArray()
+                $foreignKey => array_column(
+                    $this->repository->newQuery()->simpling(true)->all($this->repository->table(), [
+                        '[><]' . $throughTable => [
+                            $key => $throughKey
+                        ],
+                    ], [
+                        $throughTable . '.' . $throughForeignKey
+                    ], [
+                        $throughTable . '.' . $throughKey => $this->getResultsValues($results, $key)
+                    ]),
+                    $throughForeignKey
+                )
             ]
         ));
 
@@ -173,6 +202,8 @@ class Relationship implements Arrayable
     }
 
     /**
+     * Set relationship nam
+     *
      * @param string $name
      * @return $this
      */
@@ -200,6 +231,8 @@ class Relationship implements Arrayable
     }
 
     /**
+     * Set relation query conditions
+     *
      * @param array $conditions
      * @return $this
      */
@@ -211,6 +244,8 @@ class Relationship implements Arrayable
     }
 
     /**
+     * Get parent repository
+     *
      * @return Base
      */
     public function getRepository()
@@ -219,6 +254,8 @@ class Relationship implements Arrayable
     }
 
     /**
+     * Get relation repository
+     *
      * @return Base
      */
     public function getRelation()
@@ -295,6 +332,8 @@ class Relationship implements Arrayable
     }
 
     /**
+     * Relation query result to array
+     *
      * @return Collection
      */
     public function toArray()

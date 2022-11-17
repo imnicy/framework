@@ -3,8 +3,8 @@
 namespace Nicy\Framework\Bindings\DB\Query;
 
 use PDOStatement;
+use Nicy\Framework\Bindings\DB\Repository\RepositoryInterface;
 use Nicy\Framework\Exceptions\QueryException;
-use Nicy\Framework\Bindings\DB\Repository\Base;
 use Nicy\Framework\Main;
 use Medoo\Medoo;
 
@@ -54,7 +54,7 @@ class Builder extends Medoo
      * @param string|array $join
      * @param array $columns
      * @param array $where
-     * @return array|\Nicy\Framework\Bindings\DB\Repository\Base
+     * @return array|\Nicy\Framework\Bindings\DB\Repository\RepositoryInterface
      */
     public function one($table, $join=null, $columns=null, $where=null)
     {
@@ -139,7 +139,7 @@ class Builder extends Medoo
     /**
      * Get the repository instance being queried.
      *
-     * @return \Nicy\Framework\Bindings\DB\Repository\Base
+     * @return \Nicy\Framework\Bindings\DB\Repository\RepositoryInterface
      */
     public function getRepository()
     {
@@ -149,10 +149,10 @@ class Builder extends Medoo
     /**
      * Set a repository instance for the repository being queried.
      *
-     * @param \Nicy\Framework\Bindings\DB\Repository\Base $repository
-     * @return $this
+     * @param \Nicy\Framework\Bindings\DB\Repository\RepositoryInterface $repository
+     * @return Builder
      */
-    public function setRepository(Base $repository)
+    public function setRepository(RepositoryInterface $repository)
     {
         $this->repository = $repository;
 
@@ -176,7 +176,7 @@ class Builder extends Medoo
      * Create a new instance of the repository being queried.
      *
      * @param array $attributes
-     * @return \Nicy\Framework\Bindings\DB\Repository\Base|static
+     * @return \Nicy\Framework\Bindings\DB\Repository\RepositoryInterface|static
      */
     public function newRepositoryInstance($attributes=[])
     {
