@@ -60,8 +60,12 @@ class ConnectionFactory
     protected function createSingleConnection($config)
     {
         $builder = new Builder($config);
-        $builder->pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
-        $builder->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+        $pod = $builder->pdo;
+
+        // $pod->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+        $pod->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
         return $builder;
     }
 }
