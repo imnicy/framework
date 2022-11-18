@@ -70,12 +70,17 @@ class Main
      * Main constructor.
      *
      * @param string $path
+     * @param string $configurePath
      */
-    public function __construct($path)
+    public function __construct($path, $configurePath=null)
     {
-        date_default_timezone_set('Asia/Shanghai');
+        date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 
         $this->path = $path;
+
+        $this->configurePath = file_exists($configurePath)
+            ? $configurePath
+            : $this->path($configurePath);
 
         $this->bootstrapContainer();
         $this->configure('app');
@@ -344,19 +349,6 @@ class Main
     }
 
     /**
-     * Set configures path
-     *
-     * @param string $path
-     * @return $this
-     */
-    public function setConfigurePath($path)
-    {
-        $this->configurePath = file_exists($path) ? $path : null;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     protected function getDefaultConfigurePath()
@@ -387,7 +379,7 @@ class Main
                 return $appConfigPath;
             }
         }
-        return '.';
+        return '';
     }
 
     /**
