@@ -3,9 +3,9 @@
 namespace Nicy\Framework\Bindings\DB\Repository;
 
 use RuntimeException;
+use InvalidArgumentException;
 use Nicy\Support\Str;
 use Nicy\Support\Contracts\Arrayable;
-use Nicy\Framework\Bindings\DB\Repository\Concerns\HasRelationships;
 
 class Relationship implements Arrayable
 {
@@ -61,7 +61,7 @@ class Relationship implements Arrayable
     /**
      * Relationship constructor.
      *
-     * @param Base|HasRelationships $repository For IDE
+     * @param Base|\Nicy\Framework\Bindings\DB\Repository\Concerns\HasRelationships $repository For IDE
      * @param Base $relation
      * @param string $type
      * @param array $args
@@ -71,7 +71,26 @@ class Relationship implements Arrayable
         $this->repository = $repository;
         $this->relation = $relation;
         $this->type = $type;
-        $this->args = $args;
+        $this->args = $this->parseRelationArgs($args);
+    }
+
+    /**
+     * @param array $args
+     * @return array
+     */
+    protected function parseRelationArgs($args)
+    {
+        $parsed = array_filter($args, function($arg) {
+            return is_string($arg);
+        });
+
+        if (count($parsed) != count($args)) {
+            throw new InvalidArgumentException(
+                sprintf('has invalid relationship arguments wth relationship class [%s]', get_class($this->relation))
+            );
+        }
+
+        return $parsed;
     }
 
     /**

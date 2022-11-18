@@ -31,8 +31,6 @@ trait HasRelationships
      */
     public function load($relations) :RepositoryInterface
     {
-        $this->load = array_merge($this->load, $relations);
-
         if (! is_array($relations)) {
             if (! is_string($relations)) {
                 return $this;
@@ -40,6 +38,8 @@ trait HasRelationships
 
             $relations = [$relations];
         }
+
+        $this->load = array_merge($this->load, $relations);
 
         foreach ($relations as $relation => $conditions) {
             if (is_int($relation)) {
@@ -71,9 +71,9 @@ trait HasRelationships
     {
         $finder = explode('.', $relation);
 
-        $related = $this->getRelated(array_slice($finder, 0, -1));
+        $related = $this->getRelatedRepository(array_slice($finder, 0, -1));
 
-        if ($related) {
+        if ($related && $related !== $this) {
             $related->load([end($finder) => $conditions]);
         }
     }
@@ -95,12 +95,17 @@ trait HasRelationships
     }
 
     /**
-     * @param array $eagerRelations
+     * @param array|string $eagerRelations
      * @return Base
      */
-    protected function getRelated($eagerRelations)
+    protected function getRelatedRepository($eagerRelations)
     {
+        if (is_string($eagerRelations)) {
+            $eagerRelations = [$eagerRelations];
+        }
+
         $related = $this;
+
         foreach ($eagerRelations as $item) {
             if (! array_key_exists($item, $related->relations)) {
                 return null;
@@ -214,6 +219,9 @@ trait HasRelationships
         else {
             $conditions = [];
         }
+
+        $conditions = is_array($conditions) ? $conditions : [];
+
         if (is_string($relation)) {
             if (! class_exists($relation)) {
                 throw new InvalidArgumentException(sprintf('invalid relationship class [%s]', $relation));
