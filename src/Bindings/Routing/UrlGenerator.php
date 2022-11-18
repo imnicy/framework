@@ -55,6 +55,7 @@ class UrlGenerator
     public function __construct(Container $container)
     {
         $this->container = $container;
+
         $this->uri = $container->get('request')->getUri();
     }
 

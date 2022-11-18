@@ -14,8 +14,8 @@ class BusServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->container->singleton(Dispatcher::class, function (Container $app) {
-            return new Dispatcher($app);
+        $this->container->singleton(Dispatcher::class, function () {
+            return new Dispatcher($this->container);
         });
     }
 }

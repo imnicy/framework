@@ -62,7 +62,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      */
     protected static $booted = [];
 
-    public function __construct(array $attributes=[])
+    public function __construct($attributes=[])
     {
         $this->bootIfNotBooted();
         $this->syncOriginal();

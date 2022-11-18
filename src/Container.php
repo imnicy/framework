@@ -201,6 +201,11 @@ class Container extends DiContainer
         });
     }
 
+    protected function registerJWTBindings()
+    {
+        Main::instance()->loadComponent('Nicy\Framework\Bindings\JWT\JWTServiceProvider', 'jwt');
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -287,6 +292,7 @@ class Container extends DiContainer
         'router'            => 'registerRoutingBindings',
         'router.parser'     => 'registerRoutingBindings',
         'url'               => 'registerUrlBindings',
+        'jwt'               => 'registerJWTBindings',
         'cache'             => 'registerCacheBindings',
         'cache.store'       => 'registerCacheBindings',
         'db'                => 'registerDatabaseBindings',
