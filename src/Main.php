@@ -28,6 +28,13 @@ class Main
     protected $path;
 
     /**
+     * The configures path
+     *
+     * @var string
+     */
+    protected $configurePath;
+
+    /**
      * @var Manager
      */
     protected $manager;
@@ -245,12 +252,19 @@ class Main
     /**
      * Register a service provider with the container.
      *
-     * @param \Nicy\Framework\Support\ServiceProvider|string $provider
+     * @param \Nicy\Framework\Support\ServiceProvider|string|array $provider
      * @return \Nicy\Framework\Support\ServiceProvider|void
      */
     public function register($provider)
     {
-        return $this->container->register($provider);
+        if (is_array($provider)) {
+            foreach ($provider as $item) {
+                $this->register($item);
+            }
+        }
+        else {
+            return $this->container->register($provider);
+        }
     }
 
     /**
@@ -330,6 +344,27 @@ class Main
     }
 
     /**
+     * Set configures path
+     *
+     * @param string $path
+     * @return $this
+     */
+    public function setConfigurePath($path)
+    {
+        $this->configurePath = file_exists($path) ? $path : null;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultConfigurePath()
+    {
+        return $this->path('config') . '/';
+    }
+
+    /**
      * Get the path to the given configuration file.
      *
      * If no name is provided, then we'll return the path to the config folder.
@@ -339,21 +374,17 @@ class Main
      */
     public function getConfigurationPath($name=null)
     {
-        if (! $name) {
-            $appConfigDir = $this->path('config').'/';
+        $appConfigPath = $this->configurePath ?: $this->getDefaultConfigurePath();
 
-            if (file_exists($appConfigDir)) {
-                return $appConfigDir;
-            } elseif (file_exists($path = __DIR__.'/../config/')) {
-                return $path;
+        if (! $name) {
+            if (file_exists($appConfigPath)) {
+                return $appConfigPath;
             }
         } else {
-            $appConfigPath = $this->path('config').'/'.$name.'.php';
+            $appConfigPath = $appConfigPath . '/' . $name . '.php';
 
             if (file_exists($appConfigPath)) {
                 return $appConfigPath;
-            } elseif (file_exists($path = __DIR__.'/../config/'.$name.'.php')) {
-                return $path;
             }
         }
         return '.';
