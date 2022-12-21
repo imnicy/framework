@@ -76,7 +76,7 @@ class Builder extends Medoo
      */
     public function count($table, $join=null, $column=null, $where=null) :int
     {
-        return parent::count($table, $join ?: '*', $column, $where);
+        return parent::count($table, $join ?: '*', is_string($column) ? $column : '*', $where);
     }
 
     /**
