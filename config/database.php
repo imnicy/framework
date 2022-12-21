@@ -30,19 +30,11 @@ return [
 
         'default' => [
             // required
-            'database_type' => 'mysql',
-            'database_name' => env('DB_NAME', 'sample'),
-            'server' => env('DB_HOST', '127.0.0.1'),
+            'type' => 'mysql',
+            'database' => env('DB_NAME', 'sample'),
+            'host' => env('DB_HOST', '127.0.0.1:3306'),
             'username' => env('DB_USER', 'root'),
             'password' => env('DB_PASSWORD'),
-
-            // [optional]
-            'charset' => 'utf8',
-            'collation' => 'utf8_general_ci',
-            'port' => 3306,
-
-            // [optional] Table prefix
-            'prefix' => ''
         ]
 
     ],

@@ -2,6 +2,8 @@
 
 namespace Nicy\Framework\Bindings\DB\Repository\Concerns;
 
+use Nicy\Framework\Bindings\DB\Repository\Base;
+use Nicy\Framework\Bindings\DB\Repository\RepositoryInterface;
 use Nicy\Support\Arr;
 use Nicy\Support\Contracts\Arrayable;
 use Nicy\Support\Str;
@@ -62,17 +64,13 @@ trait HasAttributes
      */
     public function getAttribute($key)
     {
-        if (! $key) {
+        if (! $key || ! is_string($key)) {
             return;
         }
 
         if (array_key_exists($key, $this->attributes) ||
             $this->hasGetMutator($key)) {
             return $this->getAttributeValue($key);
-        }
-
-        if (method_exists(self::class, $key)) {
-            return;
         }
 
         return;
@@ -116,9 +114,9 @@ trait HasAttributes
      * With any attributes
      *
      * @param array|string $attributes
-     * @return $this
+     * @return RepositoryInterface|Base|$this
      */
-    public function with($attributes)
+    public function with($attributes) :RepositoryInterface
     {
         if (! is_array($attributes)) {
             if (! is_string($attributes)) {
@@ -346,6 +344,10 @@ trait HasAttributes
         $appends = [];
 
         foreach ($this->with as $item) {
+            if (! is_string($item)) {
+                continue;
+            }
+
             if ($value = $this->getAttribute($item)) {
                 $appends[$item] = $value;
             }

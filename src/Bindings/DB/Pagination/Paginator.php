@@ -61,6 +61,7 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
     protected function setItems($items)
     {
         $this->items = $items instanceof Collection ? $items : Collection::make($items);
+
         $this->items = $this->items->slice(0, $this->itemsPerPage);
     }
 
@@ -148,45 +149,45 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
     /**
      * Determine if the given item exists.
      *
-     * @param mixed $key
+     * @param mixed $offset
      * @return bool
      */
-    public function offsetExists($key)
+    public function offsetExists($offset)
     {
-        return $this->items->has($key);
+        return $this->items->has($offset);
     }
 
     /**
      * Get the item at the given offset.
      *
-     * @param mixed $key
+     * @param mixed $offset
      * @return mixed
      */
-    public function offsetGet($key)
+    public function offsetGet($offset)
     {
-        return $this->items->get($key);
+        return $this->items->get($offset);
     }
 
     /**
      * Set the item at the given offset.
      *
-     * @param mixed $key
+     * @param mixed $offset
      * @param mixed $value
      * @return void
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($offset, $value)
     {
-        $this->items->put($key, $value);
+        $this->items->put($offset, $value);
     }
 
     /**
      * Unset the item at the given key.
      *
-     * @param mixed $key
+     * @param mixed $offset
      * @return void
      */
-    public function offsetUnset($key)
+    public function offsetUnset($offset)
     {
-        $this->items->forget($key);
+        $this->items->forget($offset);
     }
 }

@@ -3,6 +3,7 @@
 namespace Nicy\Framework\Bindings\DB\Repository;
 
 use ArrayAccess;
+use RuntimeException;
 use Nicy\Framework\Main;
 use Nicy\Support\Str;
 use Nicy\Support\Contracts\Arrayable;
@@ -97,7 +98,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $args
      * @return int
      */
-    public function count(...$args)
+    public function count(...$args) :int
     {
         return $this->newQueryWith()->count($this->table, ...$args);
     }
@@ -106,25 +107,37 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $args
      * @return Collection
      */
-    public function all(...$args)
+    public function all(...$args) :Collection
     {
-        return tap($this->newQueryWith()->select($this->table, ...$args), function($results) {
-            return $this->loadingRelationships($results);
+        return tap($this->newQueryWith()->all($this->table, ...$args), function($results) {
+            return $this->hydrateRelationships($results);
         });
     }
 
     /**
      * @param array $args
-     * @return Base
+     * @return RepositoryInterface|Base|$this
      */
-    public function one(...$args)
+    public function one(...$args) :RepositoryInterface
     {
-        return $this->newQueryWith()->get($this->table, ...$args);
+        return tap($this->newQueryWith()->one($this->table, ...$args), function($result) {
+            return $this->hydrateRelationships($result);
+        });
+    }
+
+    /**
+     * @param int|string $id
+     * @param string|array $columns
+     * @return RepositoryInterface|Base|$this
+     */
+    public function find($id, $columns=null) :RepositoryInterface
+    {
+        return $this->one($columns, [$this->primary => $id]);
     }
 
     /**
      * @param array $attributes
-     * @return RepositoryInterface
+     * @return RepositoryInterface|Base|$this
      */
     public function create(array $attributes=[]): RepositoryInterface
     {
@@ -139,7 +152,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $rows
      * @return bool
      */
-    public function insert(array $rows=[])
+    public function insert(array $rows=[]) :bool
     {
         static::query()->insert($this->table, $rows);
 
@@ -304,9 +317,9 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
 
     /**
      * @param array $attributes
-     * @return RepositoryInterface
+     * @return Base
      */
-    public function fill(array $attributes=[]): RepositoryInterface
+    public function fill(array $attributes=[]): Base
     {
         $totallyGuarded = $this->totallyGuarded();
 
@@ -317,7 +330,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
             if ($this->isFillable($key)) {
                 $this->setAttribute($key, $value);
             } elseif ($totallyGuarded) {
-                throw new \RuntimeException(sprintf(
+                throw new RuntimeException(sprintf(
                     'Add [%s] to fillable property to allow mass assignment on [%s].',
                     $key, get_class($this)
                 ));
@@ -333,7 +346,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param string $key
      * @return string
      */
-    protected function removeTableFromKey($key)
+    protected function removeTableFromKey(string $key)
     {
         return Str::contains($key, '.') ? last(explode('.', $key)) : $key;
     }
@@ -341,7 +354,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public function newQuery()
+    public function newQuery() :Builder
     {
         $query = clone Main::instance()->container('db')->connection($this->connection);
 
@@ -351,7 +364,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public function newQueryWith()
+    public function newQueryWith() :Builder
     {
         return static::query($this->with);
     }
@@ -376,7 +389,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $with
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public static function query(array $with=[])
+    public static function query(array $with=[]) :Builder
     {
         return (new static)->with($with)->newQuery();
     }
@@ -396,9 +409,9 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param bool $exists
      * @return static
      */
-    public function newInstance(array $attributes=[], $exists=false)
+    public function newInstance(array $attributes=[], bool $exists=false) :Base
     {
-        $instance = new static($attributes);
+        $instance = new static((array) $attributes);
 
         $instance->exists = $exists;
 
@@ -441,10 +454,10 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * Set the connection associated with the repository.
      *
-     * @param string|null $name
+     * @param string $name
      * @return $this
      */
-    public function setConnection(?string $name)
+    public function setConnection($name)
     {
         $this->connection = $name;
 
@@ -465,7 +478,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
-     * @param mixed $data
+     * @param array|Collection|\ArrayAccess $data
      * @return \Nicy\Framework\Bindings\DB\Repository\Collection
      */
     public function newCollection($data)
@@ -553,14 +566,14 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      *
      * @param int $options
      * @return string
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function toJson($options=0)
     {
         $json = json_encode($this->toArray(), $options);
 
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 'Error encoding repository ['.get_class($this).'] to JSON: '.json_last_error_msg()
             );
         }

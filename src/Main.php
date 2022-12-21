@@ -28,6 +28,13 @@ class Main
     protected $path;
 
     /**
+     * The configures path
+     *
+     * @var string
+     */
+    protected $configurePath;
+
+    /**
      * @var Manager
      */
     protected $manager;
@@ -63,12 +70,17 @@ class Main
      * Main constructor.
      *
      * @param string $path
+     * @param string|null $configurePath
      */
-    public function __construct(string $path)
+    public function __construct(string $path, string $configurePath=null)
     {
-        date_default_timezone_set('Asia/Shanghai');
+        date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 
         $this->path = $path;
+
+        $this->configurePath = file_exists($configurePath)
+            ? $configurePath
+            : $this->path($configurePath ?: '');
 
         $this->bootstrapContainer();
         $this->configure('app');
@@ -136,7 +148,7 @@ class Main
      * @param bool $shouldMake
      * @return $this
      */
-    public function middleware($middleware, bool $shouldMake=true)
+    public function middleware($middleware, $shouldMake=true)
     {
         if ($shouldMake && is_string($middleware) && class_exists($middleware)) {
             $middleware = $this->container->make($middleware);
@@ -245,12 +257,19 @@ class Main
     /**
      * Register a service provider with the container.
      *
-     * @param \Nicy\Framework\Support\ServiceProvider|string $provider
+     * @param \Nicy\Framework\Support\ServiceProvider|string|array $provider
      * @return \Nicy\Framework\Support\ServiceProvider|void
      */
     public function register($provider)
     {
-        return $this->container->register($provider);
+        if (is_array($provider)) {
+            foreach ($provider as $item) {
+                $this->register($item);
+            }
+        }
+        else {
+            return $this->container->register($provider);
+        }
     }
 
     /**
@@ -330,6 +349,25 @@ class Main
     }
 
     /**
+     * @param string|null $name
+     * @return string
+     */
+    protected function getDefaultConfigurePath(string $name=null)
+    {
+        $path = $this->path('config') . '/';
+
+        if ($name) {
+            $configurePath = $path . $name . '.php';
+            if (! file_exists($configurePath)) {
+                return '';
+            }
+            return $configurePath;
+        }
+
+        return $path;
+    }
+
+    /**
      * Get the path to the given configuration file.
      *
      * If no name is provided, then we'll return the path to the config folder.
@@ -339,24 +377,19 @@ class Main
      */
     public function getConfigurationPath(string $name=null)
     {
-        if (! $name) {
-            $appConfigDir = $this->path('config').'/';
+        $appConfigPath = $this->configurePath;
 
-            if (file_exists($appConfigDir)) {
-                return $appConfigDir;
-            } elseif (file_exists($path = __DIR__.'/../config/')) {
-                return $path;
+        if ($appConfigPath) {
+            if ($name) {
+                $appConfigPath = $appConfigPath . '/' . $name . '.php';
             }
-        } else {
-            $appConfigPath = $this->path('config').'/'.$name.'.php';
 
             if (file_exists($appConfigPath)) {
                 return $appConfigPath;
-            } elseif (file_exists($path = __DIR__.'/../config/'.$name.'.php')) {
-                return $path;
             }
         }
-        return '.';
+
+        return $this->getDefaultConfigurePath($name);
     }
 
     /**

@@ -68,7 +68,7 @@ class LogManager implements LoggerInterface
     /**
      * Get a log channel instance.
      *
-     * @param string|string $channel
+     * @param string|null $channel
      * @return mixed
      */
     public function channel(string $channel=null)

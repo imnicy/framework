@@ -32,7 +32,7 @@ abstract class Simple implements SimpleRepositoryInterface
      * @param array $args
      * @return int
      */
-    public function count(...$args)
+    public function count(...$args) :int
     {
         return static::query()->count($this->table, ...$args);
     }
@@ -41,24 +41,24 @@ abstract class Simple implements SimpleRepositoryInterface
      * @param array $args
      * @return array
      */
-    public function all(...$args)
+    public function all(...$args) :array
     {
-        return static::query()->select($this->table, ...$args);
+        return static::query()->all($this->table, ...$args);
     }
 
     /**
      * @param array $args
      * @return array
      */
-    public function one(...$args)
+    public function one(...$args) :array
     {
-        return static::query()->get($this->table, ...$args);
+        return static::query()->one($this->table, ...$args);
     }
 
     /**
      * @return Builder
      */
-    public function newQuery()
+    public function newQuery() :Builder
     {
         return Main::instance()->container('db')->connection($this->connection)->simpling();
     }

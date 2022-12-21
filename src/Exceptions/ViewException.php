@@ -6,5 +6,5 @@ use Twig\Error\RuntimeError;
 
 class ViewException extends RuntimeError
 {
-
+    //
 }

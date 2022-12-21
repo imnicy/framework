@@ -2,8 +2,9 @@
 
 namespace Nicy\Framework\Bindings\DB\Query;
 
+use PDOStatement;
+use Nicy\Framework\Bindings\DB\Repository\RepositoryInterface;
 use Nicy\Framework\Exceptions\QueryException;
-use Nicy\Framework\Bindings\DB\Repository\Base;
 use Nicy\Framework\Main;
 use Medoo\Medoo;
 
@@ -35,7 +36,7 @@ class Builder extends Medoo
      * @param array $where
      * @return array|\Nicy\Framework\Bindings\DB\Repository\Collection
      */
-    public function select($table, $join=null, $columns=null, $where=null)
+    public function all($table, $join=null, $columns=null, $where=null)
     {
         $result = parent::select($table, $join ?: '*', $columns, $where);
 
@@ -53,9 +54,9 @@ class Builder extends Medoo
      * @param string|array $join
      * @param array $columns
      * @param array $where
-     * @return array|\Nicy\Framework\Bindings\DB\Repository\Base
+     * @return array|\Nicy\Framework\Bindings\DB\Repository\RepositoryInterface
      */
-    public function get($table, $join=null, $columns=null, $where=null)
+    public function one($table, $join=null, $columns=null, $where=null)
     {
         $result = parent::get($table, $join ?: '*', $columns, $where);
 
@@ -71,11 +72,11 @@ class Builder extends Medoo
      * @param string|array $join
      * @param array $column
      * @param array $where
-     * @return false|float|int|mixed|string
+     * @return int
      */
-    public function count($table, $join=null, $column=null, $where=null)
+    public function count($table, $join=null, $column=null, $where=null) :int
     {
-        return parent::count($table, $join ?: '*', is_string($column) ? $column : '*', $where);
+        return parent::count($table, $join ?: '*', $column, $where);
     }
 
     /**
@@ -93,7 +94,7 @@ class Builder extends Medoo
      */
     protected function prepareQueryWithError()
     {
-        if (($error = $this->error()) && $error[1] && static::$errorThrowable) {
+        if (($error = $this->error) && $error[1] && static::$errorThrowable) {
             // Dispatch a query error event, if query has error info.
             Main::instance()->container('events')->dispatch('db.query.error', $error);
 
@@ -106,12 +107,15 @@ class Builder extends Medoo
      *
      * @param string $query
      * @param array $map
-     * @return bool|\PDOStatement
+     * @param callable|null $callback
+     * @return bool|PDOStatement
      */
-    public function exec($query, $map=[])
+    public function exec($query, $map=[], callable $callback=null) : ?PDOStatement
     {
         // Dispatch a query sql statements log, when sql running.
-        Main::instance()->container('events')->dispatch('db.query.sql', parent::generate($query, $map));
+        Main::instance()->container('events')->dispatch('db.query.sql', $sql = parent::generate($query, $map));
+
+        // debug('run sql', compact('sql'));
 
         $statement = parent::exec($query, $map);
         $this->prepareQueryWithError();
@@ -125,7 +129,7 @@ class Builder extends Medoo
      * @param array $items
      * @return \Nicy\Framework\Bindings\DB\Repository\Collection
      */
-    public function hydrate($items)
+    public function hydrate(array $items)
     {
         $repository = $this->repository->newInstance();
 
@@ -137,7 +141,7 @@ class Builder extends Medoo
     /**
      * Get the repository instance being queried.
      *
-     * @return \Nicy\Framework\Bindings\DB\Repository\Base
+     * @return \Nicy\Framework\Bindings\DB\Repository\RepositoryInterface
      */
     public function getRepository()
     {
@@ -147,10 +151,10 @@ class Builder extends Medoo
     /**
      * Set a repository instance for the repository being queried.
      *
-     * @param \Nicy\Framework\Bindings\DB\Repository\Base $repository
-     * @return $this
+     * @param \Nicy\Framework\Bindings\DB\Repository\RepositoryInterface $repository
+     * @return Builder
      */
-    public function setRepository(Base $repository)
+    public function setRepository(RepositoryInterface $repository)
     {
         $this->repository = $repository;
 
@@ -174,7 +178,7 @@ class Builder extends Medoo
      * Create a new instance of the repository being queried.
      *
      * @param array $attributes
-     * @return \Nicy\Framework\Bindings\DB\Repository\Base|static
+     * @return \Nicy\Framework\Bindings\DB\Repository\RepositoryInterface|static
      */
     public function newRepositoryInstance(array $attributes=[])
     {
