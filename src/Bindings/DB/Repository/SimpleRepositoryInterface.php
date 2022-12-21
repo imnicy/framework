@@ -34,7 +34,7 @@ interface SimpleRepositoryInterface
      * @param array $rows
      * @return bool
      */
-    public function insert($rows=[]): bool ;
+    public function insert(array $rows=[]): bool ;
 
     /**
      * Get insert id
@@ -49,7 +49,7 @@ interface SimpleRepositoryInterface
      * @param array $conditions
      * @return bool
      */
-    public function delete($conditions=[]): bool ;
+    public function delete(array $conditions=[]): bool ;
 
     /**
      * Update table with conditions
@@ -58,7 +58,7 @@ interface SimpleRepositoryInterface
      * @param array $conditions
      * @return bool
      */
-    public function update($attributes=[], $conditions=[]): bool ;
+    public function update(array $attributes=[], array $conditions=[]): bool ;
 
     /**
      * Get a query builder instance

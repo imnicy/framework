@@ -29,7 +29,7 @@ trait HasEvents
      * @param string $event
      * @return mixed
      */
-    protected function dispatchRepositoryEvent($event)
+    protected function dispatchRepositoryEvent(string $event)
     {
         if (! isset(static::$dispatcher)) {
             return true;
@@ -44,7 +44,7 @@ trait HasEvents
         }
 
         return ! empty($result) ? $result : static::$dispatcher->dispatch(
-            "db.repository.{$event}: ".static::class, $this
+            "db.repository.$event: ".static::class, $this
         );
     }
 
@@ -54,7 +54,7 @@ trait HasEvents
      * @param string $event
      * @return mixed|void
      */
-    protected function dispatchCustomRepositoryEvent($event)
+    protected function dispatchCustomRepositoryEvent(string $event)
     {
         if (! isset($this->dispatchesEvents[$event])) {
             return;
@@ -91,12 +91,12 @@ trait HasEvents
      * @param Closure|string $callback
      * @return void
      */
-    protected static function registerRepositoryEvent($event, $callback)
+    protected static function registerRepositoryEvent(string $event, $callback)
     {
         if (isset(static::$dispatcher)) {
             $name = static::class;
 
-            static::$dispatcher->listen("db.repository.{$event}: {$name}", $callback);
+            static::$dispatcher->listen("db.repository.$event: $name", $callback);
         }
     }
 

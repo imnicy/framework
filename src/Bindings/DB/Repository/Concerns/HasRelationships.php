@@ -32,10 +32,10 @@ trait HasRelationships
      * @param string|array|Base $repository
      * @param string $key
      * @param string $foreignKey
-     * @param string $name
+     * @param string|null $name
      * @return $this
      */
-    public function loadMany($repository, $key, $foreignKey, $name=null)
+    public function loadMany($repository, string $key, string $foreignKey, string $name=null)
     {
         return $this->addToRelations($name, $repository, 'many', $key, $foreignKey);
     }
@@ -44,10 +44,10 @@ trait HasRelationships
      * @param string|array|Base $repository
      * @param string $key
      * @param string $foreignKey
-     * @param string $name
+     * @param string|null $name
      * @return $this
      */
-    public function loadOne($repository, $key, $foreignKey, $name=null)
+    public function loadOne($repository, string $key, string $foreignKey, string $name=null)
     {
         return $this->addToRelations($name, $repository, 'one', $key, $foreignKey);
     }
@@ -59,11 +59,11 @@ trait HasRelationships
      * @param string $throughForeignKey
      * @param string $key
      * @param string $foreignKey
-     * @param string $name
+     * @param string|null $name
      * @return $this
      */
     public function loadManyThrough(
-        $repository, $through, $throughKey, $throughForeignKey, $key, $foreignKey, $name=null
+        $repository, string $through, string $throughKey, string $throughForeignKey, string $key, string $foreignKey, string $name=null
     )
     {
         return $this->addToRelations(
@@ -72,13 +72,13 @@ trait HasRelationships
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @param string|array|object $repository
      * @param string $type
      * @param array $args
      * @return $this
      */
-    protected function addToRelations($name, $repository, $type, ...$args)
+    protected function addToRelations(?string $name, $repository, string $type, ...$args)
     {
         list($repository, $conditions) = $this->getLoadRepository($repository);
 
@@ -168,7 +168,7 @@ trait HasRelationships
      * @param Collection $results
      * @return $this
      */
-    protected function setResults(Collection  $results)
+    protected function setResults(Collection $results)
     {
         $this->results = $results;
 
@@ -191,7 +191,9 @@ trait HasRelationships
      * @param bool $one
      * @return Collection
      */
-    private function loadOneOrManyFromConditions(Base $repository, $conditions, $key, $foreignKey, $one=false)
+    private function loadOneOrManyFromConditions(
+        Base $repository, array $conditions, string $key, string $foreignKey, bool $one=false
+    )
     {
         list($results, $foreignResults) = $this->getOneOrManyResults(
             $repository, $conditions, $key, $foreignKey
@@ -213,7 +215,7 @@ trait HasRelationships
      * @return Collection
      */
     private function loadManyThroughFromConditions(
-        Base $repository, $conditions, $through, $throughKey, $throughForeignKey, $key, $foreignKey
+        Base $repository, array $conditions, string $through, string $throughKey, string $throughForeignKey, string $key, string $foreignKey
     )
     {
         $results = $this->getResults();
@@ -248,7 +250,9 @@ trait HasRelationships
      * @param bool $one
      * @return Collection
      */
-    protected function attachForeignResults($class, $results, $foreignResults, $key, $foreignKey, $one=false)
+    protected function attachForeignResults(
+        string $class, Collection $results, Collection $foreignResults, string $key, string $foreignKey, bool $one=false
+    )
     {
         return $results->each(function($item) use (
             $class, $foreignResults, $key, $foreignKey, $one
@@ -266,7 +270,7 @@ trait HasRelationships
      * @param string $class
      * @return string
      */
-    protected function getLoadedKey($key, $class)
+    protected function getLoadedKey(string $key, string $class)
     {
         return $this->aliases[$class] ?? $this->getDefaultLoadedKey($key);
     }
@@ -278,7 +282,7 @@ trait HasRelationships
      * @param string $foreignKey
      * @return array
      */
-    protected function getOneOrManyResults(Base $repository, $conditions, $key, $foreignKey)
+    protected function getOneOrManyResults(Base $repository, array $conditions, string $key, string $foreignKey)
     {
         $results = $this->getResults();
 
@@ -293,7 +297,7 @@ trait HasRelationships
      * @param string $key
      * @return string
      */
-    protected function getDefaultLoadedKey($key)
+    protected function getDefaultLoadedKey(string $key)
     {
         return 'loaded_' . $key;
     }

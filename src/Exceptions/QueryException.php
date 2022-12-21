@@ -28,7 +28,7 @@ class QueryException extends PDOException
      * @param array $bindings
      * @return void
      */
-    public function __construct($sql, $bindings=[])
+    public function __construct(string $sql, array $bindings=[])
     {
         parent::__construct('', 0);
 
@@ -45,7 +45,7 @@ class QueryException extends PDOException
      * @param array $bindings
      * @return string
      */
-    protected function formatMessage($sql, $bindings)
+    protected function formatMessage(string $sql, array $bindings)
     {
         return ' SQL: '.Str::replaceArray('?', $bindings, $sql);
     }

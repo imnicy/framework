@@ -41,7 +41,7 @@ abstract class ServiceProvider implements Provider
      * @param string $key
      * @return void
      */
-    protected function mergeConfigFrom($name, $key)
+    protected function mergeConfigFrom(string $name, string $key)
     {
         Main::instance()->configure($name);
 

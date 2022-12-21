@@ -34,7 +34,7 @@ interface RepositoryInterface
      * @param array $attributes
      * @return RepositoryInterface
      */
-    public function create($attributes=[]): RepositoryInterface ;
+    public function create(array $attributes=[]): RepositoryInterface ;
 
     /**
      * Delete the row with conditions
@@ -50,7 +50,7 @@ interface RepositoryInterface
      * @param array $conditions
      * @return bool
      */
-    public function update($attributes=[], $conditions=[]): bool ;
+    public function update(array $attributes=[], array $conditions=[]): bool ;
 
     /**
      * Save changes attributes
@@ -58,7 +58,7 @@ interface RepositoryInterface
      * @param array $options
      * @return bool
      */
-    public function save($options=[]): bool ;
+    public function save(array $options=[]): bool ;
 
     /**
      * Destroy items from table
@@ -66,7 +66,7 @@ interface RepositoryInterface
      * @param array $ids
      * @return bool
      */
-    public function destroy($ids=[]): bool ;
+    public function destroy(array $ids=[]): bool ;
 
     /**
      * Fill attributes for save
@@ -74,7 +74,7 @@ interface RepositoryInterface
      * @param array $attributes
      * @return RepositoryInterface
      */
-    public function fill($attributes=[]): RepositoryInterface ;
+    public function fill(array $attributes=[]): RepositoryInterface ;
 
     /**
      * Get a query builder instance

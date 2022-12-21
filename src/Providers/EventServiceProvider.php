@@ -62,7 +62,7 @@ class EventServiceProvider extends ServiceProvider
      * @param string $listener
      * @return Closure
      */
-    public function createClassListener($listener)
+    public function createClassListener(string $listener)
     {
         return function ($payload) use ($listener) {
             return call_user_func_array(
@@ -77,7 +77,7 @@ class EventServiceProvider extends ServiceProvider
      * @param string $listener
      * @return callable
      */
-    protected function createClassCallable($listener)
+    protected function createClassCallable(string $listener)
     {
         [$class, $method] = Str::parseCallback($listener, 'handle');;
 

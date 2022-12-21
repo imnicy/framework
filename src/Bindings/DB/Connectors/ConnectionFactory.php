@@ -28,7 +28,7 @@ class ConnectionFactory
      * @param string $name
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public function make($config, $name)
+    public function make(array $config, string $name)
     {
         $config = $this->parseConfig($config, $name);
 
@@ -46,7 +46,7 @@ class ConnectionFactory
      * @param string $name
      * @return array
      */
-    protected function parseConfig($config, $name)
+    protected function parseConfig(array $config, string $name)
     {
         return Arr::add(Arr::add($config, 'prefix', ''), 'name', $name);
     }
@@ -54,10 +54,10 @@ class ConnectionFactory
     /**
      * Create a single database connection instance.
      *
-     * @param array$config
+     * @param array $config
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    protected function createSingleConnection($config)
+    protected function createSingleConnection(array $config)
     {
         $builder = new Builder($config);
         $builder->pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);

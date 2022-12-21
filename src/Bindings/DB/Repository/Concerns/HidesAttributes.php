@@ -34,7 +34,7 @@ trait HidesAttributes
      * @param array $hidden
      * @return $this
      */
-    public function setHidden($hidden)
+    public function setHidden(array $hidden)
     {
         $this->hidden = $hidden;
 
@@ -69,7 +69,7 @@ trait HidesAttributes
      * @param array $visible
      * @return $this
      */
-    public function setVisible($visible)
+    public function setVisible(array $visible)
     {
         $this->visible = $visible;
 

@@ -13,11 +13,11 @@ trait ForResponse
      * @param mixed $contents
      * @param array $headers
      * @param array $cookies
-     * @param int $status
-     * @param int $version
+     * @param int|null $status
+     * @param int|null $version
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function response($contents, $headers=[], $cookies=[], $status=null, $version=null)
+    public function response($contents, array $headers=[], array $cookies=[], int $status=null, int $version=null)
     {
         $response = Response::prepare($contents);
 

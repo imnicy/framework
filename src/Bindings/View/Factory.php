@@ -9,7 +9,6 @@ use Nicy\Framework\Bindings\View\Extensions\CSRFToken;
 use Nicy\Framework\Bindings\View\Extensions\Asset;
 use Nicy\Container\Contracts\Container;
 use Nicy\Framework\Bindings\View\Extensions\Url;
-use Nicy\Framework\Exceptions\ViewException;
 use Nicy\Support\Str;
 use Twig\TemplateWrapper;
 
@@ -43,7 +42,7 @@ class Factory
      * @param mixed $default
      * @return mixed
      */
-    protected function config($name, $default=null)
+    protected function config(string $name, $default=null)
     {
         return $this->container['config']->get('view.'.$name, $default);
     }
@@ -87,7 +86,7 @@ class Factory
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function render($name, $context=[]): string
+    public function render($name, array $context=[]): string
     {
         return $this->engine->render($name, $context);
     }

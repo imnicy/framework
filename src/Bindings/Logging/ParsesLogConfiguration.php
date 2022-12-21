@@ -37,7 +37,7 @@ trait ParsesLogConfiguration
      * @return int
      * @throws \InvalidArgumentException
      */
-    protected function level($config)
+    protected function level(array $config)
     {
         $level = $config['level'] ?? 'debug';
 
@@ -54,7 +54,7 @@ trait ParsesLogConfiguration
      * @param array $config
      * @return string
      */
-    protected function parseChannel($config)
+    protected function parseChannel(array $config)
     {
         if (! isset($config['name'])) {
             return $this->getFallbackChannelName();

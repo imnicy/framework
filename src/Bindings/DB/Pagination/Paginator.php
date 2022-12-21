@@ -27,7 +27,7 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
      * @param int $perPage
      * @param string $urlPattern
      */
-    public function __construct($items, $total, $page, $perPage, $urlPattern='')
+    public function __construct(Collection $items, int $total, int $page, int $perPage, string $urlPattern='')
     {
         parent::__construct($total, $perPage, $page, $urlPattern);
 
@@ -55,7 +55,7 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
     /**
      * Set the items for the paginator.
      *
-     * @param mixed $items
+     * @param array|\ArrayAccess $items
      * @return void
      */
     protected function setItems($items)
@@ -140,7 +140,7 @@ class Paginator extends PaginatorBuilder implements Arrayable, Jsonable, JsonSer
      * @param int $options
      * @return string
      */
-    public function toJson($options = 0)
+    public function toJson($options=0)
     {
         return json_encode($this->jsonSerialize(), $options);
     }

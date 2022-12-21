@@ -64,7 +64,7 @@ class Main
      *
      * @param string $path
      */
-    public function __construct($path)
+    public function __construct(string $path)
     {
         date_default_timezone_set('Asia/Shanghai');
 
@@ -136,7 +136,7 @@ class Main
      * @param bool $shouldMake
      * @return $this
      */
-    public function middleware($middleware, $shouldMake=true)
+    public function middleware($middleware, bool $shouldMake=true)
     {
         if ($shouldMake && is_string($middleware) && class_exists($middleware)) {
             $middleware = $this->container->make($middleware);
@@ -201,11 +201,11 @@ class Main
     /**
      * Return the registered container
      *
-     * @param string $name
+     * @param string|null $name
      * @param array $parameters
      * @return FrameworkContainer|mixed
      */
-    public function container($name=null, $parameters=[])
+    public function container(string $name=null, array $parameters=[])
     {
         if (is_null($name)) {
             return $this->container;
@@ -259,7 +259,7 @@ class Main
      * @param string $name
      * @param mixed $value
      */
-    public function singleton($name, $value=null)
+    public function singleton(string $name, $value=null)
     {
         $this->container->singleton($name, $value);
     }
@@ -284,7 +284,7 @@ class Main
      * @param string $path
      * @return string
      */
-    public function path($path='')
+    public function path(string $path='')
     {
         return $this->path.($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
@@ -295,7 +295,7 @@ class Main
      * @param string $name
      * @return void
      */
-    public function configure($name)
+    public function configure(string $name)
     {
         if (isset($this->loadedConfigurations[$name])) {
             return;
@@ -313,12 +313,12 @@ class Main
     /**
      * Configure and load the given component and provider.
      *
-     * @param string $config
      * @param array|string $providers
-     * @param string $return
+     * @param string|null $config
+     * @param string|null $return
      * @return mixed
      */
-    public function loadComponent($providers, $config=null, $return=null)
+    public function loadComponent($providers, string $config=null, string $return=null)
     {
         $config && $this->configure($config);
 
@@ -334,10 +334,10 @@ class Main
      *
      * If no name is provided, then we'll return the path to the config folder.
      *
-     * @param string $name
+     * @param string|null $name
      * @return string
      */
-    public function getConfigurationPath($name=null)
+    public function getConfigurationPath(string $name=null)
     {
         if (! $name) {
             $appConfigDir = $this->path('config').'/';

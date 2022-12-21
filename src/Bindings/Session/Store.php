@@ -111,7 +111,7 @@ class Store
      * @param string $data
      * @return string
      */
-    protected function prepareForUnserialize($data)
+    protected function prepareForUnserialize(string $data)
     {
         return $data;
     }
@@ -138,7 +138,7 @@ class Store
      * @param string $data
      * @return string
      */
-    protected function prepareForStorage($data)
+    protected function prepareForStorage(string $data)
     {
         return $data;
     }
@@ -173,7 +173,7 @@ class Store
      * @param array $keys
      * @return array
      */
-    public function only($keys)
+    public function only(array $keys)
     {
         return Arr::only($this->attributes, $keys);
     }
@@ -213,7 +213,7 @@ class Store
      * @param mixed $default
      * @return mixed
      */
-    public function get($key, $default=null)
+    public function get(string $key, $default=null)
     {
         return Arr::get($this->attributes, $key, $default);
     }
@@ -225,7 +225,7 @@ class Store
      * @param string|null $default
      * @return mixed
      */
-    public function pull($key, $default=null)
+    public function pull(string $key, $default=null)
     {
         return Arr::pull($this->attributes, $key, $default);
     }
@@ -233,10 +233,10 @@ class Store
     /**
      * Determine if the session contains old input.
      *
-     * @param string $key
+     * @param string|null $key
      * @return bool
      */
-    public function hasOldInput($key=null)
+    public function hasOldInput(string $key=null)
     {
         $old = $this->getOldInput($key);
 
@@ -246,11 +246,11 @@ class Store
     /**
      * Get the requested item from the flashed input array.
      *
-     * @param string $key
+     * @param string|null $key
      * @param mixed $default
      * @return mixed
      */
-    public function getOldInput($key=null, $default=null)
+    public function getOldInput(string $key=null, $default=null)
     {
         return Arr::get($this->get('_old_input', []), $key, $default);
     }
@@ -261,7 +261,7 @@ class Store
      * @param array $attributes
      * @return void
      */
-    public function replace($attributes)
+    public function replace(array $attributes)
     {
         $this->put($attributes);
     }
@@ -273,7 +273,7 @@ class Store
      * @param mixed $value
      * @return void
      */
-    public function put($key, $value=null)
+    public function put(string $key, $value=null)
     {
         if (! is_array($key)) {
             $key = [$key => $value];
@@ -291,7 +291,7 @@ class Store
      * @param Closure $callback
      * @return mixed
      */
-    public function remember($key, Closure $callback)
+    public function remember(string $key, Closure $callback)
     {
         if (! is_null($value = $this->get($key))) {
             return $value;
@@ -309,7 +309,7 @@ class Store
      * @param mixed $value
      * @return void
      */
-    public function push($key, $value)
+    public function push(string $key, $value)
     {
         $array = $this->get($key, []);
 
@@ -325,7 +325,7 @@ class Store
      * @param int $amount
      * @return mixed
      */
-    public function increment($key, $amount=1)
+    public function increment(string $key, $amount=1)
     {
         $this->put($key, $value = $this->get($key, 0) + $amount);
 
@@ -339,7 +339,7 @@ class Store
      * @param int $amount
      * @return int
      */
-    public function decrement($key, $amount=1)
+    public function decrement(string $key, $amount=1)
     {
         return $this->increment($key, $amount * -1);
     }
@@ -367,7 +367,7 @@ class Store
      * @param mixed $value
      * @return void
      */
-    public function now($key, $value)
+    public function now(string $key, $value)
     {
         $this->put($key, $value);
 
@@ -405,7 +405,7 @@ class Store
      * @param array $keys
      * @return void
      */
-    protected function mergeNewFlashes($keys)
+    protected function mergeNewFlashes(array $keys)
     {
         $values = array_unique(array_merge($this->get('_flash.new', []), $keys));
 
@@ -418,7 +418,7 @@ class Store
      * @param array $keys
      * @return void
      */
-    protected function removeFromOldFlashData($keys)
+    protected function removeFromOldFlashData(array $keys)
     {
         $this->put('_flash.old', array_diff($this->get('_flash.old', []), $keys));
     }
@@ -426,7 +426,7 @@ class Store
     /**
      * Flash an input array to the session.
      *
-     * @param array $value
+     * @param mixed $value
      * @return void
      */
     public function flashInput($value)
@@ -440,7 +440,7 @@ class Store
      * @param string $key
      * @return mixed
      */
-    public function remove($key)
+    public function remove(string $key)
     {
         return Arr::pull($this->attributes, $key);
     }
@@ -484,7 +484,7 @@ class Store
      * @param bool $destroy
      * @return bool
      */
-    public function regenerate($destroy=false)
+    public function regenerate(bool $destroy=false)
     {
         return tap($this->migrate($destroy), function () {
             $this->regenerateToken();
@@ -497,7 +497,7 @@ class Store
      * @param bool $destroy
      * @return bool
      */
-    public function migrate($destroy=false)
+    public function migrate(bool $destroy=false)
     {
         if ($destroy) {
             $this->handler->destroy($this->getId());
@@ -534,7 +534,7 @@ class Store
      * @param string $name
      * @return void
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -614,10 +614,10 @@ class Store
     /**
      * Set the "previous" URL in the session.
      *
-     * @param string $url
+     * @param string|null $url
      * @return void
      */
-    public function setPreviousUrl($url)
+    public function setPreviousUrl(?string $url)
     {
         $this->put('_previous.url', $url);
     }

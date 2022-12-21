@@ -203,7 +203,7 @@ trait HasAttributes
      * @param string $cast
      * @return bool
      */
-    protected function isCustomDateTimeCast($cast)
+    protected function isCustomDateTimeCast(string $cast)
     {
         return strncmp($cast, 'date:', 5) === 0 ||
             strncmp($cast, 'datetime:', 9) === 0;
@@ -231,7 +231,7 @@ trait HasAttributes
      * @param string $class
      * @return void
      */
-    public static function cacheMutatedAttributes($class)
+    public static function cacheMutatedAttributes(string $class)
     {
         static::$mutatorCache[$class] = collect(static::getMutatorMethods($class))->map(function ($match) {
             return lcfirst(static::$snakeAttributes ? Str::snake($match) : $match);
@@ -267,7 +267,7 @@ trait HasAttributes
      * @param mixed $value
      * @return mixed
      */
-    protected function mutateAttributeForArray($key, $value)
+    protected function mutateAttributeForArray(string $key, $value)
     {
         $value = $this->mutateAttribute($key, $value);
 
@@ -280,7 +280,7 @@ trait HasAttributes
      * @param string $key
      * @return bool
      */
-    public function hasGetMutator($key)
+    public function hasGetMutator(string $key)
     {
         return method_exists($this, 'get'.Str::studly($key).'Attribute');
     }
@@ -292,7 +292,7 @@ trait HasAttributes
      * @param mixed $value
      * @return mixed
      */
-    protected function mutateAttribute($key, $value)
+    protected function mutateAttribute(string $key, $value)
     {
         return $this->{'get'.Str::studly($key).'Attribute'}($value);
     }
@@ -403,7 +403,7 @@ trait HasAttributes
      * @param mixed $current
      * @return bool
      */
-    public function originalIsEquivalent($key, $current)
+    public function originalIsEquivalent(string $key, $current)
     {
         if (! array_key_exists($key, $this->original)) {
             return false;
@@ -421,7 +421,7 @@ trait HasAttributes
         }
 
         return is_numeric($current) && is_numeric($original)
-            && strcmp((string) $current, (string) $original) === 0;
+            && strcmp((string) $current, (string) $original) == 0;
     }
 
     /**
@@ -445,10 +445,10 @@ trait HasAttributes
      * @param mixed $value
      * @return mixed
      */
-    protected function castAttribute($key, $value)
+    protected function castAttribute(string $key, $value)
     {
         if (is_null($value)) {
-            return $value;
+            return null;
         }
 
         switch ($this->getCastType($key)) {
@@ -489,7 +489,7 @@ trait HasAttributes
      * Decode the given float.
      *
      * @param mixed $value
-     * @return mixed
+     * @return float|int
      */
     public function fromFloat($value)
     {
@@ -524,7 +524,7 @@ trait HasAttributes
      * @param bool $asObject
      * @return mixed
      */
-    public function fromJson($value, $asObject=false)
+    public function fromJson(string $value, $asObject=false)
     {
         return json_decode($value, ! $asObject);
     }
@@ -558,10 +558,10 @@ trait HasAttributes
      * @param array|string|null $types
      * @return bool
      */
-    public function hasCast($key, $types=null)
+    public function hasCast(string $key, $types=null)
     {
         if (array_key_exists($key, $this->getCasts())) {
-            return $types ? in_array($this->getCastType($key), (array) $types, true) : true;
+            return ! $types || in_array($this->getCastType($key), (array)$types, true);
         }
 
         return false;
@@ -584,7 +584,7 @@ trait HasAttributes
      * @param string $key
      * @return string
      */
-    protected function getCastType($key)
+    protected function getCastType(string $key)
     {
         if ($this->isDecimalCast($this->getCasts()[$key])) {
             return 'decimal';
@@ -599,9 +599,9 @@ trait HasAttributes
      * @param string $cast
      * @return bool
      */
-    protected function isDecimalCast($cast)
+    protected function isDecimalCast(string $cast)
     {
-        return strncmp($cast, 'decimal:', 8) === 0;
+        return strncmp($cast, 'decimal:', 8) == 0;
     }
 
     /**
@@ -611,13 +611,13 @@ trait HasAttributes
      * @param mixed $default
      * @return mixed|array
      */
-    public function getOriginal($key=null, $default=null)
+    public function getOriginal(string $key=null, $default=null)
     {
         return Arr::get($this->original, $key, $default);
     }
 
     /**
-     * Get all of the current attributes on the model.
+     * Get all the current attributes on the model.
      *
      * @return array
      */
@@ -631,9 +631,9 @@ trait HasAttributes
      *
      * @param string $key
      * @param mixed $value
-     * @return mixed
+     * @return $this
      */
-    public function setAttribute($key, $value)
+    public function setAttribute(string $key, $value)
     {
         $this->attributes[$key] = $value;
 
@@ -711,7 +711,7 @@ trait HasAttributes
     }
 
     /**
-     * Get all of the attribute mutator methods.
+     * Get all the attribute mutator methods.
      *
      * @param mixed $class
      * @return array

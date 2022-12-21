@@ -101,7 +101,7 @@ class UrlGenerator
      * @param bool|null $secure
      * @return string
      */
-    public function to($path, $extra=[], $secure=null)
+    public function to(string $path, array $extra=[], bool $secure=null)
     {
         if ($this->isValidUrl($path)) {
             return $path;
@@ -124,7 +124,7 @@ class UrlGenerator
      * @param array  $parameters
      * @return string
      */
-    public function secure($path, $parameters=[])
+    public function secure(string $path, array $parameters=[])
     {
         return $this->to($path, $parameters, true);
     }
@@ -136,7 +136,7 @@ class UrlGenerator
      * @param bool|null $secure
      * @return string
      */
-    public function asset($path, $secure=null)
+    public function asset(string $path, bool $secure=null)
     {
         if ($this->isValidUrl($path)) {
             return $path;
@@ -155,7 +155,7 @@ class UrlGenerator
      * @param bool|null $secure
      * @return string
      */
-    public function assetFrom($root, $path, $secure=null)
+    public function assetFrom(string $root, string $path, bool $secure=null)
     {
         $root = $this->getRootUrl($this->formatScheme($secure), $root);
 
@@ -168,7 +168,7 @@ class UrlGenerator
      * @param string $root
      * @return string
      */
-    protected function removeIndex($root)
+    protected function removeIndex(string $root)
     {
         $i = 'index.php';
 
@@ -181,7 +181,7 @@ class UrlGenerator
      * @param string $path
      * @return string
      */
-    public function secureAsset($path)
+    public function secureAsset(string $path)
     {
         return $this->asset($path, true);
     }
@@ -192,7 +192,7 @@ class UrlGenerator
      * @param string $schema
      * @return void
      */
-    public function forceScheme($schema)
+    public function forceScheme(string $schema)
     {
         $this->cachedSchema = null;
 
@@ -205,7 +205,7 @@ class UrlGenerator
      * @param bool|null $secure
      * @return string
      */
-    public function formatScheme($secure)
+    public function formatScheme(bool $secure=null)
     {
         if (! is_null($secure)) {
             return $secure ? 'https://' : 'http://';
@@ -227,7 +227,7 @@ class UrlGenerator
      * @return string
      * @throws \InvalidArgumentException
      */
-    public function route($name, $parameters=[], $queryParams=[])
+    public function route(string $name, array $parameters=[], array $queryParams=[])
     {
         return $this->container->get('router.parser')->fullUrlFor(
             $this->uri, $name, $parameters, $queryParams
@@ -240,7 +240,7 @@ class UrlGenerator
      * @param string $path
      * @return bool
      */
-    public function isValidUrl($path)
+    public function isValidUrl(string $path)
     {
         if (Str::startsWith($path, ['#', '//', 'mailto:', 'tel:', 'http://', 'https://'])) {
             return true;
@@ -255,7 +255,7 @@ class UrlGenerator
      * @param bool|null $secure
      * @return string
      */
-    protected function getSchemeForUrl($secure)
+    protected function getSchemeForUrl(bool $secure=null)
     {
         if (is_null($secure)) {
             if (is_null($this->cachedSchema)) {
@@ -286,7 +286,7 @@ class UrlGenerator
      * @param array $parameters
      * @return string
      */
-    protected function replaceRouteParameters($route, &$parameters=[])
+    protected function replaceRouteParameters(string $route, &$parameters=[])
     {
         return preg_replace_callback('/\{(.*?)(:.*?)?(\{[0-9,]+\})?\}/', function ($m) use (&$parameters) {
             return isset($parameters[$m[1]]) ? Arr::pull($parameters, $m[1]) : $m[0];
@@ -297,10 +297,10 @@ class UrlGenerator
      * Get the base URL for the request.
      *
      * @param string $scheme
-     * @param string $root
+     * @param string|null $root
      * @return string
      */
-    protected function getRootUrl($scheme, $root=null)
+    protected function getRootUrl(string $scheme, string $root=null)
     {
         if (is_null($root)) {
             if (is_null($this->cachedRoot)) {
@@ -331,7 +331,7 @@ class UrlGenerator
      * @param string $root
      * @return void
      */
-    public function forceRootUrl($root)
+    public function forceRootUrl(string $root)
     {
         $this->forcedRoot = rtrim($root, '/');
 
@@ -346,7 +346,7 @@ class UrlGenerator
      * @param string $tail
      * @return string
      */
-    protected function trimUrl($root, $path, $tail='')
+    protected function trimUrl(string $root, string $path, string $tail='')
     {
         return trim($root.'/'.trim($path.'/'.$tail, '/'), '/');
     }

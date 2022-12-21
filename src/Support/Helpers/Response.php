@@ -32,11 +32,14 @@ class Response
         else if (is_array($contents) || $contents instanceof Arrayable) {
             $response = static::shouldBeJson($response, json_encode(is_array($contents) ? $contents : $contents->toArray()));
         }
-        else if (is_string($contents) || is_bool($contents) || is_int($contents) || method_exists($contents, '__toString')) {
+        else if (
+            is_string($contents) || is_bool($contents) || is_int($contents) ||
+            (is_object($contents) && method_exists($contents, '__toString'))
+        ) {
             $responseBody->write((string) $contents);
         }
         else {
-            return null;
+            return $response;
         }
 
         if ($responseBody->isSeekable()) {
@@ -63,7 +66,7 @@ class Response
     }
 
     /**
-     * @param $contents
+     * @param mixed $contents
      * @param SetCookie $cookie
      * @return ResponseInterface
      */

@@ -41,7 +41,7 @@ class CacheManager extends Manager
      *
      * @param string $name
      */
-    public function setDefaultDriver($name)
+    public function setDefaultDriver(string $name)
     {
         $this->container['config']['cache.default'] = $name;
     }

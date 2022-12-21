@@ -20,7 +20,7 @@ trait FacadeTrait
      * @param array $userAliases
      * @return void
      */
-    public function withFacades($aliases=true, $userAliases=[])
+    public function withFacades(bool $aliases=true, array $userAliases=[])
     {
         Facade::setFacadeContainer($this->container);
 
@@ -35,7 +35,7 @@ trait FacadeTrait
      * @param array $userAliases
      * @return void
      */
-    public function withAliases($userAliases=[])
+    public function withAliases(array $userAliases=[])
     {
         $defaults = [
             //

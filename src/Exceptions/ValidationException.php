@@ -44,7 +44,7 @@ class ValidationException extends Exception
     }
 
     /**
-     * Get all of the validation error messages.
+     * Get all the validation error messages.
      *
      * @return array
      */
@@ -59,7 +59,7 @@ class ValidationException extends Exception
      * @param int $status
      * @return $this
      */
-    public function status($status)
+    public function status(int $status)
     {
         $this->status = $status;
 

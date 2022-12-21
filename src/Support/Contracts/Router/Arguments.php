@@ -7,7 +7,7 @@ use ArrayAccess;
 
 interface Arguments extends ArrayAccess, Countable
 {
-    public function get($name, $default=null);
+    public function get(string $name, $default=null);
 
     public function all();
 }

@@ -8,16 +8,16 @@ use Nicy\Framework\Support\Facade;
  * Class Router
  * @package Framework\Facades
  *
- * @method static \Slim\Interfaces\RouteInterface get($pattern, $callable)
- * @method static \Slim\Interfaces\RouteInterface post($pattern, $callable)
- * @method static \Slim\Interfaces\RouteInterface put($pattern, $callable)
- * @method static \Slim\Interfaces\RouteInterface patch($pattern, $callable)
- * @method static \Slim\Interfaces\RouteInterface delete($pattern, $callable)
- * @method static \Slim\Interfaces\RouteInterface options($pattern, $callable)
- * @method static \Slim\Interfaces\RouteInterface any($pattern, $callable)
- * @method static \Slim\Interfaces\RouteInterface map($methods, $pattern, $callable)
- * @method static \Slim\Interfaces\RouteGroupInterface group($pattern, $callable)
- * @method static \Slim\Interfaces\RouteInterface redirect($from, $to, $status=302)
+ * @method static \Slim\Interfaces\RouteInterface get(string $pattern, $callable)
+ * @method static \Slim\Interfaces\RouteInterface post(string $pattern, $callable)
+ * @method static \Slim\Interfaces\RouteInterface put(string $pattern, $callable)
+ * @method static \Slim\Interfaces\RouteInterface patch(string $pattern, $callable)
+ * @method static \Slim\Interfaces\RouteInterface delete(string $pattern, $callable)
+ * @method static \Slim\Interfaces\RouteInterface options(string $pattern, $callable)
+ * @method static \Slim\Interfaces\RouteInterface any(string $pattern, $callable)
+ * @method static \Slim\Interfaces\RouteInterface map(array $methods, string $pattern, $callable)
+ * @method static \Slim\Interfaces\RouteGroupInterface group(string $pattern, $callable)
+ * @method static \Slim\Interfaces\RouteInterface redirect(string $from, string $to, int $status=302)
  *
  */
 class Route extends Facade

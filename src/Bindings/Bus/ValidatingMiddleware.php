@@ -69,7 +69,6 @@ class ValidatingMiddleware
      *
      * @param object $command
      * @return array
-     * @throws \ReflectionException
      */
     protected function getData($command)
     {
@@ -81,10 +80,8 @@ class ValidatingMiddleware
             if (in_array($name, ['rules', 'validationMessages'], true)) {
                 continue;
             }
-
             $data[$name] = $value;
         }
-
         return $data;
     }
 }

@@ -33,7 +33,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function emergency($message, $context=[])
+    public function emergency($message, array $context=[])
     {
         $this->writeLog(__FUNCTION__, $message, $context);
     }
@@ -45,7 +45,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function alert($message, $context=[])
+    public function alert($message, array $context=[])
     {
         $this->writeLog(__FUNCTION__, $message, $context);
     }
@@ -57,7 +57,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function critical($message, $context=[])
+    public function critical($message, array $context=[])
     {
         $this->writeLog(__FUNCTION__, $message, $context);
     }
@@ -69,7 +69,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function error($message, $context=[])
+    public function error($message, array $context=[])
     {
         $this->writeLog(__FUNCTION__, $message, $context);
     }
@@ -81,7 +81,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function warning($message, $context=[])
+    public function warning($message, array $context=[])
     {
         $this->writeLog(__FUNCTION__, $message, $context);
     }
@@ -93,7 +93,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function notice($message, $context=[])
+    public function notice($message, array $context=[])
     {
         $this->writeLog(__FUNCTION__, $message, $context);
     }
@@ -105,7 +105,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function info($message, $context=[])
+    public function info($message, array $context=[])
     {
         $this->writeLog(__FUNCTION__, $message, $context);
     }
@@ -117,7 +117,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function debug($message, $context=[])
+    public function debug($message, array $context=[])
     {
         $this->writeLog(__FUNCTION__, $message, $context);
     }
@@ -130,7 +130,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function log($level, $message, $context=[])
+    public function log($level, $message, array $context=[])
     {
         $this->writeLog($level, $message, $context);
     }
@@ -143,7 +143,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    public function write($level, $message, $context=[])
+    public function write($level, $message, array $context=[])
     {
         $this->writeLog($level, $message, $context);
     }
@@ -156,7 +156,7 @@ class Logger implements LoggerInterface
      * @param array $context
      * @return void
      */
-    protected function writeLog($level, $message, $context=[])
+    protected function writeLog($level, $message, array $context=[])
     {
         $this->logger->{$level}($message, $context);
     }

@@ -22,7 +22,7 @@ interface Dispatcher extends EmitterInterface
      * @param mixed $payload
      * @return mixed
      */
-    public function dispatch($event, $payload=[]);
+    public function dispatch($event, array $payload=[]);
 
     /**
      * Determine if a given event has listeners.

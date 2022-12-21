@@ -70,7 +70,7 @@ class DatabaseManager
      * @param string $name
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    protected function makeConnection($name)
+    protected function makeConnection(string $name)
     {
         $config = $this->configuration($name);
 
@@ -84,7 +84,7 @@ class DatabaseManager
      * @return array
      * @throws \InvalidArgumentException
      */
-    protected function configuration($name)
+    protected function configuration(string $name)
     {
         $name = $name ?: $this->getDefaultConnection();
         $connections = $this->container['config']['database.connections'];

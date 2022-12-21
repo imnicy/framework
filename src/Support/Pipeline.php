@@ -169,7 +169,7 @@ class Pipeline
      * @param string $pipe
      * @return array
      */
-    protected function parsePipeString($pipe)
+    protected function parsePipeString(string $pipe)
     {
         [$name, $parameters] = array_pad(explode(':', $pipe, 2), 2, []);
 

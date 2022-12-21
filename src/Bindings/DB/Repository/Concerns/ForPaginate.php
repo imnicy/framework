@@ -35,7 +35,7 @@ trait ForPaginate
      * @param int $perPage
      * @return $this
      */
-    public function setPerPage($perPage)
+    public function setPerPage(int $perPage)
     {
         $this->perPage = $perPage;
 
@@ -46,7 +46,7 @@ trait ForPaginate
      * @param string $pattern
      * @return $this
      */
-    public function setUrlPattern($pattern)
+    public function setUrlPattern(string $pattern)
     {
         $this->urlPattern = $pattern;
 
@@ -58,11 +58,11 @@ trait ForPaginate
      *
      * @param array $args
      * @param int $page
-     * @param int $perPage
-     * @param string $urlPattern
+     * @param int|null $perPage
+     * @param string|null $urlPattern
      * @return Paginator
      */
-    public function paginate($args=[], $page=1, $perPage=null, $urlPattern=null)
+    public function paginate(array $args=[], int $page=1, int $perPage=null, string$urlPattern=null)
     {
         if ($urlPattern) {
             $this->setUrlPattern($urlPattern);
@@ -70,7 +70,6 @@ trait ForPaginate
         if ($perPage) {
             $this->setPerPage($perPage);
         }
-
         $perPage = $this->getPerPage();
         if (! isset($args[1])) {
             $conditions = ['LIMIT' => [($page - 1) * $perPage, $perPage]];
@@ -97,7 +96,6 @@ trait ForPaginate
         else {
             $items = new Collection();
         }
-
         return new Paginator($items, $total, $page, $this->perPage, $this->urlPattern);
     }
 }

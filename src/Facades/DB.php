@@ -8,7 +8,7 @@ use Nicy\Framework\Support\Facade;
  * Class DB
  * @package Framework\Facades
  *
- * @method static \Nicy\Framework\Bindings\DB\Query\Builder connection($name=null)
+ * @method static \Nicy\Framework\Bindings\DB\Query\Builder connection(string $name=null)
  *
  */
 class DB extends Facade

@@ -31,10 +31,8 @@ class Encrypter implements EncrypterContract
      * @return void
      * @throws \RuntimeException
      */
-    public function __construct($key, $cipher='AES-128-CBC')
+    public function __construct(string $key, string $cipher='AES-128-CBC')
     {
-        $key = (string) $key;
-
         if (static::supported($key, $cipher)) {
             $this->key = $key;
             $this->cipher = $cipher;
@@ -50,7 +48,7 @@ class Encrypter implements EncrypterContract
      * @param string $cipher
      * @return bool
      */
-    public static function supported($key, $cipher)
+    public static function supported(string $key, string $cipher)
     {
         $length = mb_strlen($key, '8bit');
 
@@ -64,7 +62,7 @@ class Encrypter implements EncrypterContract
      * @param string $cipher
      * @return string
      */
-    public static function generateKey($cipher)
+    public static function generateKey(string $cipher)
     {
         return random_bytes($cipher === 'AES-128-CBC' ? 16 : 32);
     }
@@ -77,7 +75,7 @@ class Encrypter implements EncrypterContract
      * @return string
      * @throws \Nicy\Framework\Exceptions\EncryptException
      */
-    public function encrypt($value, $serialize=true)
+    public function encrypt($value, bool $serialize=true)
     {
         $iv = random_bytes(openssl_cipher_iv_length($this->cipher));
 
@@ -110,7 +108,7 @@ class Encrypter implements EncrypterContract
     /**
      * Encrypt a string without serialization.
      *
-     * @param string $value
+     * @param mixed $value
      * @return string
      */
     public function encryptString($value)
@@ -126,7 +124,7 @@ class Encrypter implements EncrypterContract
      * @return mixed
      * @throws \Nicy\Framework\Exceptions\DecryptException
      */
-    public function decrypt($payload, $unserialize=true)
+    public function decrypt($payload, bool $unserialize=true)
     {
         $payload = $this->getJsonPayload($payload);
 
@@ -149,10 +147,10 @@ class Encrypter implements EncrypterContract
     /**
      * Decrypt the given string without unserialization.
      *
-     * @param  string  $payload
+     * @param string $payload
      * @return string
      */
-    public function decryptString($payload)
+    public function decryptString(string $payload)
     {
         return $this->decrypt($payload, false);
     }
@@ -161,10 +159,10 @@ class Encrypter implements EncrypterContract
      * Create a MAC for the given value.
      *
      * @param string $iv
-     * @param mixed $value
+     * @param string $value
      * @return string
      */
-    protected function hash($iv, $value)
+    protected function hash(string $iv, string $value)
     {
         return hash_hmac('sha256', $iv.$value, $this->key);
     }
@@ -176,62 +174,62 @@ class Encrypter implements EncrypterContract
      * @return array
      * @throws \Nicy\Framework\Exceptions\DecryptException
      */
-    protected function getJsonPayload($payload)
+    protected function getJsonPayload(string $payload)
     {
-        $payload = json_decode(base64_decode($payload), true);
+        $payloads = json_decode(base64_decode($payload), true);
 
         // If the payload is not valid JSON or does not have the proper keys set we will
         // assume it is invalid and bail out of the routine since we will not be able
         // to decrypt the given value. We'll also check the MAC for this encryption.
-        if (! $this->validPayload($payload)) {
+        if (! $this->validPayload($payloads)) {
             throw new DecryptException('The payload is invalid.');
         }
 
-        if (! $this->validMac($payload)) {
+        if (! $this->validMac($payloads)) {
             throw new DecryptException('The MAC is invalid.');
         }
 
-        return $payload;
+        return $payloads;
     }
 
     /**
      * Verify that the encryption payload is valid.
      *
-     * @param mixed $payload
+     * @param mixed $payloads
      * @return bool
      */
-    protected function validPayload($payload)
+    protected function validPayload($payloads)
     {
-        return is_array($payload) && isset($payload['iv'], $payload['value'], $payload['mac']) &&
-            strlen(base64_decode($payload['iv'], true)) === openssl_cipher_iv_length($this->cipher);
+        return is_array($payloads) && isset($payloads['iv'], $payloads['value'], $payloads['mac']) &&
+            strlen(base64_decode($payloads['iv'], true)) === openssl_cipher_iv_length($this->cipher);
     }
 
     /**
      * Determine if the MAC for the given payload is valid.
      *
-     * @param array $payload
+     * @param array $payloads
      * @return bool
      */
-    protected function validMac($payload)
+    protected function validMac(array $payloads)
     {
-        $calculated = $this->calculateMac($payload, $bytes = random_bytes(16));
+        $calculated = $this->calculateMac($payloads, $bytes = random_bytes(16));
 
         return hash_equals(
-            hash_hmac('sha256', $payload['mac'], $bytes, true), $calculated
+            hash_hmac('sha256', $payloads['mac'], $bytes, true), $calculated
         );
     }
 
     /**
      * Calculate the hash of the given payload.
      *
-     * @param array $payload
+     * @param array $payloads
      * @param string $bytes
      * @return string
      */
-    protected function calculateMac($payload, $bytes)
+    protected function calculateMac(array $payloads, $bytes)
     {
         return hash_hmac(
-            'sha256', $this->hash($payload['iv'], $payload['value']), $bytes, true
+            'sha256', $this->hash($payloads['iv'], $payloads['value']), $bytes, true
         );
     }
 

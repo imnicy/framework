@@ -32,10 +32,10 @@ class LoadEnvironment
      * register a new loads environment variables instance.
      *
      * @param string $path
-     * @param string $name
+     * @param string|null $name
      * @return $this
      */
-    public function register($path, $name=null)
+    public function register(string $path, string $name=null)
     {
         $this->filePath = $path;
         $this->fileName = $name;
@@ -84,7 +84,7 @@ class LoadEnvironment
      * @param string[] $errors
      * @return void
      */
-    protected function writeErrorAndDie($errors)
+    protected function writeErrorAndDie(array $errors)
     {
         foreach ($errors as $error) {
             echo $error . PHP_EOL;

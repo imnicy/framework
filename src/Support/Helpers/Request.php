@@ -78,7 +78,9 @@ class Request
      * @param bool $withParams
      * @return \Nicy\Support\Collection
      */
-    protected static function collection($withQueries=true, $withRequests=true, $withFiles=true, $withParams=false)
+    protected static function collection(
+        bool $withQueries=true, bool $withRequests=true, bool $withFiles=true, bool $withParams=false
+    )
     {
         if (static::$attributes) {
             return static::$attributes;
@@ -93,7 +95,7 @@ class Request
         $attributes = [];
 
         if ($withQueries) {
-            $attributes = $attributes + (array) $request->getQueryParams();
+            $attributes = $attributes + (array )$request->getQueryParams();
         }
 
         if ($withRequests) {
@@ -116,7 +118,7 @@ class Request
      * @param mixed $default
      * @return mixed
      */
-    public static function get($name, $default=null)
+    public static function get(string $name, $default=null)
     {
         return static::queries()->get($name, $default);
     }
@@ -126,7 +128,7 @@ class Request
      * @param mixed $default
      * @return mixed
      */
-    public static function request($name, $default=null)
+    public static function request(string $name, $default=null)
     {
         return static::requests()->get($name, $default);
     }
@@ -135,7 +137,7 @@ class Request
      * @param string $name
      * @return mixed
      */
-    public static function file($name)
+    public static function file(string $name)
     {
         return static::files()->get($name);
     }
@@ -145,7 +147,7 @@ class Request
      * @param mixed $default
      * @return mixed
      */
-    public static function param($name, $default=null)
+    public static function param(string $name, $default=null)
     {
         return static::params()->get($name, $default);
     }
@@ -155,7 +157,7 @@ class Request
      * @param mixed $default
      * @return mixed
      */
-    public static function input($name, $default=null)
+    public static function input(string $name, $default=null)
     {
         return static::all()->get($name, $default);
     }
@@ -163,10 +165,10 @@ class Request
     /**
      * @param string $key
      * @param bool $unique
-     * @param string $disk
+     * @param string|null $disk
      * @return string|false
      */
-    public static function upload($key, $unique=false, $disk=null)
+    public static function upload(string $key, bool $unique=false, string $disk=null)
     {
         if ($file = static::file($key)) {
             if (! $file instanceof UploadedFileInterface) {

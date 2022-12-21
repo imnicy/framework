@@ -75,7 +75,7 @@ class Builder extends Medoo
      */
     public function count($table, $join=null, $column=null, $where=null)
     {
-        return parent::count($table, $join ?: '*', $column, $where);
+        return parent::count($table, $join ?: '*', is_string($column) ? $column : '*', $where);
     }
 
     /**
@@ -111,7 +111,7 @@ class Builder extends Medoo
     public function exec($query, $map=[])
     {
         // Dispatch a query sql statements log, when sql running.
-        Main::instance()->container('events')->dispatch('db.query.sql', $sql = parent::generate($query, $map));
+        Main::instance()->container('events')->dispatch('db.query.sql', parent::generate($query, $map));
 
         $statement = parent::exec($query, $map);
         $this->prepareQueryWithError();
@@ -163,7 +163,7 @@ class Builder extends Medoo
      * @param bool $state
      * @return Builder
      */
-    public function simpling($state=true)
+    public function simpling(bool $state=true)
     {
         $this->simple = $state;
 
@@ -176,7 +176,7 @@ class Builder extends Medoo
      * @param array $attributes
      * @return \Nicy\Framework\Bindings\DB\Repository\Base|static
      */
-    public function newRepositoryInstance($attributes=[])
+    public function newRepositoryInstance(array $attributes=[])
     {
         return $this->repository::unguarded(function() use($attributes) {
             return $this->repository->newInstance($attributes, true)->setConnection(

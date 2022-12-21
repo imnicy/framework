@@ -11,12 +11,12 @@ use Nicy\Framework\Support\Facade;
  * @method static string full()
  * @method static string path()
  * @method static string current()
- * @method static string to($path, $extra=[], $secure=null)
- * @method static string secure($path, $parameters=[])
- * @method static string asset($path, $secure=null)
- * @method static string assetFrom($root, $path, $secure=null)
- * @method static string secureAsset($path)
- * @method static string route($name, $parameters=[], $queryParams=[])
+ * @method static string to(string $path, array $extra=[], bool $secure=null)
+ * @method static string secure(string $path, array $parameters=[])
+ * @method static string asset(string $path, bool $secure=null)
+ * @method static string assetFrom(string $root, string $path, bool $secure=null)
+ * @method static string secureAsset(string $path)
+ * @method static string route(string $name, array $parameters=[], array $queryParams=[])
  */
 class Url extends Facade
 {

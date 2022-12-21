@@ -63,7 +63,7 @@ trait RegistersExceptionHandlers
      * @param int $type
      * @return bool
      */
-    protected function isFatalError($type)
+    protected function isFatalError(int $type)
     {
         $errorCodes = [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE];
 

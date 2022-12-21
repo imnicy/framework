@@ -20,7 +20,7 @@ class Repository implements ArrayAccess
      * @param array $items
      * @return void
      */
-    public function __construct($items=[])
+    public function __construct(array $items=[])
     {
         $this->items = $items;
     }
@@ -31,7 +31,7 @@ class Repository implements ArrayAccess
      * @param string $key
      * @return bool
      */
-    public function has($key)
+    public function has(string $key)
     {
         return Arr::has($this->items, $key);
     }
@@ -43,7 +43,7 @@ class Repository implements ArrayAccess
      * @param mixed $default
      * @return mixed
      */
-    public function get($key, $default=null)
+    public function get(string $key, $default=null)
     {
         if (is_array($key)) {
             return $this->getMany($key);
@@ -58,7 +58,7 @@ class Repository implements ArrayAccess
      * @param array $keys
      * @return array
      */
-    public function getMany($keys)
+    public function getMany(array $keys)
     {
         $config = [];
 
@@ -80,7 +80,7 @@ class Repository implements ArrayAccess
      * @param mixed $value
      * @return void
      */
-    public function set($key, $value=null)
+    public function set(string $key, $value=null)
     {
         $keys = is_array($key) ? $key : [$key => $value];
 
@@ -96,7 +96,7 @@ class Repository implements ArrayAccess
      * @param mixed $value
      * @return void
      */
-    public function prepend($key, $value)
+    public function prepend(string $key, $value)
     {
         $array = $this->get($key);
 
@@ -112,7 +112,7 @@ class Repository implements ArrayAccess
      * @param mixed $value
      * @return void
      */
-    public function push($key, $value)
+    public function push(string $key, $value)
     {
         $array = $this->get($key);
 
@@ -173,6 +173,6 @@ class Repository implements ArrayAccess
      */
     public function offsetUnset($key)
     {
-        $this->set($key, null);
+        $this->set($key);
     }
 }

@@ -43,7 +43,7 @@ trait GuardsAttributes
      * @param array $fillable
      * @return $this
      */
-    public function fillable($fillable)
+    public function fillable(array $fillable)
     {
         $this->fillable = $fillable;
 
@@ -66,7 +66,7 @@ trait GuardsAttributes
      * @param array $guarded
      * @return $this
      */
-    public function guard($guarded)
+    public function guard(array $guarded)
     {
         $this->guarded = $guarded;
 
@@ -79,7 +79,7 @@ trait GuardsAttributes
      * @param bool $state
      * @return void
      */
-    public static function unguard($state=true)
+    public static function unguard(bool $state=true)
     {
         static::$unguarded = $state;
     }
@@ -131,7 +131,7 @@ trait GuardsAttributes
      * @param string $key
      * @return bool
      */
-    public function isFillable($key)
+    public function isFillable(string $key)
     {
         if (static::$unguarded) {
             return true;
@@ -155,7 +155,7 @@ trait GuardsAttributes
      * @param string $key
      * @return bool
      */
-    public function isGuarded($key)
+    public function isGuarded(string $key)
     {
         return in_array($key, $this->getGuarded()) || $this->getGuarded() == ['*'];
     }
@@ -176,7 +176,7 @@ trait GuardsAttributes
      * @param array $attributes
      * @return array
      */
-    protected function fillableFromArray($attributes)
+    protected function fillableFromArray(array $attributes)
     {
         if (count($this->getFillable()) > 0 && ! static::$unguarded) {
             return array_intersect_key($attributes, array_flip($this->getFillable()));

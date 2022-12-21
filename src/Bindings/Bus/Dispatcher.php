@@ -120,15 +120,14 @@ class Dispatcher
      * Retrieve the handler for a command.
      *
      * @param mixed $command
-     * @return bool|mixed
+     * @return mixed
      */
     public function getCommandHandler($command)
     {
         if ($this->hasCommandHandler($command)) {
             return $this->container->make($this->handlers[get_class($command)]);
         }
-
-        return false;
+        return null;
     }
 
     /**
@@ -137,7 +136,7 @@ class Dispatcher
      * @param array $pipes
      * @return $this
      */
-    public function pipeThrough($pipes)
+    public function pipeThrough(array $pipes)
     {
         $this->pipes = $pipes;
 
@@ -150,7 +149,7 @@ class Dispatcher
      * @param array $map
      * @return $this
      */
-    public function map($map)
+    public function map(array $map)
     {
         $this->handlers = array_merge($this->handlers, $map);
 
@@ -176,7 +175,7 @@ class Dispatcher
      * @param string $handlerNamespace
      * @return string
      */
-    public static function simpleMapping($command, $commandNamespace, $handlerNamespace)
+    public static function simpleMapping($command, string $commandNamespace, string $handlerNamespace)
     {
         $command = str_replace($commandNamespace, '', get_class($command));
 

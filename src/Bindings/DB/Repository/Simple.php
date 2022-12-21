@@ -67,7 +67,7 @@ abstract class Simple implements SimpleRepositoryInterface
      * @param array $rows
      * @return bool
      */
-    public function insert($rows=[]): bool
+    public function insert(array $rows=[]): bool
     {
         static::query()->insert($this->table, $rows);
 
@@ -83,12 +83,12 @@ abstract class Simple implements SimpleRepositoryInterface
     }
 
     /**
-     * @param array $condition
+     * @param array $conditions
      * @return bool
      */
-    public function delete($condition=[]): bool
+    public function delete(array $conditions=[]): bool
     {
-        static::query()->delete($this->table, $condition);
+        static::query()->delete($this->table, $conditions);
 
         return true;
     }
@@ -98,7 +98,7 @@ abstract class Simple implements SimpleRepositoryInterface
      * @param array $conditions
      * @return bool
      */
-    public function update($attributes=[], $conditions=[]): bool
+    public function update(array $attributes=[], array $conditions=[]): bool
     {
         static::query()->update($this->table, $attributes, $conditions);
 

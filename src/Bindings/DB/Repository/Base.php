@@ -126,7 +126,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $attributes
      * @return RepositoryInterface
      */
-    public function create($attributes=[]): RepositoryInterface
+    public function create(array $attributes=[]): RepositoryInterface
     {
         $this->fill($attributes)->save();
 
@@ -139,7 +139,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $rows
      * @return bool
      */
-    public function insert($rows=[])
+    public function insert(array $rows=[])
     {
         static::query()->insert($this->table, $rows);
 
@@ -151,7 +151,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $conditions
      * @return bool
      */
-    public function update($attributes=[], $conditions=[]): bool
+    public function update(array $attributes=[], array $conditions=[]): bool
     {
         if (! $this->exists) {
             return false;
@@ -188,7 +188,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $ids
      * @return bool
      */
-    public function destroy($ids=[]): bool
+    public function destroy(array $ids=[]): bool
     {
         static::query()->delete($this->table, [$this->primary.'[!]' => $ids]);
 
@@ -199,7 +199,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $options
      * @return bool
      */
-    public function save($options=[]): bool
+    public function save(array $options=[]): bool
     {
         $query = $this->newQuery();
 
@@ -306,7 +306,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $attributes
      * @return RepositoryInterface
      */
-    public function fill($attributes=[]): RepositoryInterface
+    public function fill(array $attributes=[]): RepositoryInterface
     {
         $totallyGuarded = $this->totallyGuarded();
 
@@ -376,7 +376,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $with
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public static function query($with=[])
+    public static function query(array $with=[])
     {
         return (new static)->with($with)->newQuery();
     }
@@ -396,9 +396,9 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param bool $exists
      * @return static
      */
-    public function newInstance($attributes=[], $exists=false)
+    public function newInstance(array $attributes=[], $exists=false)
     {
-        $instance = new static((array) $attributes);
+        $instance = new static($attributes);
 
         $instance->exists = $exists;
 
@@ -432,6 +432,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     public function is($repository)
     {
         return ! is_null($repository) &&
+            $repository instanceof Base &&
             $this->getPrimary() === $repository->getPrimary() &&
             $this->table() === $repository->table() &&
             $this->connection() === $repository->connection();
@@ -440,10 +441,10 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     /**
      * Set the connection associated with the repository.
      *
-     * @param string $name
+     * @param string|null $name
      * @return $this
      */
-    public function setConnection($name)
+    public function setConnection(?string $name)
     {
         $this->connection = $name;
 
@@ -456,7 +457,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param string $table
      * @return $this
      */
-    public function setTable($table)
+    public function setTable(string $table)
     {
         $this->table = $table;
 

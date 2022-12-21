@@ -8,8 +8,8 @@ use Nicy\Framework\Support\Facade;
  * Class Cookie
  * @package Nicy\Framework\Facades
  *
- * @method static string get($name, $default=null)
- * @method static \Dflydev\FigCookies\SetCookie make($name, $value=null)
+ * @method static string get(string $name, $default=null)
+ * @method static \Dflydev\FigCookies\SetCookie make(string $name, $value=null)
  */
 class Cookie extends Facade
 {
