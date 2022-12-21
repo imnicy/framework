@@ -2,18 +2,16 @@
 
 namespace Nicy\Framework\Bindings\Events\Contracts;
 
-use League\Event\EmitterInterface;
-
-interface Dispatcher extends EmitterInterface
+interface Dispatcher
 {
     /**
      * Register an event listener with the dispatcher.
      *
      * @param string $event
-     * @param mixed $listener
+     * @param string $listener
      * @return mixed
      */
-    public function listen($event, $listener);
+    public function listen(string $event, string $listener);
 
     /**
      * Dispatch an event and call the listeners.
@@ -22,7 +20,7 @@ interface Dispatcher extends EmitterInterface
      * @param mixed $payload
      * @return mixed
      */
-    public function dispatch($event, array $payload=[]);
+    public function dispatch($event, $payload=null);
 
     /**
      * Determine if a given event has listeners.
@@ -30,7 +28,7 @@ interface Dispatcher extends EmitterInterface
      * @param string $event
      * @return bool
      */
-    public function hasListeners($event);
+    public function has(string $event);
 
     /**
      * Flush a set of pushed events.
@@ -38,5 +36,5 @@ interface Dispatcher extends EmitterInterface
      * @param string $event
      * @return mixed
      */
-    public function flush($event);
+    public function flush(string $event);
 }
