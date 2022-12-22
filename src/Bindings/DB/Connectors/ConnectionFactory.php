@@ -61,8 +61,9 @@ class ConnectionFactory
     {
         $builder = new Builder($config);
 
-        $pod = $builder->pdo;
+        $builder->setConnection($config['name']);
 
+        $pod = $builder->pdo;
         // $pod->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
         $pod->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 

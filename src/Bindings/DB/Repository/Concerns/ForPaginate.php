@@ -62,7 +62,7 @@ trait ForPaginate
      * @param string|null $urlPattern
      * @return Paginator
      */
-    public function paginate(array $args=[], int $page=1, int $perPage=null, string$urlPattern=null)
+    public function paginate(array $args=[], int $page=1, int $perPage=null, string $urlPattern=null)
     {
         if ($urlPattern) {
             $this->setUrlPattern($urlPattern);
@@ -72,26 +72,26 @@ trait ForPaginate
         }
         $perPage = $this->getPerPage();
         if (! isset($args[1])) {
-            $conditions = ['LIMIT' => [($page - 1) * $perPage, $perPage]];
-            $args = [$args[0] ?? '*', $conditions];
+            $conditions = [];
+            $args = [$args[0] ?? '*'];
         }
         else {
             $conditions = $args[2] ?? $args[1];
-            unset($conditions['LIMIT']);
             if (count($args) < 3) {
                 $args = [
-                    $args[0], $conditions
+                    $args[0]
                 ];
             }
             else {
                 $args = [
-                    $args[0], $args[1], $conditions
+                    $args[0], $args[1]
                 ];
             }
         }
         $total = $this->count(...$args);
         if ($total) {
-            $items = $this->all(...$args);
+            $conditions['LIMIT'] = [($page - 1) * $perPage, $perPage];
+            $items = $this->all(...array_merge($args, [$conditions]));
         }
         else {
             $items = new Collection();

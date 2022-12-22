@@ -28,6 +28,22 @@ class Builder extends Medoo
     protected $repository;
 
     /**
+     * @var string
+     */
+    protected $connection;
+
+    /**
+     * @param string $name
+     * @return $this
+     */
+    public function setConnection(string $name)
+    {
+        $this->connection = $name;
+
+        return $this;
+    }
+
+    /**
      * Query handler
      *
      * @param string $table
@@ -122,7 +138,7 @@ class Builder extends Medoo
             // Dispatch a query sql statements log, when sql running.
             Main::instance()->container('events')->dispatch(
                 'db.query.sql', new QueryExecuted(
-                    $sql, $map, $this->getElapsedTime($start), $this->repository->connection()
+                    $sql, $map, $this->getElapsedTime($start), $this->connection
                 )
             );
         }
