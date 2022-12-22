@@ -138,7 +138,7 @@ class Builder extends Medoo
             // Dispatch a query sql statements log, when sql running.
             Main::instance()->container('events')->dispatch(
                 'db.query.sql', new QueryExecuted(
-                    $sql, $map, $this->getElapsedTime($start), $this->connection
+                    parent::generate($sql, $map), $map, $this->getElapsedTime($start), $this->connection
                 )
             );
         }
