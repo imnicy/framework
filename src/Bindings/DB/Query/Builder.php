@@ -105,22 +105,40 @@ class Builder extends Medoo
     /**
      * Record execution statements, determine whether execution fails, and dispatch events
      *
-     * @param string $query
+     * @param string $statement
      * @param array $map
      * @param callable|null $callback
      * @return bool|PDOStatement
      */
-    public function exec($query, $map=[], callable $callback=null) : ?PDOStatement
+    public function exec($statement, $map=[], callable $callback=null) : ?PDOStatement
     {
-        // Dispatch a query sql statements log, when sql running.
-        Main::instance()->container('events')->dispatch('db.query.sql', $sql = parent::generate($query, $map));
+        $sql = $statement;
+        $start = microtime(true);
 
-        // debug('run sql', compact('sql'));
-
-        $statement = parent::exec($query, $map);
+        $statement = parent::exec($statement, $map);
         $this->prepareQueryWithError();
 
+        if ($statement) {
+            // Dispatch a query sql statements log, when sql running.
+            Main::instance()->container('events')->dispatch(
+                'db.query.sql', new QueryExecuted(
+                    $sql, $map, $this->getElapsedTime($start), $this->repository->connection()
+                )
+            );
+        }
+
         return $statement;
+    }
+
+    /**
+     * Get the elapsed time since a given starting point.
+     *
+     * @param int $start
+     * @return float
+     */
+    protected function getElapsedTime($start)
+    {
+        return round((microtime(true) - $start) * 1000, 2);
     }
 
     /**
