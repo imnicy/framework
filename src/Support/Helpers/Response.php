@@ -2,6 +2,7 @@
 
 namespace Nicy\Framework\Support\Helpers;
 
+use Nicy\Framework\Support\Contracts\Http\Responsable;
 use Slim\Psr7\Response as SimHttpResponse;
 use Nicy\Framework\Main;
 use Nicy\Support\Contracts\Arrayable;
@@ -26,7 +27,13 @@ class Response
 
         $responseBody = $response->getBody();
 
-        if ($contents instanceof Jsonable) {
+        if ($contents instanceof Responsable) {
+            $response = $contents->toResponse();
+            if ($contents->shouldBeJson()) {
+                $response = static::shouldBeJson($response);
+            }
+        }
+        else if ($contents instanceof Jsonable) {
             $response = static::shouldBeJson($response, $contents->toJson());
         }
         else if (is_array($contents) || $contents instanceof Arrayable) {

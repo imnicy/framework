@@ -7,7 +7,7 @@ return [
     | Environment And Debug
     |--------------------------------------------------------------------------
     |
-    | set the application environment, and should be debug?
+    | set the application environment, and should be debugging ?
     |
     */
 
