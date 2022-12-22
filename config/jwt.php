@@ -32,7 +32,7 @@ return [
         |
         */
 
-        'public' => env('JWT_PUBLIC_KEY'),
+        'public' => env('JWT_PUBLIC_KEY'), // Or set name as 'JWT_SECRET' if use HS256, HS384 & HS512
 
         /*
         |--------------------------------------------------------------------------

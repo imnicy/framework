@@ -27,7 +27,7 @@ class Authorization implements MiddlewareInterface
 
         $jwt->setRequest($request);
 
-        if ($jwt->getToken() && ($payload = $jwt->check(true))) {
+        if ($jwt->getToken() && $jwt->check(true)) {
             return $handler->handle($request);
         }
 
