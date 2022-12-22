@@ -51,8 +51,8 @@ class EventServiceProvider extends ServiceProvider
             return $this->createClassListener($listener);
         }
 
-        return function ($payload) use ($listener) {
-            return $listener(...array_values($payload));
+        return function ($event, $payload) use ($listener) {
+            return $listener($event, $payload);
         };
     }
 
@@ -64,9 +64,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function createClassListener(string $listener)
     {
-        return function ($payload) use ($listener) {
+        return function ($event, $payload) use ($listener) {
             return call_user_func_array(
-                $this->createClassCallable($listener), $payload
+                $this->createClassCallable($listener), [$event, $payload]
             );
         };
     }
