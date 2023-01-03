@@ -88,14 +88,24 @@ trait ForPaginate
                 ];
             }
         }
-        $total = $this->count(...$args);
+        $total = $this->count(...$this->getBuilderArgs($args, $conditions));
         if ($total) {
             $conditions['LIMIT'] = [($page - 1) * $perPage, $perPage];
-            $items = $this->all(...array_merge($args, [$conditions]));
+            $items = $this->all(...$this->getBuilderArgs($args, $conditions));
         }
         else {
             $items = new Collection();
         }
         return new Paginator($items, $total, $page, $this->perPage, $this->urlPattern);
+    }
+
+    /**
+     * @param array $args
+     * @param array $conditions
+     * @return array
+     */
+    protected function getBuilderArgs(array $args, array $conditions): array
+    {
+        return array_merge($args, [$conditions]);
     }
 }
