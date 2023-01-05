@@ -71,23 +71,9 @@ trait ForPaginate
             $this->setPerPage($perPage);
         }
         $perPage = $this->getPerPage();
-        if (! isset($args[1])) {
-            $conditions = [];
-            $args = [$args[0] ?? '*'];
-        }
-        else {
-            $conditions = $args[2] ?? $args[1];
-            if (count($args) < 3) {
-                $args = [
-                    $args[0]
-                ];
-            }
-            else {
-                $args = [
-                    $args[0], $args[1]
-                ];
-            }
-        }
+
+        list($args, $conditions) = $this->parseArgs($args);
+
         $total = $this->count(...$this->getBuilderArgs($args, $conditions));
         if ($total) {
             $conditions['LIMIT'] = [($page - 1) * $perPage, $perPage];
@@ -96,7 +82,35 @@ trait ForPaginate
         else {
             $items = new Collection();
         }
+
         return new Paginator($items, $total, $page, $this->perPage, $this->urlPattern);
+    }
+
+    /**
+     * @param array $args
+     * @return array
+     */
+    protected function parseArgs(array $args): array
+    {
+        if (! isset($args[1])) {
+            $conditions = [];
+            $args = [
+               $args[0] ?? '*'
+            ];
+        }
+        else if (! isset($args[2])) {
+            $conditions = $args[1];
+            $args = [
+                $args[0]
+            ];
+        }
+        else {
+            $conditions = $args[2];
+            $args = [
+                $args[0], $args[1]
+            ];
+        }
+        return [$args, $conditions];
     }
 
     /**
