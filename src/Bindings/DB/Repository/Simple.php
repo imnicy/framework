@@ -50,7 +50,7 @@ abstract class Simple implements SimpleRepositoryInterface
      * @param array $args
      * @return array
      */
-    public function one(...$args) :array
+    public function one(...$args): ?array
     {
         return static::query()->one($this->table, ...$args);
     }
@@ -75,9 +75,9 @@ abstract class Simple implements SimpleRepositoryInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function id(): int
+    public function id(): ?string
     {
         return static::query()->id();
     }

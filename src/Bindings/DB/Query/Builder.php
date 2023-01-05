@@ -90,7 +90,7 @@ class Builder extends Medoo
      * @param array $where
      * @return int
      */
-    public function count($table, $join=null, $column=null, $where=null) :int
+    public function count($table, $join=null, $column=null, $where=null): int
     {
         return parent::count($table, $join, parent::isJoin($join) ? '*' : $column, $where);
     }

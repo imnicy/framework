@@ -10,7 +10,7 @@ interface RepositoryInterface
      * @param array $args
      * @return int
      */
-    public function count(...$args) :int ;
+    public function count(...$args): int ;
 
     /**
      * Get all entries from table with conditions
@@ -18,7 +18,7 @@ interface RepositoryInterface
      * @param array $args
      * @return Collection
      */
-    public function all(...$args) :Collection ;
+    public function all(...$args): Collection ;
 
     /**
      * Get a row from table with conditions
@@ -26,7 +26,7 @@ interface RepositoryInterface
      * @param array $args
      * @return RepositoryInterface
      */
-    public function one(...$args) :RepositoryInterface ;
+    public function one(...$args): ?RepositoryInterface ;
 
     /**
      * Find a row from table with primary key
@@ -35,7 +35,7 @@ interface RepositoryInterface
      * @param string|array $columns
      * @return RepositoryInterface
      */
-    public function find($id, $columns=null) :RepositoryInterface ;
+    public function find($id, $columns=null): ?RepositoryInterface ;
 
     /**
      * Create a new row
@@ -50,7 +50,7 @@ interface RepositoryInterface
      *
      * @return bool
      */
-    public function delete() :bool ;
+    public function delete(): bool ;
 
     /**
      * Update table with conditions
@@ -59,7 +59,7 @@ interface RepositoryInterface
      * @param array $conditions
      * @return bool
      */
-    public function update(array $attributes=[], array $conditions=[]) :bool ;
+    public function update(array $attributes=[], array $conditions=[]): bool ;
 
     /**
      * Save changes attributes
@@ -67,7 +67,7 @@ interface RepositoryInterface
      * @param array $options
      * @return bool
      */
-    public function save(array $options=[]) :bool ;
+    public function save(array $options=[]): bool ;
 
     /**
      * Destroy items from table
@@ -75,7 +75,7 @@ interface RepositoryInterface
      * @param array $ids
      * @return bool
      */
-    public function destroy(array $ids=[]) :bool ;
+    public function destroy(array $ids=[]): bool ;
 
     /**
      * Fill attributes for save
@@ -83,7 +83,7 @@ interface RepositoryInterface
      * @param array $attributes
      * @return RepositoryInterface
      */
-    public function fill(array $attributes=[]) :RepositoryInterface ;
+    public function fill(array $attributes=[]): RepositoryInterface ;
 
     /**
      * With any attributes
@@ -91,7 +91,7 @@ interface RepositoryInterface
      * @param array|string $attributes
      * @return RepositoryInterface
      */
-    public function with($attributes) :RepositoryInterface ;
+    public function with($attributes): RepositoryInterface ;
 
     /**
      * Load any relationships
@@ -99,7 +99,7 @@ interface RepositoryInterface
      * @param string|array $relations
      * @return RepositoryInterface
      */
-    public function load($relations) :RepositoryInterface ;
+    public function load($relations): RepositoryInterface ;
 
     /**
      * Get a query builder instance

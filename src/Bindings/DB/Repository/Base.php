@@ -98,7 +98,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $args
      * @return int
      */
-    public function count(...$args) :int
+    public function count(...$args): int
     {
         return $this->newQueryWith()->count($this->table, ...$args);
     }
@@ -107,7 +107,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $args
      * @return Collection
      */
-    public function all(...$args) :Collection
+    public function all(...$args): Collection
     {
         return tap($this->newQueryWith()->all($this->table, ...$args), function($results) {
             return $this->hydrateRelationships($results);
@@ -118,7 +118,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $args
      * @return RepositoryInterface|Base|$this
      */
-    public function one(...$args) :RepositoryInterface
+    public function one(...$args): ?RepositoryInterface
     {
         return tap($this->newQueryWith()->one($this->table, ...$args), function($result) {
             return $this->hydrateRelationships($result);
@@ -130,7 +130,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param string|array $columns
      * @return RepositoryInterface|Base|$this
      */
-    public function find($id, $columns=null) :RepositoryInterface
+    public function find($id, $columns=null): ?RepositoryInterface
     {
         return $this->one($columns, [$this->primary => $id]);
     }
@@ -152,7 +152,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $rows
      * @return bool
      */
-    public function insert(array $rows=[]) :bool
+    public function insert(array $rows=[]): bool
     {
         static::query()->insert($this->table, $rows);
 
@@ -389,7 +389,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param array $with
      * @return \Nicy\Framework\Bindings\DB\Query\Builder
      */
-    public static function query(array $with=[]) :Builder
+    public static function query(array $with=[]): Builder
     {
         return (new static)->with($with)->newQuery();
     }
@@ -409,7 +409,7 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
      * @param bool $exists
      * @return static
      */
-    public function newInstance(array $attributes=[], bool $exists=false) :Base
+    public function newInstance(array $attributes=[], bool $exists=false): Base
     {
         $instance = new static((array) $attributes);
 
