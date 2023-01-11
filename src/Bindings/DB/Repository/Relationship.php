@@ -6,6 +6,7 @@ use RuntimeException;
 use InvalidArgumentException;
 use Nicy\Support\Str;
 use Nicy\Support\Contracts\Arrayable;
+use Nicy\Framework\Bindings\DB\Repository\Concerns\HasRelationships;
 
 class Relationship implements Arrayable
 {
@@ -61,7 +62,7 @@ class Relationship implements Arrayable
     /**
      * Relationship constructor.
      *
-     * @param Base|\Nicy\Framework\Bindings\DB\Repository\Concerns\HasRelationships $repository For IDE
+     * @param Base|HasRelationships $repository For IDE
      * @param Base $relation
      * @param string $type
      * @param array $args
@@ -81,7 +82,7 @@ class Relationship implements Arrayable
     protected function parseRelationArgs(array $args)
     {
         $parsed = array_filter($args, function($arg) {
-            return is_string($arg);
+            return is_string($arg) || is_null($arg);
         });
 
         if (count($parsed) != count($args)) {
@@ -94,40 +95,76 @@ class Relationship implements Arrayable
     }
 
     /**
+     * @param Collection $relationResults
+     * @param Collection $throughResults
+     * @param string $throughKey
+     * @param string $throughForeignKey
+     * @return callable
+     */
+    protected function buildRelationPivotClosure(
+        $relationResults, $throughResults, string $throughKey, string $throughForeignKey
+    ): callable
+    {
+        return function($filter, string $foreignKey=null)
+        use ($relationResults, $throughResults, $throughKey, $throughForeignKey)
+        {
+            if (is_null($foreignKey)) {
+                $foreignKey = $relationResults->first()->getPrimaryKey();
+            }
+            $through = $throughResults->where($throughForeignKey, '=', $filter);
+
+            return $relationResults->whereIn($foreignKey, $through->pluck($throughKey));
+        };
+    }
+
+    /**
      * @param Collection|Base $results
-     * @param Collection $foreignResults
+     * @param Collection|callable $relationResults
      * @param string $key
      * @param string $foreignKey
      * @return Collection|Base
      */
-    protected function attachForeignResults($results, $foreignResults, string $key, string $foreignKey)
+    protected function attachRelationResults($results, $relationResults, string $key, string $foreignKey=null)
     {
         $name = lcfirst(static::$snakeNames ? Str::snake($this->name) : $this->name);
 
+        if (is_null($foreignKey)) {
+            $foreignKey = $this->repository->getPrimaryKey();
+        }
+
         if ($results instanceof Collection) {
-            return $results->each(function($item) use ($name, $foreignResults, $key, $foreignKey) {
-                $item->{$name} = $this->filterForeignResults(
-                    $foreignResults, $foreignKey,  $item->{$key}
-                );
+            return $results->each(function($item) use ($name, $relationResults, $key, $foreignKey) {
+                if (is_callable($relationResults)) {
+                    $item->{$name} = $relationResults($item->{$foreignKey});
+                }
+                else {
+                    $item->{$name} = $this->filterRelationResults(
+                        $relationResults, $key, $item->{$foreignKey}
+                    );
+                }
             });
         }
 
-        $results->{$name} = $this->filterForeignResults($foreignResults, $foreignKey, $results->{$key});
+        $results->{$name} = $this->filterRelationResults($relationResults, $key, $results->{$foreignKey});
 
         return $results;
     }
 
     /**
-     * @param Collection|Base $foreignResults
-     * @param string $foreignKey
-     * @param string|int $foreignValue
+     * @param Collection|Base $relationResults
+     * @param string $key
+     * @param string|int|null $value
      * @return mixed
      */
-    protected function filterForeignResults($foreignResults, string $foreignKey, string $foreignValue)
+    protected function filterRelationResults($relationResults, string $key, string $value=null)
     {
-        $foreignResults = $foreignResults->where($foreignKey, '=', $foreignValue);
+        if (is_null($value)) {
+            return null;
+        }
 
-        return $this->type == 'one' ? $foreignResults->first()->toArray() : $foreignResults->values();
+        $relationResults = $relationResults->where($key, '=', $value);
+
+        return $this->type == 'one' ? $relationResults->first() : $relationResults->values();
     }
 
     /**
@@ -140,13 +177,13 @@ class Relationship implements Arrayable
     {
         list($key, $foreignKey) = $this->args;
 
-        $foreignResults = $this->relation->all(
+        $relationResults = $this->relation->all(
             '*', array_merge($this->conditions, [
-                $foreignKey => $this->getResultsValues($results, $key)
+                $key => $this->getResultsValues($results, $foreignKey)
             ]
         ));
 
-        return $this->attachForeignResults($results, $foreignResults, $key, $foreignKey);
+        return $this->attachRelationResults($results, $relationResults, $key, $foreignKey);
     }
 
     /**
@@ -159,40 +196,53 @@ class Relationship implements Arrayable
     {
         list($through, $throughKey, $throughForeignKey, $key, $foreignKey) = $this->args;
 
-        $throughTable = $this->newRepositoryWithoutRelationships($through)->table();
+        if (is_null($foreignKey)) {
+            $foreignKey = $this->repository->getPrimaryKey();
+        }
 
-        $foreignResults = $this->relation->all(
+        $throughRepository = $this->newRepositoryWithoutRelationships($through);
+        $throughTable = $throughRepository->table();
+
+        $throughResults = $this->repository->newQuery()->all($this->repository->table(), [
+            '[><]' . $throughTable => [
+                $foreignKey => $throughForeignKey
+            ],
+        ], [
+            $throughTable . '.' . $throughKey,
+            $throughTable . '.' . $throughForeignKey
+        ], [
+            $throughTable . '.' . $throughForeignKey => $this->getResultsValues($results, $foreignKey)
+        ]);
+
+        $relationResults = $this->relation->all(
             '*', array_merge($this->conditions, [
-                $foreignKey => array_column(
-                    $this->repository->newQuery()->simpling()->all($this->repository->table(), [
-                        '[><]' . $throughTable => [
-                            $key => $throughKey
-                        ],
-                    ], [
-                        $throughTable . '.' . $throughForeignKey
-                    ], [
-                        $throughTable . '.' . $throughKey => $this->getResultsValues($results, $key)
-                    ]),
-                    $throughForeignKey
-                )
+                $foreignKey => $throughResults->pluck($throughKey)->toArray()
             ]
         ));
 
-        return $this->attachForeignResults($results, $foreignResults, $key, $foreignKey);
+        return $this->attachRelationResults(
+            $results,
+            $this->buildRelationPivotClosure($relationResults, $throughResults, $throughKey, $throughForeignKey),
+            $key, $foreignKey
+        );
     }
 
     /**
      * @param Collection|Base $results
-     * @param string $key
+     * @param string|null $foreignKey
      * @return array
      */
-    protected function getResultsValues($results, string $key)
+    protected function getResultsValues($results, string $foreignKey=null)
     {
-        if ($results instanceof Collection) {
-            return $results->pluck($key)->toArray();
+        if (is_null($foreignKey)) {
+            $foreignKey = $this->repository->getPrimaryKey();
         }
 
-        return [$results->{$key}];
+        if ($results instanceof Collection) {
+            return $results->pluck($foreignKey)->toArray();
+        }
+
+        return [$results->{$foreignKey}];
     }
 
     /**
@@ -201,7 +251,7 @@ class Relationship implements Arrayable
      * @param mixed $name
      * @return Base
      */
-    protected function newRepositoryWithoutRelationships( $name)
+    protected function newRepositoryWithoutRelationships($name)
     {
         if (is_string($name) && class_exists($name)) {
             $repository = new $name;
@@ -210,7 +260,7 @@ class Relationship implements Arrayable
             $repository = $name;
         }
         else {
-            throw new RuntimeException('invalid repository class: ' . (string) $name);
+            throw new RuntimeException('invalid repository class: ' . $name);
         }
 
         if (! $repository instanceof Base) {

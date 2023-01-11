@@ -118,10 +118,10 @@ trait HasRelationships
     /**
      * @param string|array|Base $relation
      * @param string $key
-     * @param string $foreignKey
+     * @param string|null $foreignKey
      * @return Relationship
      */
-    protected function loadMany($relation, string $key, string $foreignKey)
+    protected function loadMany($relation, string $key, string $foreignKey=null)
     {
         return $this->loadRelation('many', null, $relation, $key, $foreignKey);
     }
@@ -129,10 +129,10 @@ trait HasRelationships
     /**
      * @param string|array|Base $relation
      * @param string $key
-     * @param string $foreignKey
+     * @param string|null $foreignKey
      * @return Relationship
      */
-    protected function loadOne($relation, string $key, string $foreignKey)
+    protected function loadOne($relation, string $key, string $foreignKey=null)
     {
         return $this->loadRelation('one', null, $relation, $key, $foreignKey);
     }
@@ -143,11 +143,11 @@ trait HasRelationships
      * @param string $throughKey
      * @param string $throughForeignKey
      * @param string $key
-     * @param string $foreignKey
+     * @param string|null $foreignKey
      * @return Relationship
      */
     protected function loadManyThrough(
-        $relation, string $through, string $throughKey, string $throughForeignKey, string $key, string $foreignKey
+        $relation, string $through, string $throughKey, string $throughForeignKey, string $key, string $foreignKey=null
     )
     {
         return $this->loadRelation(

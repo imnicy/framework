@@ -425,6 +425,14 @@ class Base implements RepositoryInterface, Jsonable, Arrayable, ArrayAccess
     }
 
     /**
+     * @return string
+     */
+    public function getPrimaryKey()
+    {
+        return $this->primary;
+    }
+
+    /**
      * @return mixed|void
      */
     public function getPrimary()

@@ -106,9 +106,10 @@ class Builder extends Medoo
     /**
      * If statement execution fails, an exception will throw
      *
+     * @param string|null $sql
      * @return void
      */
-    protected function prepareQueryWithError()
+    protected function prepareQueryWithError(string $sql=null)
     {
         if (($error = $this->error) && $error[1] && static::$errorThrowable) {
             // Dispatch a query error event, if query has error info.
@@ -116,6 +117,8 @@ class Builder extends Medoo
 
             throw new QueryException($error[2]);
         }
+
+        throw new QueryException($sql);
     }
 
     /**
@@ -131,8 +134,12 @@ class Builder extends Medoo
         $sql = $statement;
         $start = microtime(true);
 
-        $statement = parent::exec($statement, $map);
-        $this->prepareQueryWithError();
+        try {
+            $statement = parent::exec($statement, $map);
+        }
+        catch (\PDOException $e) {
+            $this->prepareQueryWithError(parent::generate($sql, $map));
+        }
 
         if ($statement) {
             // Dispatch a query sql statements log, when sql running.

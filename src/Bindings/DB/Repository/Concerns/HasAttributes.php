@@ -321,7 +321,9 @@ trait HasAttributes
             $values = array_diff_key($values, array_flip($this->getHidden()));
         }
 
-        return $values;
+        return array_map(function($value) {
+            return $value instanceof Arrayable ? $value->toArray() : $value;
+        }, $values);
     }
 
     /**
