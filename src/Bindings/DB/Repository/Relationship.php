@@ -215,10 +215,15 @@ class Relationship implements Arrayable
         ]);
 
         $relationResults = $this->relation->all(
-            '*', array_merge($this->conditions, [
+            '*', array_filter(array_merge($this->conditions, [
                 $foreignKey => $throughResults->pluck($throughKey)->toArray()
-            ]
-        ));
+            ]), function($val) {
+                if (is_array($val) && empty($val)) {
+                    return false;
+                }
+                return true;
+            })
+        );
 
         return $this->attachRelationResults(
             $results,
